@@ -12,10 +12,15 @@
 @interface MOVHomeTableViewCell : UITableViewCell <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitle;
-@property (nonatomic, strong) NSArray *movies;
+@property (nonatomic, strong) NSArray *topRatedMovies;
+@property (nonatomic, strong) NSArray *popularMovies;
+@property (nonatomic, strong) NSArray *upcomingMovies;
+@property (nonatomic, strong) NSArray *topRatedSeries;
+@property (nonatomic, strong) NSArray *popularSeries;
+
+
 @property (strong, nonatomic) IBOutlet UICollectionView *movieCollectionView;
 
-
--(void) reload;
+-(MOVCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

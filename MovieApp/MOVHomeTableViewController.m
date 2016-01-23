@@ -20,7 +20,12 @@
     NSMutableArray *categories;
 }
 
-@property (nonatomic, strong) NSArray *movies;
+@property (strong, nonatomic) NSArray *movies;
+@property (nonatomic, strong) NSArray *topRatedMovies;
+@property (nonatomic, strong) NSArray *popularMovies;
+@property (nonatomic, strong) NSArray *upcomingMovies;
+@property (nonatomic, strong) NSArray *topRatedSeries;
+@property (nonatomic, strong) NSArray *popularSeries;
 
 @end
 
@@ -38,11 +43,20 @@
     categories = [[NSMutableArray alloc] initWithObjects:@"Most popular movies", @"Top rated movies", @"Upcoming movies", @"Top rated TV shows", @"Most popular TV shows", nil];
     
     //Add lines for RestKit
-    [self configureRestKit];
-    [self loadMovies];
+    [self configureRestKit:@"/3/movie/upcoming"];
+    [self loadMovies:@"/3/movie/upcoming" movieArray:self.upcomingMovies];
+    [self configureRestKit:@"/3/movie/popular"];
+    [self loadMovies:@"/3/movie/popular" movieArray:self.popularMovies];
+    [self configureRestKit:@"/3/movie/top_rated"];
+    [self loadMovies:@"/3/movie/top_rated" movieArray:self.topRatedMovies];
+    [self configureRestKit:@"/3/tv/top_rated"];
+    [self loadMovies:@"/3/tv/top_rated" movieArray:self.topRatedSeries];
+    [self configureRestKit:@"/3/tv/popular"];
+    [self loadMovies:@"/3/tv/popular" movieArray:self.popularSeries];
+
 }
 
-- (void)configureRestKit {
+- (void)configureRestKit:(NSString *)urlPath {
     
     // Initialize AFNetworking HTTPClient
     NSURL *baseURL = [NSURL URLWithString:@"https://api.themoviedb.org"];
@@ -54,33 +68,29 @@
     // Setup object mappings
     RKObjectMapping *movieMapping = [RKObjectMapping mappingForClass:[MOVMovie class]];
     [movieMapping addAttributeMappingsFromArray:@[@"title", @"overview", @"poster_path", @"release_date"]];
-    //[movieMapping addAttributeMappingsFromArray:@[@"overview"]];
-                                        
+    
     // Register mappings with the provider using a response descriptor
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:@"/3/movie/top_rated" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:urlPath keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     [objectManager addResponseDescriptor:responseDescriptor];
 }
 
-- (void) loadMovies {
+- (void) loadMovies:(NSString *)urlPath movieArray:(NSArray *)movies {
+    
+    
     const NSString *API_KEY = @"eeeda4aeb01446fa9cabef99fab242af";
-//    const NSString *QUERY_POPULARITY_DESC = @"popularity.desc";
+
+    //__block movies = [[NSArray alloc]init];
     
     NSDictionary *queryParams = @{@"api_key" : API_KEY};
     
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/movie/top_rated" parameters:queryParams
+    [[RKObjectManager sharedManager] getObjectsAtPath:urlPath parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                  self.movies = mappingResult.array;
-                                                  MOVMovie *movie = [self.movies objectAtIndex:1];
-                                                  NSLog(@"Top movies: %lu", [self.movies count]);
-
-                                                  NSLog(@"Movie title: %@\n Image: %@", [movie title], [movie poster_path]);
+                                                   movies = mappingResult.array;
                                                   [self.tableView reloadData];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                  NSLog(@"What do you mean by 'there is no coffee?': %@", error);
+                                                  NSLog(@"Could not load movies from API!': %@", error);
                                               }];
-    
-    
 }
 
 
@@ -105,7 +115,8 @@
     MOVHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
     cell.categoryTitle.text = [categories objectAtIndex:indexPath.row];
-    cell.movies = self.movies;
+
+    cell.topRatedMovies = self.topRatedMovies;
     
     [cell.movieCollectionView reloadData];
 //    [cell.movieCollectionView scrollRectToVisible:CGRectZero animated:NO];

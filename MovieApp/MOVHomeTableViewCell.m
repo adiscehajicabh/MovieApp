@@ -41,33 +41,32 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MOVCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    // Configure the cell
-    
-    
-    MOVMovie *movie = [self.movies objectAtIndex:indexPath.row];
-    NSLog(@"Movie count 22222: %@", movie.title);
+    return [self loadMoviesInCategories:self.topRatedMovies cellAtIndex:cell cellIndex:indexPath];
 
+}
+
+- (MOVCollectionViewCell *)loadMoviesInCategories:(NSArray *)movies cellAtIndex:(MOVCollectionViewCell *)cell cellIndex:(NSIndexPath *)indexPath {
+    
+    // Configure the cell
+    // Finding movie for each cell and setting the title, year and the poster of the movie
+    
+    // Title
+    MOVMovie *movie = [self.topRatedMovies objectAtIndex:indexPath.row];
     cell.movieTitleCell.text = movie.title;
     
-    
-    
-    NSURL * url = [NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, movie.poster_path];
+    // Movie poster
+    NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, movie.poster_path]];
     [cell.movieImageCell sd_setImageWithURL:url];
     
+    // Release date
     NSString *dateString = movie.release_date;
     NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
     [dateFormater setDateFormat:@"yyyy-MM-dd"];
     NSDate *date = [dateFormater dateFromString:dateString];
-    
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
     cell.movieYearCell.text = [NSString stringWithFormat:@"%lu", [components year]];
 
     return cell;
-}
-
-- (void) reload {
-    //[self.movieCollection reloadInputViews];
 }
 
 @end

@@ -91,7 +91,8 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Movie App" id="b1D-Cv-gCc"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lfp-ep-mGF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
