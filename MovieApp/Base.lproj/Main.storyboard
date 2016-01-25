@@ -10,11 +10,11 @@
             <objects>
                 <viewController id="HWH-B8-tVV" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="lcH-eJ-47n"/>
-                        <viewControllerLayoutGuide type="bottom" id="wx9-Cl-aG0"/>
+                        <viewControllerLayoutGuide type="top" id="f3L-sj-lFQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="zxq-1T-oI7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7UO-tI-o3p">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -22,13 +22,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sE-Z5-LRb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="202" y="-890"/>
+            <point key="canvasLocation" x="202" y="-889.99999999999989"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="fgX-5w-5gT">
             <objects>
                 <tabBarController id="fnW-eX-CfR" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="qSy-o7-Kp8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -49,11 +48,11 @@
             <objects>
                 <viewController id="hvW-zp-Pgm" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="vTl-Ik-JXc"/>
-                        <viewControllerLayoutGuide type="bottom" id="iP4-yU-Bo1"/>
+                        <viewControllerLayoutGuide type="top" id="Lq5-NJ-2M2"/>
+                        <viewControllerLayoutGuide type="bottom" id="KpW-hd-Iqi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vqc-tc-tcI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -61,22 +60,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSA-fF-1l0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1712" y="-829"/>
+            <point key="canvasLocation" x="1712" y="-828.99999999999989"/>
         </scene>
         <!--Feed-->
         <scene sceneID="g1l-y7-9BQ">
             <objects>
                 <tableViewController id="WAl-Ok-7wy" customClass="MOVHomeTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="250" sectionHeaderHeight="28" sectionFooterHeight="28" id="5lG-ec-R7k">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="250" id="NB8-AW-97h" customClass="MOVHomeTableViewCell">
-                                <rect key="frame" x="0.0" y="92" width="375" height="250"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="250"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NB8-AW-97h" id="b1s-Z7-wnk">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AMi-1G-wAk">
@@ -125,7 +124,6 @@
                                                         <outlet property="movieImageCell" destination="3Rx-j3-8zK" id="8xt-Xu-o5j"/>
                                                         <outlet property="movieTitleCell" destination="CtL-4w-HnQ" id="c83-eg-AxV"/>
                                                         <outlet property="movieYearCell" destination="UXE-Yv-3ed" id="SXp-Oe-rmk"/>
-                                                        <segue destination="0OT-8p-yVo" kind="show" identifier="movieDetailsSegue" animates="NO" id="Sz2-y9-gOn"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
@@ -150,22 +148,24 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Feed" image="movies.png" id="zoH-0c-1wZ"/>
                     <navigationItem key="navigationItem" title="Feed" id="b1D-Cv-gCc"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="0OT-8p-yVo" kind="show" identifier="movieDetailsSegue" id="LPW-oS-Dwr"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lfp-ep-mGF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1145.5" y="353.5"/>
+            <point key="canvasLocation" x="1145.5" y="353.49999999999994"/>
         </scene>
         <!--Movie Details View Controller-->
         <scene sceneID="bNH-wf-8RL">
             <objects>
                 <viewController id="0OT-8p-yVo" customClass="MOVMovieDetailsViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qxf-Yf-ccX"/>
-                        <viewControllerLayoutGuide type="bottom" id="i3k-Cz-IgF"/>
+                        <viewControllerLayoutGuide type="top" id="wOS-Ry-HfI"/>
+                        <viewControllerLayoutGuide type="bottom" id="pYm-iN-2H5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Azk-8X-XOj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZAZ-aZ-btJ">
@@ -208,7 +208,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationItem key="navigationItem" id="0uR-SP-HtI"/>
                     <connections>
                         <outlet property="movieDescription" destination="RI3-xW-Lpt" id="CTv-3O-82Z"/>
                         <outlet property="movieImage" destination="oFT-3g-iex" id="Sg8-1c-1TK"/>
@@ -222,7 +222,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VnN-yj-L00" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1777.5" y="347.5"/>
+            <point key="canvasLocation" x="2357.8125" y="334.33098591549293"/>
         </scene>
         <!--Feed-->
         <scene sceneID="lfc-LH-azz">

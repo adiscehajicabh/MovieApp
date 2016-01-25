@@ -98,6 +98,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     MOVMovie *movie = [self.movies objectAtIndex:indexPath.row];
     
     [self.delegate addSegueForTableCell:movie];
+    
 }
 
 
