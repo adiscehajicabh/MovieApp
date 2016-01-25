@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MOVHomeTableViewCell.h"
 
-@interface MOVHomeTableViewController : UITableViewController
 
+@interface MOVHomeTableViewController : UITableViewController <MOVHomeTableViewCellDelegate>
 
 @end

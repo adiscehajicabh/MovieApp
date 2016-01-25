@@ -14,5 +14,9 @@
 @property (nonatomic, strong) NSString *overview;
 @property (nonatomic, strong) NSString *poster_path;
 @property (nonatomic, strong) NSString *release_date;
+@property (nonatomic, strong) NSString *backdrop_path;
+@property (nonatomic, strong) NSString *vote_average;
+@property (nonatomic, strong) NSString *vote_count;
+
 
 @end

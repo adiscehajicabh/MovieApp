@@ -9,8 +9,10 @@
 #import "MOVHomeTableViewCell.h"
 #import "MOVCollectionViewCell.h"
 #import "MOVMovie.h"
+#import "MOVTVShow.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImageView+WebCache.h"
+#import "MOVMovieDetailsViewController.h"
 
 @implementation MOVHomeTableViewCell
 
@@ -25,7 +27,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -41,7 +43,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MOVCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    return [self loadMoviesInCategories:self.topRatedMovies cellAtIndex:cell cellIndex:indexPath];
+    return [self loadMoviesInCategories:self.movies cellAtIndex:cell cellIndex:indexPath];
 
 }
 
@@ -49,9 +51,10 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     
     // Configure the cell
     // Finding movie for each cell and setting the title, year and the poster of the movie
-    
+    if ([[movies objectAtIndex:indexPath.row] isKindOfClass:[MOVMovie class]]) {
+        
     // Title
-    MOVMovie *movie = [self.topRatedMovies objectAtIndex:indexPath.row];
+    MOVMovie *movie = [movies objectAtIndex:indexPath.row];
     cell.movieTitleCell.text = movie.title;
     
     // Movie poster
@@ -65,8 +68,37 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     NSDate *date = [dateFormater dateFromString:dateString];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
     cell.movieYearCell.text = [NSString stringWithFormat:@"%lu", [components year]];
-
+    } else {
+        // Title
+        MOVTVShow *serie = [movies objectAtIndex:indexPath.row];
+        cell.movieTitleCell.text = serie.name;
+        
+        // Movie poster
+        NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, serie.poster_path]];
+        [cell.movieImageCell sd_setImageWithURL:url];
+        
+        // Release date
+        NSString *dateString = serie.first_air_date;
+        NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
+        [dateFormater setDateFormat:@"yyyy-MM-dd"];
+        NSDate *date = [dateFormater dateFromString:dateString];
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
+        cell.movieYearCell.text = [NSString stringWithFormat:@"%lu", [components year]];
+    }
+    
+//    MOVMovieDetailsViewController *controller = [[MOVMovieDetailsViewController alloc] initWithNibName:@"MOVMovieDetailsViewController" bundle:nil];
+//    
+//    controller.delegate = self;
+    
     return cell;
 }
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+
+    MOVMovie *movie = [self.movies objectAtIndex:indexPath.row];
+    
+    [self.delegate addSegueForTableCell:movie];
+}
+
 
 @end

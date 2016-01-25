@@ -14,10 +14,14 @@
 		A05935211C4FDDC300135575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A05935201C4FDDC300135575 /* Assets.xcassets */; };
 		A05935241C4FDDC300135575 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A05935221C4FDDC300135575 /* LaunchScreen.storyboard */; };
 		A059352D1C4FDE7100135575 /* MOVHomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A059352C1C4FDE7100135575 /* MOVHomeTableViewController.m */; };
-		A05935301C4FE1A800135575 /* MOVCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A059352F1C4FE1A800135575 /* MOVCollectionViewController.m */; };
 		A05935331C4FE22300135575 /* MOVCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A05935321C4FE22300135575 /* MOVCollectionViewCell.m */; };
 		A05935361C4FE47E00135575 /* MOVHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A05935351C4FE47E00135575 /* MOVHomeTableViewCell.m */; };
 		A059353F1C5116CF00135575 /* MOVMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = A059353E1C5116CF00135575 /* MOVMovie.m */; };
+		A0EC8A9E1C54F18300EA77F4 /* MOVTVShow.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC8A9D1C54F18300EA77F4 /* MOVTVShow.m */; };
+		A0EC8AAA1C5551D000EA77F4 /* movies.png in Resources */ = {isa = PBXBuildFile; fileRef = A0EC8AA71C5551D000EA77F4 /* movies.png */; };
+		A0EC8AAB1C5551D000EA77F4 /* account.png in Resources */ = {isa = PBXBuildFile; fileRef = A0EC8AA81C5551D000EA77F4 /* account.png */; };
+		A0EC8AAC1C5551D000EA77F4 /* favorites.png in Resources */ = {isa = PBXBuildFile; fileRef = A0EC8AA91C5551D000EA77F4 /* favorites.png */; };
+		A0EC8AAF1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC8AAE1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,14 +37,19 @@
 		A05935251C4FDDC300135575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A059352B1C4FDE7100135575 /* MOVHomeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVHomeTableViewController.h; sourceTree = "<group>"; };
 		A059352C1C4FDE7100135575 /* MOVHomeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVHomeTableViewController.m; sourceTree = "<group>"; };
-		A059352E1C4FE1A800135575 /* MOVCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVCollectionViewController.h; sourceTree = "<group>"; };
-		A059352F1C4FE1A800135575 /* MOVCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVCollectionViewController.m; sourceTree = "<group>"; };
 		A05935311C4FE22300135575 /* MOVCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVCollectionViewCell.h; sourceTree = "<group>"; };
 		A05935321C4FE22300135575 /* MOVCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVCollectionViewCell.m; sourceTree = "<group>"; };
 		A05935341C4FE47E00135575 /* MOVHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVHomeTableViewCell.h; sourceTree = "<group>"; };
 		A05935351C4FE47E00135575 /* MOVHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVHomeTableViewCell.m; sourceTree = "<group>"; };
 		A059353D1C5116CF00135575 /* MOVMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVMovie.h; sourceTree = "<group>"; };
 		A059353E1C5116CF00135575 /* MOVMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVMovie.m; sourceTree = "<group>"; };
+		A0EC8A9C1C54F18300EA77F4 /* MOVTVShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVTVShow.h; sourceTree = "<group>"; };
+		A0EC8A9D1C54F18300EA77F4 /* MOVTVShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVTVShow.m; sourceTree = "<group>"; };
+		A0EC8AA71C5551D000EA77F4 /* movies.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movies.png; sourceTree = "<group>"; };
+		A0EC8AA81C5551D000EA77F4 /* account.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = account.png; sourceTree = "<group>"; };
+		A0EC8AA91C5551D000EA77F4 /* favorites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorites.png; sourceTree = "<group>"; };
+		A0EC8AAD1C556FBC00EA77F4 /* MOVMovieDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVMovieDetailsViewController.h; sourceTree = "<group>"; };
+		A0EC8AAE1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVMovieDetailsViewController.m; sourceTree = "<group>"; };
 		BB6730FFB68930CD780B1AD8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,13 +113,15 @@
 				A059352C1C4FDE7100135575 /* MOVHomeTableViewController.m */,
 				A05935341C4FE47E00135575 /* MOVHomeTableViewCell.h */,
 				A05935351C4FE47E00135575 /* MOVHomeTableViewCell.m */,
-				A059352E1C4FE1A800135575 /* MOVCollectionViewController.h */,
-				A059352F1C4FE1A800135575 /* MOVCollectionViewController.m */,
 				A05935311C4FE22300135575 /* MOVCollectionViewCell.h */,
 				A05935321C4FE22300135575 /* MOVCollectionViewCell.m */,
 				A05935141C4FDDC300135575 /* Supporting Files */,
 				A059353D1C5116CF00135575 /* MOVMovie.h */,
 				A059353E1C5116CF00135575 /* MOVMovie.m */,
+				A0EC8A9C1C54F18300EA77F4 /* MOVTVShow.h */,
+				A0EC8A9D1C54F18300EA77F4 /* MOVTVShow.m */,
+				A0EC8AAD1C556FBC00EA77F4 /* MOVMovieDetailsViewController.h */,
+				A0EC8AAE1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m */,
 			);
 			path = MovieApp;
 			sourceTree = "<group>";
@@ -118,6 +129,9 @@
 		A05935141C4FDDC300135575 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A0EC8AA71C5551D000EA77F4 /* movies.png */,
+				A0EC8AA81C5551D000EA77F4 /* account.png */,
+				A0EC8AA91C5551D000EA77F4 /* favorites.png */,
 				A05935151C4FDDC300135575 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -183,6 +197,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0EC8AAA1C5551D000EA77F4 /* movies.png in Resources */,
+				A0EC8AAC1C5551D000EA77F4 /* favorites.png in Resources */,
+				A0EC8AAB1C5551D000EA77F4 /* account.png in Resources */,
 				A05935241C4FDDC300135575 /* LaunchScreen.storyboard in Resources */,
 				A05935211C4FDDC300135575 /* Assets.xcassets in Resources */,
 				A059351F1C4FDDC300135575 /* Main.storyboard in Resources */,
@@ -246,7 +263,8 @@
 			files = (
 				A059353F1C5116CF00135575 /* MOVMovie.m in Sources */,
 				A05935191C4FDDC300135575 /* AppDelegate.m in Sources */,
-				A05935301C4FE1A800135575 /* MOVCollectionViewController.m in Sources */,
+				A0EC8A9E1C54F18300EA77F4 /* MOVTVShow.m in Sources */,
+				A0EC8AAF1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m in Sources */,
 				A059352D1C4FDE7100135575 /* MOVHomeTableViewController.m in Sources */,
 				A05935161C4FDDC300135575 /* main.m in Sources */,
 				A05935331C4FE22300135575 /* MOVCollectionViewCell.m in Sources */,

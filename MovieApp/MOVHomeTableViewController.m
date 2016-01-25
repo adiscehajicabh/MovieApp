@@ -9,23 +9,25 @@
 #import "MOVHomeTableViewController.h"
 #import "MOVHomeTableViewCell.h"
 #import "MOVMovie.h"
+#import "MOVTVShow.h"
 #import <RestKit/RestKit.h>
 #import "MOVCollectionViewCell.h"
-
-
+#import "MOVMovieDetailsViewController.h"
+#import "MOVHomeTableViewCell.h"
 
 @interface MOVHomeTableViewController ()
 
 {
     NSMutableArray *categories;
+    NSMutableDictionary *movies;
 }
 
-@property (strong, nonatomic) NSArray *movies;
 @property (nonatomic, strong) NSArray *topRatedMovies;
 @property (nonatomic, strong) NSArray *popularMovies;
 @property (nonatomic, strong) NSArray *upcomingMovies;
 @property (nonatomic, strong) NSArray *topRatedSeries;
 @property (nonatomic, strong) NSArray *popularSeries;
+@property (nonatomic, strong) MOVMovie *selectedMovie;
 
 @end
 
@@ -41,22 +43,15 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     categories = [[NSMutableArray alloc] initWithObjects:@"Most popular movies", @"Top rated movies", @"Upcoming movies", @"Top rated TV shows", @"Most popular TV shows", nil];
-    
-    //Add lines for RestKit
-    [self configureRestKit:@"/3/movie/upcoming"];
-    [self loadMovies:@"/3/movie/upcoming" movieArray:self.upcomingMovies];
-    [self configureRestKit:@"/3/movie/popular"];
-    [self loadMovies:@"/3/movie/popular" movieArray:self.popularMovies];
-    [self configureRestKit:@"/3/movie/top_rated"];
-    [self loadMovies:@"/3/movie/top_rated" movieArray:self.topRatedMovies];
-    [self configureRestKit:@"/3/tv/top_rated"];
-    [self loadMovies:@"/3/tv/top_rated" movieArray:self.topRatedSeries];
-    [self configureRestKit:@"/3/tv/popular"];
-    [self loadMovies:@"/3/tv/popular" movieArray:self.popularSeries];
 
+    movies = [[NSMutableDictionary alloc] initWithCapacity:5];
+    //Add lines for RestKit
+    [self configureRestKit];
+    [self loadMoviesAndSeries];
+    
 }
 
-- (void)configureRestKit:(NSString *)urlPath {
+- (void)configureRestKit{
     
     // Initialize AFNetworking HTTPClient
     NSURL *baseURL = [NSURL URLWithString:@"https://api.themoviedb.org"];
@@ -65,27 +60,93 @@
     // Initialize RestKit
     RKObjectManager *objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
     
-    // Setup object mappings
+    // Setup object mappings for movies
     RKObjectMapping *movieMapping = [RKObjectMapping mappingForClass:[MOVMovie class]];
-    [movieMapping addAttributeMappingsFromArray:@[@"title", @"overview", @"poster_path", @"release_date"]];
+    [movieMapping addAttributeMappingsFromArray:@[@"title", @"overview", @"poster_path", @"release_date", @"backdrop_path", @"vote_average", @"vote_count"]];
     
     // Register mappings with the provider using a response descriptor
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:urlPath keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
-    [objectManager addResponseDescriptor:responseDescriptor];
+    RKResponseDescriptor *responseDescriptorTopRatedMovies = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:@"/3/movie/top_rated" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:responseDescriptorTopRatedMovies];
+
+    RKResponseDescriptor *responseDescriptorPopularMovies = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:@"/3/movie/popular" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:responseDescriptorPopularMovies];
+    
+    RKResponseDescriptor *responseDescriptorUpcomingMovies = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:@"/3/movie/upcoming" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:responseDescriptorUpcomingMovies];
+
+    // Setup object mappings for series
+    RKObjectMapping *seriesMapping = [RKObjectMapping mappingForClass:[MOVTVShow class]];
+    [seriesMapping addAttributeMappingsFromArray:@[@"name", @"overview", @"poster_path", @"first_air_date"]];
+    
+    RKResponseDescriptor *responseDescriptorTopRatedSeries = [RKResponseDescriptor responseDescriptorWithMapping:seriesMapping method:RKRequestMethodGET pathPattern:@"/3/tv/top_rated" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:responseDescriptorTopRatedSeries];
+    
+    RKResponseDescriptor *responseDescriptorPopularSeries = [RKResponseDescriptor responseDescriptorWithMapping:seriesMapping method:RKRequestMethodGET pathPattern:@"/3/tv/popular" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:responseDescriptorPopularSeries];
+    
 }
 
-- (void) loadMovies:(NSString *)urlPath movieArray:(NSArray *)movies {
+- (void) loadMoviesAndSeries {
     
     
     const NSString *API_KEY = @"eeeda4aeb01446fa9cabef99fab242af";
-
+    
     //__block movies = [[NSArray alloc]init];
     
     NSDictionary *queryParams = @{@"api_key" : API_KEY};
     
-    [[RKObjectManager sharedManager] getObjectsAtPath:urlPath parameters:queryParams
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/movie/top_rated" parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                   movies = mappingResult.array;
+                                                  self.topRatedMovies = mappingResult.array;
+                                                  NSLog(@"TOP RATED MOVIES: %lu", [self.topRatedMovies count]);
+//                                                  [movies insertObject:self.topRatedMovies atIndex:0];
+                                                  [movies setObject:self.topRatedMovies forKey:@"Most popular movies"];
+                                                  [self.tableView reloadData];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"Could not load movies from API!': %@", error);
+                                              }];
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/movie/popular" parameters:queryParams
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  self.popularMovies = mappingResult.array;
+                                                  NSLog(@"TOP RATED MOVIES: %lu", [self.popularMovies count]);
+                                                  [movies setObject:self.popularMovies forKey:@"Top rated movies"];
+
+//                                                  [movies insertObject:self.popularMovies atIndex:1];
+                                                  [self.tableView reloadData];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"Could not load movies from API!': %@", error);
+                                              }];
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/movie/upcoming" parameters:queryParams
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  self.upcomingMovies = mappingResult.array;
+                                                  NSLog(@"TOP RATED MOVIES: %lu", [self.upcomingMovies count]);
+                                                  [movies setObject:self.upcomingMovies forKey:@"Upcoming movies"];
+
+//                                                  [movies insertObject:self.upcomingMovies atIndex:2];
+                                                  [self.tableView reloadData];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"Could not load movies from API!': %@", error);
+                                              }];
+
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/tv/top_rated" parameters:queryParams
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  self.topRatedSeries = mappingResult.array;
+                                                  [movies setObject:self.topRatedSeries forKey:@"Top rated TV shows"];
+
+                                                  [self.tableView reloadData];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"Could not load movies from API!': %@", error);
+                                              }];
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/tv/popular" parameters:queryParams
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  self.popularSeries = mappingResult.array;
+                                                
+                                                  [movies setObject:self.popularSeries forKey:@"Most popular TV shows"];
+
                                                   [self.tableView reloadData];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -106,67 +167,84 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return [movies count] ? [movies count] : 0;
 }
+
+-(void) addSegueForTableCell:(MOVMovie *)movie {
+    self.selectedMovie = movie;
+    
+    [self performSegueWithIdentifier:@"movieDetailsSegue" sender:self];
+    
+}
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"TableCell";
     MOVHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-
+    
     cell.categoryTitle.text = [categories objectAtIndex:indexPath.row];
+    cell.delegate = self;
 
-    cell.topRatedMovies = self.topRatedMovies;
+    cell.movies = [movies objectForKey:[categories objectAtIndex:indexPath.row]];
     
     [cell.movieCollectionView reloadData];
-//    [cell.movieCollectionView scrollRectToVisible:CGRectZero animated:NO];
     
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+    NSLog(@"==================================Movie");
+    if ([segue.identifier isEqualToString:@"movieDetailsSegue"]) {
+        MOVMovieDetailsViewController *movieDetail = [segue destinationViewController];
+        movieDetail.movie = self.selectedMovie;
+//         [self addSegueForTableCell:self.selectedMovie];
+    }
 }
-*/
+
+
+/*
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
+
+/*
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
+
+/*
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
+
+/*
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
+
+/*
+ #pragma mark - Navigation
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
