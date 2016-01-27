@@ -86,19 +86,21 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         cell.movieYearCell.text = [NSString stringWithFormat:@"%lu", [components year]];
     }
     
-//    MOVMovieDetailsViewController *controller = [[MOVMovieDetailsViewController alloc] initWithNibName:@"MOVMovieDetailsViewController" bundle:nil];
-//    
-//    controller.delegate = self;
-    
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    MOVMovie *movie = [self.movies objectAtIndex:indexPath.row];
+    if ([[self.movies objectAtIndex:indexPath.row] isKindOfClass:[MOVMovie class]]) {
+
+        MOVMovie *movie = [self.movies objectAtIndex:indexPath.row];
     
-    [self.delegate addSegueForTableCell:movie];
-    
+        [self.delegate addSegueMovie:movie];
+    } else {
+        MOVTVShow *serie = [self.movies objectAtIndex:indexPath.row];
+        
+        [self.delegate addSegueSerie:serie];
+    }
 }
 
 

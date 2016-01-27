@@ -14,6 +14,7 @@
 #import "MOVCollectionViewCell.h"
 #import "MOVMovieDetailsViewController.h"
 #import "MOVHomeTableViewCell.h"
+#import "MOVMovieCast.h"
 
 @interface MOVHomeTableViewController ()
 
@@ -28,6 +29,8 @@
 @property (nonatomic, strong) NSArray *topRatedSeries;
 @property (nonatomic, strong) NSArray *popularSeries;
 @property (nonatomic, strong) MOVMovie *selectedMovie;
+@property (nonatomic, strong) MOVTVShow *selectedSerie;
+
 
 @end
 
@@ -45,6 +48,7 @@
     categories = [[NSMutableArray alloc] initWithObjects:@"Most popular movies", @"Top rated movies", @"Upcoming movies", @"Top rated TV shows", @"Most popular TV shows", nil];
 
     movies = [[NSMutableDictionary alloc] initWithCapacity:5];
+    
     //Add lines for RestKit
     [self configureRestKit];
     [self loadMoviesAndSeries];
@@ -62,7 +66,7 @@
     
     // Setup object mappings for movies
     RKObjectMapping *movieMapping = [RKObjectMapping mappingForClass:[MOVMovie class]];
-    [movieMapping addAttributeMappingsFromArray:@[@"title", @"overview", @"poster_path", @"release_date", @"backdrop_path", @"vote_average", @"vote_count"]];
+    [movieMapping addAttributeMappingsFromArray:@[@"id", @"title", @"overview", @"poster_path", @"release_date", @"backdrop_path", @"vote_average", @"vote_count"]];
     
     // Register mappings with the provider using a response descriptor
     RKResponseDescriptor *responseDescriptorTopRatedMovies = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:@"/3/movie/top_rated" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
@@ -76,7 +80,7 @@
 
     // Setup object mappings for series
     RKObjectMapping *seriesMapping = [RKObjectMapping mappingForClass:[MOVTVShow class]];
-    [seriesMapping addAttributeMappingsFromArray:@[@"name", @"overview", @"poster_path", @"first_air_date"]];
+    [seriesMapping addAttributeMappingsFromArray:@[@"id", @"name", @"overview", @"poster_path", @"first_air_date", @"release_date", @"backdrop_path", @"vote_average", @"vote_count"]];
     
     RKResponseDescriptor *responseDescriptorTopRatedSeries = [RKResponseDescriptor responseDescriptorWithMapping:seriesMapping method:RKRequestMethodGET pathPattern:@"/3/tv/top_rated" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     [objectManager addResponseDescriptor:responseDescriptorTopRatedSeries];
@@ -91,15 +95,14 @@
     
     const NSString *API_KEY = @"eeeda4aeb01446fa9cabef99fab242af";
     
-    //__block movies = [[NSArray alloc]init];
-    
     NSDictionary *queryParams = @{@"api_key" : API_KEY};
+    
+//    [self mapMoviesFromAPI:@"/3/movie/top_rated" parameters:queryParams moviesArray:&(self.topRatedMovies) moviesKey:[categories objectAtIndex:0]];
     
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/movie/top_rated" parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   self.topRatedMovies = mappingResult.array;
                                                   NSLog(@"TOP RATED MOVIES: %lu", [self.topRatedMovies count]);
-//                                                  [movies insertObject:self.topRatedMovies atIndex:0];
                                                   [movies setObject:self.topRatedMovies forKey:@"Most popular movies"];
                                                   [self.tableView reloadData];
                                               }
@@ -111,8 +114,6 @@
                                                   self.popularMovies = mappingResult.array;
                                                   NSLog(@"TOP RATED MOVIES: %lu", [self.popularMovies count]);
                                                   [movies setObject:self.popularMovies forKey:@"Top rated movies"];
-
-//                                                  [movies insertObject:self.popularMovies atIndex:1];
                                                   [self.tableView reloadData];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -123,8 +124,6 @@
                                                   self.upcomingMovies = mappingResult.array;
                                                   NSLog(@"TOP RATED MOVIES: %lu", [self.upcomingMovies count]);
                                                   [movies setObject:self.upcomingMovies forKey:@"Upcoming movies"];
-
-//                                                  [movies insertObject:self.upcomingMovies atIndex:2];
                                                   [self.tableView reloadData];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -135,7 +134,6 @@
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   self.topRatedSeries = mappingResult.array;
                                                   [movies setObject:self.topRatedSeries forKey:@"Top rated TV shows"];
-
                                                   [self.tableView reloadData];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -144,15 +142,28 @@
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/tv/popular" parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   self.popularSeries = mappingResult.array;
-                                                
                                                   [movies setObject:self.popularSeries forKey:@"Most popular TV shows"];
-
                                                   [self.tableView reloadData];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"Could not load movies from API!': %@", error);
                                               }];
 }
+
+
+//-(void)mapMoviesFromAPI:(NSString *)urlPath parameters:(NSDictionary *)queryParams moviesArray:(NSArray *__autoreleasing*)moviesCategory moviesKey:(NSString *)moviesKey {
+//    [[RKObjectManager sharedManager] getObjectsAtPath:urlPath parameters:queryParams
+//                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+//                                                  *moviesCategory = mappingResult.array;
+//                                                  
+//                                                  [movies setObject:*moviesCategory forKey:moviesKey];
+//                                                  
+//                                                  [self.tableView reloadData];
+//                                              }
+//                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+//                                                  NSLog(@"Could not load movies from API!': %@", error);
+//                                              }];
+//}
 
 
 - (void)didReceiveMemoryWarning {
@@ -170,15 +181,6 @@
     return [movies count] ? [movies count] : 0;
 }
 
--(void) addSegueForTableCell:(MOVMovie *)movie {
-    self.selectedMovie = movie;
-    
-    [self performSegueWithIdentifier:@"movieDetailsSegue" sender:self];
-    
-}
-
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"TableCell";
     MOVHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
@@ -193,15 +195,34 @@
     return cell;
 }
 
+-(void) addSegueMovie:(MOVMovie *)movie {
+    self.selectedMovie = movie;
+    
+    [self performSegueWithIdentifier:@"movieDetailsSegue" sender:self];
+    
+}
+
+-(void) addSegueSerie:(MOVTVShow *)serie {
+    self.selectedSerie = serie;
+    
+    [self performSegueWithIdentifier:@"movieDetailsSegue" sender:self];
+    
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
-    NSLog(@"==================================Movie");
     if ([segue.identifier isEqualToString:@"movieDetailsSegue"]) {
         MOVMovieDetailsViewController *movieDetail = [segue destinationViewController];
-        movieDetail.movie = self.selectedMovie;
-//         [self addSegueForTableCell:self.selectedMovie];
+        
+        if (self.selectedMovie != nil) {
+            movieDetail.movie = self.selectedMovie;
+            self.selectedMovie = nil;
+        } else {
+            movieDetail.serie = self.selectedSerie;
+        }
     }
 }
+
 
 
 /*

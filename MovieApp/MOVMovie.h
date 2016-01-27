@@ -10,6 +10,8 @@
 
 @interface MOVMovie : NSObject
 
+@property (nonatomic, strong) NSString *id;
+
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *overview;
 @property (nonatomic, strong) NSString *poster_path;
@@ -17,6 +19,5 @@
 @property (nonatomic, strong) NSString *backdrop_path;
 @property (nonatomic, strong) NSString *vote_average;
 @property (nonatomic, strong) NSString *vote_count;
-
 
 @end

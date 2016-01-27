@@ -17,6 +17,12 @@
 		A05935331C4FE22300135575 /* MOVCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A05935321C4FE22300135575 /* MOVCollectionViewCell.m */; };
 		A05935361C4FE47E00135575 /* MOVHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A05935351C4FE47E00135575 /* MOVHomeTableViewCell.m */; };
 		A059353F1C5116CF00135575 /* MOVMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = A059353E1C5116CF00135575 /* MOVMovie.m */; };
+		A0E4EC2B1C57A7F60034C151 /* MOVTVShowCast.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E4EC2A1C57A7F60034C151 /* MOVTVShowCast.m */; };
+		A0E4EC311C57B6360034C151 /* MOVActorDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E4EC301C57B6360034C151 /* MOVActorDetailsViewController.m */; };
+		A0E80A081C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E80A071C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m */; };
+		A0E80A0B1C56DDD800FA8E8D /* MOVActor.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E80A0A1C56DDD800FA8E8D /* MOVActor.m */; };
+		A0E80A0E1C56E1D700FA8E8D /* MOVMovieCast.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E80A0D1C56E1D700FA8E8D /* MOVMovieCast.m */; };
+		A0EAA8671C58E40200FE2A10 /* MOVActorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EAA8661C58E40200FE2A10 /* MOVActorImage.m */; };
 		A0EC8A9E1C54F18300EA77F4 /* MOVTVShow.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC8A9D1C54F18300EA77F4 /* MOVTVShow.m */; };
 		A0EC8AAA1C5551D000EA77F4 /* movies.png in Resources */ = {isa = PBXBuildFile; fileRef = A0EC8AA71C5551D000EA77F4 /* movies.png */; };
 		A0EC8AAB1C5551D000EA77F4 /* account.png in Resources */ = {isa = PBXBuildFile; fileRef = A0EC8AA81C5551D000EA77F4 /* account.png */; };
@@ -43,6 +49,18 @@
 		A05935351C4FE47E00135575 /* MOVHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVHomeTableViewCell.m; sourceTree = "<group>"; };
 		A059353D1C5116CF00135575 /* MOVMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVMovie.h; sourceTree = "<group>"; };
 		A059353E1C5116CF00135575 /* MOVMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVMovie.m; sourceTree = "<group>"; };
+		A0E4EC291C57A7F60034C151 /* MOVTVShowCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVTVShowCast.h; sourceTree = "<group>"; };
+		A0E4EC2A1C57A7F60034C151 /* MOVTVShowCast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVTVShowCast.m; sourceTree = "<group>"; };
+		A0E4EC2F1C57B6360034C151 /* MOVActorDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVActorDetailsViewController.h; sourceTree = "<group>"; };
+		A0E4EC301C57B6360034C151 /* MOVActorDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVActorDetailsViewController.m; sourceTree = "<group>"; };
+		A0E80A061C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVMovieActorCollectionViewCell.h; sourceTree = "<group>"; };
+		A0E80A071C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVMovieActorCollectionViewCell.m; sourceTree = "<group>"; };
+		A0E80A091C56DDD800FA8E8D /* MOVActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVActor.h; sourceTree = "<group>"; };
+		A0E80A0A1C56DDD800FA8E8D /* MOVActor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVActor.m; sourceTree = "<group>"; };
+		A0E80A0C1C56E1D700FA8E8D /* MOVMovieCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVMovieCast.h; sourceTree = "<group>"; };
+		A0E80A0D1C56E1D700FA8E8D /* MOVMovieCast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVMovieCast.m; sourceTree = "<group>"; };
+		A0EAA8651C58E40200FE2A10 /* MOVActorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVActorImage.h; sourceTree = "<group>"; };
+		A0EAA8661C58E40200FE2A10 /* MOVActorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVActorImage.m; sourceTree = "<group>"; };
 		A0EC8A9C1C54F18300EA77F4 /* MOVTVShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVTVShow.h; sourceTree = "<group>"; };
 		A0EC8A9D1C54F18300EA77F4 /* MOVTVShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVTVShow.m; sourceTree = "<group>"; };
 		A0EC8AA71C5551D000EA77F4 /* movies.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movies.png; sourceTree = "<group>"; };
@@ -115,13 +133,25 @@
 				A05935351C4FE47E00135575 /* MOVHomeTableViewCell.m */,
 				A05935311C4FE22300135575 /* MOVCollectionViewCell.h */,
 				A05935321C4FE22300135575 /* MOVCollectionViewCell.m */,
+				A0EC8AAD1C556FBC00EA77F4 /* MOVMovieDetailsViewController.h */,
+				A0EC8AAE1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m */,
+				A0E80A061C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.h */,
+				A0E80A071C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m */,
+				A0E4EC2F1C57B6360034C151 /* MOVActorDetailsViewController.h */,
+				A0E4EC301C57B6360034C151 /* MOVActorDetailsViewController.m */,
 				A05935141C4FDDC300135575 /* Supporting Files */,
 				A059353D1C5116CF00135575 /* MOVMovie.h */,
 				A059353E1C5116CF00135575 /* MOVMovie.m */,
 				A0EC8A9C1C54F18300EA77F4 /* MOVTVShow.h */,
 				A0EC8A9D1C54F18300EA77F4 /* MOVTVShow.m */,
-				A0EC8AAD1C556FBC00EA77F4 /* MOVMovieDetailsViewController.h */,
-				A0EC8AAE1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m */,
+				A0E80A091C56DDD800FA8E8D /* MOVActor.h */,
+				A0E80A0A1C56DDD800FA8E8D /* MOVActor.m */,
+				A0E80A0C1C56E1D700FA8E8D /* MOVMovieCast.h */,
+				A0E80A0D1C56E1D700FA8E8D /* MOVMovieCast.m */,
+				A0E4EC291C57A7F60034C151 /* MOVTVShowCast.h */,
+				A0E4EC2A1C57A7F60034C151 /* MOVTVShowCast.m */,
+				A0EAA8651C58E40200FE2A10 /* MOVActorImage.h */,
+				A0EAA8661C58E40200FE2A10 /* MOVActorImage.m */,
 			);
 			path = MovieApp;
 			sourceTree = "<group>";
@@ -261,13 +291,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0E80A0B1C56DDD800FA8E8D /* MOVActor.m in Sources */,
 				A059353F1C5116CF00135575 /* MOVMovie.m in Sources */,
 				A05935191C4FDDC300135575 /* AppDelegate.m in Sources */,
 				A0EC8A9E1C54F18300EA77F4 /* MOVTVShow.m in Sources */,
+				A0EAA8671C58E40200FE2A10 /* MOVActorImage.m in Sources */,
 				A0EC8AAF1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m in Sources */,
 				A059352D1C4FDE7100135575 /* MOVHomeTableViewController.m in Sources */,
+				A0E4EC311C57B6360034C151 /* MOVActorDetailsViewController.m in Sources */,
+				A0E80A0E1C56E1D700FA8E8D /* MOVMovieCast.m in Sources */,
+				A0E80A081C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m in Sources */,
 				A05935161C4FDDC300135575 /* main.m in Sources */,
 				A05935331C4FE22300135575 /* MOVCollectionViewCell.m in Sources */,
+				A0E4EC2B1C57A7F60034C151 /* MOVTVShowCast.m in Sources */,
 				A05935361C4FE47E00135575 /* MOVHomeTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

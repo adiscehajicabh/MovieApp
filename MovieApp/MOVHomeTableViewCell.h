@@ -13,7 +13,8 @@
 
 @protocol MOVHomeTableViewCellDelegate <NSObject>
 
--(void) addSegueForTableCell:(MOVMovie *)movie;
+-(void) addSegueMovie:(MOVMovie *)movie;
+-(void) addSegueSerie:(MOVTVShow *)serie;
 
 @end
 

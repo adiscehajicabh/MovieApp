@@ -8,17 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "MOVMovie.h"
+#import "MOVTVShow.h"
 #import "MOVMovieDetailsViewController.h"
+#import "MOVActor.h"
 
 
 
-@interface MOVMovieDetailsViewController : UIViewController
-
-
+@interface MOVMovieDetailsViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) MOVMovie *movie;
+@property (nonatomic, strong) MOVTVShow *serie;
 
-@property (strong, nonatomic) IBOutlet UINavigationItem *navbarTitle;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navbarTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *moviePoster;
 @property (weak, nonatomic) IBOutlet UILabel *movieTitle;
 @property (weak, nonatomic) IBOutlet UILabel *movieYear;
@@ -27,12 +28,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *movieVoteAverage;
 @property (weak, nonatomic) IBOutlet UILabel *movieVoteCount;
 
-@property (nonatomic, strong) NSString *moviePosterContent;
-@property (nonatomic, strong) NSString *movieTitleContent;
-@property (nonatomic, strong) NSString *movieYearContent;
-@property (nonatomic, strong) NSString *movieImageContent;
-@property (nonatomic, strong) NSString *movieDescriptionContent;
-@property (nonatomic, strong) NSString *movieVoteAverageContent;
-@property (nonatomic, strong) NSString *movieVoteCountContent;
+//@property (nonatomic, strong) NSString *moviePosterContent;
+//@property (nonatomic, strong) NSString *movieTitleContent;
+//@property (nonatomic, strong) NSString *movieYearContent;
+//@property (nonatomic, strong) NSString *movieImageContent;
+//@property (nonatomic, strong) NSString *movieDescriptionContent;
+//@property (nonatomic, strong) NSString *movieVoteAverageContent;
+//@property (nonatomic, strong) NSString *movieVoteCountContent;
+
+@property (nonatomic, strong) NSArray *movieCast;
+@property (weak, nonatomic) IBOutlet UICollectionView *movieCastCollectionView;
+@property (nonatomic, strong) NSString *actorId;
+
+@property (nonatomic, strong) NSArray *actorArray;
+@property (nonatomic, strong) MOVActor *actor;
 
 @end
