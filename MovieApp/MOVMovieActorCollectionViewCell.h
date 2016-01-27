@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface MOVMovieActorCollectionViewCell : UICollectionViewCell
+
+// Movie details view.
 @property (weak, nonatomic) IBOutlet UIImageView *movieActorImage;
 @property (weak, nonatomic) IBOutlet UILabel *movieActorName;
 @property (weak, nonatomic) IBOutlet UIImageView *movieGalleryImage;
