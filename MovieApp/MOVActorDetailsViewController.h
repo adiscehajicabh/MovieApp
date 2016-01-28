@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *actorName;
 @property (weak, nonatomic) IBOutlet UILabel *actorBirthPlace;
 @property (weak, nonatomic) IBOutlet UICollectionView *actorMovieCollection;
-@property (weak, nonatomic) IBOutlet UICollectionView *actorTvShowCollection;
+@property (weak, nonatomic) IBOutlet UICollectionView *actorTVShowCollection;
 
 
 @property (nonatomic, strong) NSArray *actorArray;

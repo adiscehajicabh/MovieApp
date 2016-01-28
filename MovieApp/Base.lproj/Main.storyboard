@@ -175,7 +175,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="1100"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BjV-7W-JsN">
-                                        <rect key="frame" x="0.0" y="64" width="600" height="1100"/>
+                                        <rect key="frame" x="0.0" y="64" width="600" height="950"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZAZ-aZ-btJ">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
@@ -394,7 +394,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="1036"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L1B-uG-V2f">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="1100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="950"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eE5-KI-IIv">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
@@ -475,10 +475,10 @@
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Yg-bu-I9j">
                                                                     <rect key="frame" x="0.0" y="0.0" width="107" height="160"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lpG-7U-1pI">
-                                                                    <rect key="frame" x="8" y="165" width="91" height="37"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpG-7U-1pI">
+                                                                    <rect key="frame" x="0.0" y="165" width="107" height="45"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
-                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -498,53 +498,53 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yp-ee-YLS">
                                                 <rect key="frame" x="5" y="443" width="82" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TV Shows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vG-XJ-onT">
                                                 <rect key="frame" x="8" y="688" width="104" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Nbe-aF-gwt">
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lyk-GQ-pjx">
                                                 <rect key="frame" x="5" y="717" width="375" height="211"/>
-                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nOI-md-HON">
-                                                    <size key="itemSize" width="50" height="50"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ict-OP-HD1">
+                                                    <size key="itemSize" width="107" height="210"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActorTVShowCollectionCell" id="bhT-nt-y2L" customClass="MOVActorTVShowCollectionViewCell">
-                                                        <rect key="frame" x="0.0" y="0.0" width="107" height="210"/>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActorTVShowCollectionCell" id="F6J-5Y-dtI" customClass="MOVActorTVShowCollectionViewCell">
+                                                        <rect key="frame" x="0.0" y="1" width="107" height="210"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                             <rect key="frame" x="0.0" y="0.0" width="107" height="210"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rpN-aB-bZz">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KG1-5d-yz6">
                                                                     <rect key="frame" x="0.0" y="0.0" width="107" height="160"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDc-lb-h89">
-                                                                    <rect key="frame" x="8" y="167" width="91" height="37"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="MiX-Yf-TTz">
+                                                                    <rect key="frame" x="0.0" y="163" width="107" height="47"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
-                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </view>
-                                                        <size key="customSize" width="107" height="210"/>
                                                         <connections>
-                                                            <outlet property="actorTvShowImage" destination="rpN-aB-bZz" id="dHH-Jo-tza"/>
-                                                            <outlet property="actorTvShowName" destination="eDc-lb-h89" id="Y50-Ud-8Th"/>
+                                                            <outlet property="actorTvShowImage" destination="KG1-5d-yz6" id="dXk-qo-y7C"/>
+                                                            <outlet property="actorTvShowName" destination="MiX-Yf-TTz" id="Ipg-F2-5ka"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
                                                 <connections>
-                                                    <outlet property="dataSource" destination="8zw-5t-XeY" id="MkD-sL-nth"/>
-                                                    <outlet property="delegate" destination="8zw-5t-XeY" id="Xf5-5f-0b0"/>
+                                                    <outlet property="dataSource" destination="8zw-5t-XeY" id="6Kz-fA-9i7"/>
+                                                    <outlet property="delegate" destination="8zw-5t-XeY" id="mgz-PU-bjq"/>
                                                 </connections>
                                             </collectionView>
                                         </subviews>
@@ -575,7 +575,7 @@
                         <outlet property="actorMovieCollection" destination="GHs-1Q-aVs" id="trs-4C-BSq"/>
                         <outlet property="actorName" destination="ZE6-fJ-2fR" id="9fL-Xf-iTR"/>
                         <outlet property="actorPoster" destination="eE5-KI-IIv" id="nkq-Ih-R5u"/>
-                        <outlet property="actorTvShowCollection" destination="Nbe-aF-gwt" id="Qes-Te-0Qr"/>
+                        <outlet property="actorTVShowCollection" destination="lyk-GQ-pjx" id="vhu-l4-szW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kpC-9I-HC9" userLabel="First Responder" sceneMemberID="firstResponder"/>

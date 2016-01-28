@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface MOVActorTVShowCollectionViewCell : UICollectionViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *actorTvShowImage;
+
 @property (weak, nonatomic) IBOutlet UILabel *actorTvShowName;
+
 
 @end

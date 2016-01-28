@@ -37,7 +37,7 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
     [self loadActorDetails:self.actorId];
     [self loadActorImage:self.actorId];
     [self loadActorMovie:self.actorId];
-//    [self loadActorTVShow:self.actorId];
+    [self loadActorTVShow:self.actorId];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,33 +50,42 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return ([self.actorMovies count] > 15) ? 15 : [self.actorMovies count];
+    if (collectionView == self.actorMovieCollection) {
+        return ([self.actorMovies count] > 15) ? 15 : [self.actorMovies count];
+    } else {
+        return ([self.actorTvShows count] > 15) ? 15 : [self.actorTvShows count];
+    }
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    MOVActorMovieCollectionViewCell *cellMovie = [collectionView dequeueReusableCellWithReuseIdentifier:movieIdentifier forIndexPath:indexPath];
+    if (collectionView == self.actorMovieCollection) {
+        
+        MOVActorMovieCollectionViewCell *cellMovie = [collectionView dequeueReusableCellWithReuseIdentifier:movieIdentifier forIndexPath:indexPath];
     
-    MOVActorMovie *actorMovie = [self.actorMovies objectAtIndex:indexPath.row];
+        MOVActorMovie *actorMovie = [self.actorMovies objectAtIndex:indexPath.row];
     
-    cellMovie.actorMovieName.text = actorMovie.title;
+        cellMovie.actorMovieName.text = actorMovie.title;
     
-    // Actor movie image
-    NSURL * urlImageMovie = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorMovie.poster_path]];
-    [cellMovie.actorMovieImage sd_setImageWithURL:urlImageMovie];
+        // Actor movie image
+        NSURL * urlImageMovie = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorMovie.poster_path]];
+        [cellMovie.actorMovieImage sd_setImageWithURL:urlImageMovie];
     
-//    MOVActorTVShowCollectionViewCell *cellTvShows = [collectionView dequeueReusableCellWithReuseIdentifier:tvShowIdentifier forIndexPath:indexPath];
-//    
-//    MOVActorTVShow *actorTvShow = [self.actorTvShows objectAtIndex:indexPath.row];
-//    
-//    cellTvShows.actorTvShowName.text = actorTvShow.name;
-//    
-//    // Actor movie image
-//    NSURL * urlImageTvShow = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorTvShow.poster_path]];
-//    [cellTvShows.actorTvShowImage sd_setImageWithURL:urlImageTvShow];
+        return cellMovie;
+    } else {
+        
+        MOVActorTVShowCollectionViewCell *cellTvShows = [collectionView dequeueReusableCellWithReuseIdentifier:tvShowIdentifier forIndexPath:indexPath];
     
+        MOVActorTVShow *actorTvShow = [self.actorTvShows objectAtIndex:indexPath.row];
     
-    return cellMovie;
+        cellTvShows.actorTvShowName.text = actorTvShow.name;
+    
+        // Actor movie image
+        NSURL * urlImageTvShow = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorTvShow.poster_path]];
+        [cellTvShows.actorTvShowImage sd_setImageWithURL:urlImageTvShow];
+    
+        return cellTvShows;
+    }
 }
 
 - (void)loadActorDetails:(NSString *)actorId {
@@ -223,7 +232,7 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
     RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
     [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         self.actorTvShows = mappingResult.array;
-        [self.actorTvShowCollection reloadData];
+        [self.actorTVShowCollection reloadData];
         NSLog(@"TV SHOW NUMBER: %lu", [self.actorTvShows count]);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         NSLog(@"Could not load movie cast from API!': %@", error);
