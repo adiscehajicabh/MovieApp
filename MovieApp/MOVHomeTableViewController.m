@@ -38,7 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -48,11 +48,14 @@
     categories = [[NSMutableArray alloc] initWithObjects:@"Most popular movies", @"Top rated movies", @"Upcoming movies", @"Top rated TV shows", @"Most popular TV shows", nil];
 
     movies = [[NSMutableDictionary alloc] initWithCapacity:5];
-    
+
+    // Setting the color of the status bar to the white.
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+
     //Add lines for RestKit
     [self configureRestKit];
     [self loadMoviesAndSeries];
-    
+
 }
 
 - (void)configureRestKit{
@@ -222,7 +225,6 @@
         }
     }
 }
-
 
 
 /*

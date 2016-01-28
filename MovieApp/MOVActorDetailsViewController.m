@@ -71,6 +71,9 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
         NSURL * urlImageMovie = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorMovie.poster_path]];
         [cellMovie.actorMovieImage sd_setImageWithURL:urlImageMovie];
     
+        cellMovie.actorMovieImage.layer.cornerRadius = 5;
+        cellMovie.actorMovieImage.layer.masksToBounds = YES;
+        
         return cellMovie;
     } else {
         
@@ -84,6 +87,9 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
         NSURL * urlImageTvShow = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorTvShow.poster_path]];
         [cellTvShows.actorTvShowImage sd_setImageWithURL:urlImageTvShow];
     
+        cellTvShows.actorTvShowImage.layer.cornerRadius = 5;
+        cellTvShows.actorTvShowImage.layer.masksToBounds = YES;
+        
         return cellTvShows;
     }
 }
@@ -160,6 +166,9 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
     
         self.actorBirthPlace.text = [NSString stringWithFormat:@"Born %@ in %@", self.actor.birthday, birthPlace];
     }
+    
+    // Setting the navbar title.
+    self.title = self.actor.name;
     
 }
 

@@ -32,7 +32,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+       
     // Checking if the selected object from categories is movie or tv show.
     if ([self.movie isKindOfClass:[MOVMovie class]]) {
         
@@ -44,23 +44,33 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         // Movie poster
         NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W720, self.movie.backdrop_path]];
         [self.moviePoster sd_setImageWithURL:urlPoster];
-    
-        NSLog(@"%@", urlPoster);
-    
-        self.movieTitle.text = self.movie.title;
-    
+        
         // Release date
         NSString *dateString = self.movie.release_date;
         NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
         [dateFormater setDateFormat:@"yyyy-MM-dd"];
         NSDate *date = [dateFormater dateFromString:dateString];
         NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
-        self.movieYear.text = [NSString stringWithFormat:@"(%lu)", [components year]];
     
+        // Setting the name of the movie and the year of the movie with different fonts.
+        UIFont *helveticaFontTitle = [UIFont fontWithName:@"helvetica neue" size:17.0];
+        UIFont *helveticaFontYear = [UIFont fontWithName:@"helvetica neue" size:13.0];
+
+        NSDictionary *helveticaDictTitle = [NSDictionary dictionaryWithObject: helveticaFontTitle forKey:NSFontAttributeName];
+        NSMutableAttributedString *movieTitleString = [[NSMutableAttributedString alloc] initWithString:self.movie.title attributes: helveticaDictTitle];
+        
+        NSDictionary *helveticaDictYear = [NSDictionary dictionaryWithObject:helveticaFontYear forKey:NSFontAttributeName];
+        NSMutableAttributedString *movieYearString = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@" (%lu)", [components year]] attributes:helveticaDictYear];
+        
+        [movieTitleString appendAttributedString:movieYearString];
+        
+        self.movieTitle.attributedText = movieTitleString;
+        
         self.movieVoteAverage.text = [NSString stringWithFormat:@"%.1f", [self.movie.vote_average floatValue]];
         self.movieVoteCount.text = self.movie.vote_count;
-    
-//      self.navbarTitle.title = self.movieTitle.text;
+        
+        // Setting the navbar title.
+        self.title = self.movie.title;
         
         [self loadMovieCast:self.movie.id];
     } else {
@@ -72,26 +82,36 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         // Movie poster
         NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W720, self.serie.backdrop_path]];
         [self.moviePoster sd_setImageWithURL:urlPoster];
-        
-        NSLog(@"%@", urlPoster);
-        
-        self.movieTitle.text = self.serie.name;
-        
+                
         // Release date
         NSString *dateString = self.serie.first_air_date;
         NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
         [dateFormater setDateFormat:@"yyyy-MM-dd"];
         NSDate *date = [dateFormater dateFromString:dateString];
         NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
-        self.movieYear.text = [NSString stringWithFormat:@"(%lu)", [components year]];
+
+        // Setting the name of the tv show and the year of the tv show with different fonts.
+        UIFont *helveticaFontTitle = [UIFont fontWithName:@"helvetica neue" size:17.0];
+        UIFont *helveticaFontYear = [UIFont fontWithName:@"helvetica neue" size:13.0];
+        
+        NSDictionary *helveticaDictTitle = [NSDictionary dictionaryWithObject: helveticaFontTitle forKey:NSFontAttributeName];
+        NSMutableAttributedString *movieTitleString = [[NSMutableAttributedString alloc] initWithString:self.serie.name attributes: helveticaDictTitle];
+        
+        NSDictionary *helveticaDictYear = [NSDictionary dictionaryWithObject:helveticaFontYear forKey:NSFontAttributeName];
+        NSMutableAttributedString *movieYearString = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@" (%lu)", [components year]] attributes:helveticaDictYear];
+        
+        [movieTitleString appendAttributedString:movieYearString];
+        
+        self.movieTitle.attributedText = movieTitleString;
         
         self.movieVoteAverage.text = [NSString stringWithFormat:@"%.1f", [self.serie.vote_average floatValue]];
         self.movieVoteCount.text = self.serie.vote_count;
+        
+        // Setting the navbar title.
+        self.title = self.serie.name;
     
         [self loadTVShowCast:self.serie.id];
     }
-    // Do any additional setup after loading the view.
-    
 }
 
 /*
@@ -190,6 +210,9 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, tvShowActor.profile_path]];
         [cell.movieActorImage sd_setImageWithURL:urlImage];
     }
+    
+    cell.movieActorImage.layer.cornerRadius = 5;
+    cell.movieActorImage.layer.masksToBounds = YES;
     
     return cell;
     

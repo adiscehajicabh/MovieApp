@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import <RestKit/RestKit.h>
-
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface AppDelegate ()
 
@@ -16,10 +16,23 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
+//    [[UINavigationBar appearance] setTitleTextAttributes::[UIColor whiteColor]];
+
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor blackColor];
+    shadow.shadowBlurRadius = 0.0;
+    shadow.shadowOffset = CGSizeMake(0.0, 2.0);
+    [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                            NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                            NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Neue" size:0.0f],
+                                                            NSShadowAttributeName : shadow
+                                                            }];
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     return YES;
 }

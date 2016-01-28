@@ -22,6 +22,8 @@
 		A059353F1C5116CF00135575 /* MOVMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = A059353E1C5116CF00135575 /* MOVMovie.m */; };
 		A0E4EC2B1C57A7F60034C151 /* MOVTVShowCast.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E4EC2A1C57A7F60034C151 /* MOVTVShowCast.m */; };
 		A0E4EC311C57B6360034C151 /* MOVActorDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E4EC301C57B6360034C151 /* MOVActorDetailsViewController.m */; };
+		A0E7BFDA1C5A354800EA94CC /* movie_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E7BFD91C5A354800EA94CC /* movie_transparent.png */; };
+		A0E7BFDC1C5A3FFC00EA94CC /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E7BFDB1C5A3FFC00EA94CC /* forward.png */; };
 		A0E80A081C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E80A071C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m */; };
 		A0E80A0B1C56DDD800FA8E8D /* MOVActor.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E80A0A1C56DDD800FA8E8D /* MOVActor.m */; };
 		A0E80A0E1C56E1D700FA8E8D /* MOVMovieCast.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E80A0D1C56E1D700FA8E8D /* MOVMovieCast.m */; };
@@ -63,6 +65,8 @@
 		A0E4EC2A1C57A7F60034C151 /* MOVTVShowCast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVTVShowCast.m; sourceTree = "<group>"; };
 		A0E4EC2F1C57B6360034C151 /* MOVActorDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVActorDetailsViewController.h; sourceTree = "<group>"; };
 		A0E4EC301C57B6360034C151 /* MOVActorDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVActorDetailsViewController.m; sourceTree = "<group>"; };
+		A0E7BFD91C5A354800EA94CC /* movie_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movie_transparent.png; sourceTree = "<group>"; };
+		A0E7BFDB1C5A3FFC00EA94CC /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward.png; sourceTree = "<group>"; };
 		A0E80A061C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVMovieActorCollectionViewCell.h; sourceTree = "<group>"; };
 		A0E80A071C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVMovieActorCollectionViewCell.m; sourceTree = "<group>"; };
 		A0E80A091C56DDD800FA8E8D /* MOVActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVActor.h; sourceTree = "<group>"; };
@@ -151,6 +155,10 @@
 				A0E80A071C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m */,
 				A0E4EC2F1C57B6360034C151 /* MOVActorDetailsViewController.h */,
 				A0E4EC301C57B6360034C151 /* MOVActorDetailsViewController.m */,
+				A0EAA8681C59232D00FE2A10 /* MOVActorMovieCollectionViewCell.h */,
+				A0EAA8691C59232D00FE2A10 /* MOVActorMovieCollectionViewCell.m */,
+				A002BCED1C598592002ADD3F /* MOVActorTVShowCollectionViewCell.h */,
+				A002BCEE1C598592002ADD3F /* MOVActorTVShowCollectionViewCell.m */,
 				A05935141C4FDDC300135575 /* Supporting Files */,
 				A059353D1C5116CF00135575 /* MOVMovie.h */,
 				A059353E1C5116CF00135575 /* MOVMovie.m */,
@@ -164,14 +172,10 @@
 				A0E4EC2A1C57A7F60034C151 /* MOVTVShowCast.m */,
 				A0EAA8651C58E40200FE2A10 /* MOVActorImage.h */,
 				A0EAA8661C58E40200FE2A10 /* MOVActorImage.m */,
-				A0EAA8681C59232D00FE2A10 /* MOVActorMovieCollectionViewCell.h */,
-				A0EAA8691C59232D00FE2A10 /* MOVActorMovieCollectionViewCell.m */,
 				A002BCE71C597D8E002ADD3F /* MOVActorMovie.h */,
 				A002BCE81C597D8E002ADD3F /* MOVActorMovie.m */,
 				A002BCEA1C5982BD002ADD3F /* MOVActorTVShow.h */,
 				A002BCEB1C5982BD002ADD3F /* MOVActorTVShow.m */,
-				A002BCED1C598592002ADD3F /* MOVActorTVShowCollectionViewCell.h */,
-				A002BCEE1C598592002ADD3F /* MOVActorTVShowCollectionViewCell.m */,
 			);
 			path = MovieApp;
 			sourceTree = "<group>";
@@ -179,6 +183,8 @@
 		A05935141C4FDDC300135575 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A0E7BFDB1C5A3FFC00EA94CC /* forward.png */,
+				A0E7BFD91C5A354800EA94CC /* movie_transparent.png */,
 				A0EC8AA71C5551D000EA77F4 /* movies.png */,
 				A0EC8AA81C5551D000EA77F4 /* account.png */,
 				A0EC8AA91C5551D000EA77F4 /* favorites.png */,
@@ -248,7 +254,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0EC8AAA1C5551D000EA77F4 /* movies.png in Resources */,
+				A0E7BFDA1C5A354800EA94CC /* movie_transparent.png in Resources */,
 				A0EC8AAC1C5551D000EA77F4 /* favorites.png in Resources */,
+				A0E7BFDC1C5A3FFC00EA94CC /* forward.png in Resources */,
 				A0EC8AAB1C5551D000EA77F4 /* account.png in Resources */,
 				A05935241C4FDDC300135575 /* LaunchScreen.storyboard in Resources */,
 				A05935211C4FDDC300135575 /* Assets.xcassets in Resources */,
