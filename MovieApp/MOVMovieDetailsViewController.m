@@ -15,7 +15,10 @@
 #import <RestKit/RestKit.h>
 #import "MOVMovieCast.h"
 #import "MOVTVShowCast.h"
+#import "MOVDuration.h"
 #import "MOVActorDetailsViewController.h"
+#import "MOVVideoViewController.h"
+#import "MOVVideo.h"
 
 
 @interface MOVMovieDetailsViewController ()
@@ -36,6 +39,8 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
     // Checking if the selected object from categories is movie or tv show.
     if ([self.movie isKindOfClass:[MOVMovie class]]) {
         
+        NSLog(@"==================MOVIE ID: %@", self.movie.id);
+
         self.movieDescription.text = self.movie.overview;
     
         // Movie image
@@ -85,6 +90,9 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         
         [self loadMovieCast:self.movie.id];
     } else {
+        
+        NSLog(@"==================SERIE ID: %@", self.serie.id);
+        
         self.movieDescription.text = self.serie.overview;
         
         // Movie image
@@ -123,24 +131,15 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         
         // Setting the tv show duration and tv show genre.
         MOVGenre *durationGenre = [self.serie.genres objectAtIndex:0];
+        MOVDuration *serieDuration = [self.serie.episode_run_time objectAtIndex:0];
         self.movieDurationGenre.text = durationGenre.name;
-        
-        NSLog(@"=================TV SHOW DURATIONS: %@", self.serie.episode_run_time);
         
         for (int i = 1; i < [self.serie.genres count]; i++) {
             durationGenre = [self.serie.genres objectAtIndex:i];
             self.movieDurationGenre.text = [self.movieDurationGenre.text stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
         }
         
-        NSString *serieDuration = [self.serie.episode_run_time objectAtIndex:0];
-        
-        self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [self convertMinutesIntoHours:serieDuration], self.movieDurationGenre.text];
-        
-        
-        
-        
-        
-        
+        self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [self convertMinutesIntoHours:serieDuration.duration], self.movieDurationGenre.text];
     
         [self loadTVShowCast:self.serie.id];
     }
@@ -276,6 +275,26 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         } else {
             actorController.moviePoster = self.serie.backdrop_path;
         }
+    }
+    
+    if ([segue.identifier isEqualToString:@"movieVideoSegue"]) {
+        
+        
+        MOVVideo *firstMovieVideo = nil;
+        NSString *videoKey = nil;
+        
+        if (self.movie != nil) {
+            firstMovieVideo = [self.movie.videos objectAtIndex:0];
+            videoKey = firstMovieVideo.key;
+        } else {
+            firstMovieVideo = [self.serie.videos objectAtIndex:0];
+            videoKey = firstMovieVideo.key;
+        }
+        
+        MOVVideoViewController *videoController = [segue destinationViewController];
+        
+        videoController.videoUrl = [NSString stringWithFormat:@"https://www.youtube.com/watch?v=%@", videoKey];
+   
     }
 
 }

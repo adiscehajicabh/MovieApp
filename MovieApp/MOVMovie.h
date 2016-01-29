@@ -22,5 +22,6 @@
 @property (nonatomic, strong) NSString *vote_count;
 @property (nonatomic, strong) NSString *runtime;
 @property (nonatomic, strong) NSArray *genres;
+@property (nonatomic, strong) NSArray *videos;
 
 @end

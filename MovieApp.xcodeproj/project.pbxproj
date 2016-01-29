@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		490D09FA1C5B952500D4BDC4 /* MOVDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 490D09F91C5B952500D4BDC4 /* MOVDuration.m */; };
+		490D09FD1C5BB29C00D4BDC4 /* MOVVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490D09FC1C5BB29C00D4BDC4 /* MOVVideoViewController.m */; };
+		490D0A001C5BBCA700D4BDC4 /* MOVVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 490D09FF1C5BBCA700D4BDC4 /* MOVVideo.m */; };
 		6DF117E25A969EE174ACDECB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC6AEB02314E8D590719986 /* libPods.a */; };
 		A002BCE91C597D8E002ADD3F /* MOVActorMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = A002BCE81C597D8E002ADD3F /* MOVActorMovie.m */; };
 		A002BCEC1C5982BD002ADD3F /* MOVActorTVShow.m in Sources */ = {isa = PBXBuildFile; fileRef = A002BCEB1C5982BD002ADD3F /* MOVActorTVShow.m */; };
@@ -38,6 +41,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		490D09F81C5B952500D4BDC4 /* MOVDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVDuration.h; sourceTree = "<group>"; };
+		490D09F91C5B952500D4BDC4 /* MOVDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVDuration.m; sourceTree = "<group>"; };
+		490D09FB1C5BB29C00D4BDC4 /* MOVVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVVideoViewController.h; sourceTree = "<group>"; };
+		490D09FC1C5BB29C00D4BDC4 /* MOVVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVVideoViewController.m; sourceTree = "<group>"; };
+		490D09FE1C5BBCA700D4BDC4 /* MOVVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVVideo.h; sourceTree = "<group>"; };
+		490D09FF1C5BBCA700D4BDC4 /* MOVVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVVideo.m; sourceTree = "<group>"; };
 		6B7B168CBB829FCCDBBCF53F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6CC6AEB02314E8D590719986 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A002BCE71C597D8E002ADD3F /* MOVActorMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVActorMovie.h; sourceTree = "<group>"; };
@@ -181,6 +190,12 @@
 				A002BCEB1C5982BD002ADD3F /* MOVActorTVShow.m */,
 				A0EAED1A1C5AE0E500BAA8C8 /* MOVGenre.h */,
 				A0EAED1B1C5AE0E500BAA8C8 /* MOVGenre.m */,
+				490D09F81C5B952500D4BDC4 /* MOVDuration.h */,
+				490D09F91C5B952500D4BDC4 /* MOVDuration.m */,
+				490D09FB1C5BB29C00D4BDC4 /* MOVVideoViewController.h */,
+				490D09FC1C5BB29C00D4BDC4 /* MOVVideoViewController.m */,
+				490D09FE1C5BBCA700D4BDC4 /* MOVVideo.h */,
+				490D09FF1C5BBCA700D4BDC4 /* MOVVideo.m */,
 			);
 			path = MovieApp;
 			sourceTree = "<group>";
@@ -328,7 +343,9 @@
 				A0E80A0B1C56DDD800FA8E8D /* MOVActor.m in Sources */,
 				A002BCEF1C598592002ADD3F /* MOVActorTVShowCollectionViewCell.m in Sources */,
 				A059353F1C5116CF00135575 /* MOVMovie.m in Sources */,
+				490D09FA1C5B952500D4BDC4 /* MOVDuration.m in Sources */,
 				A05935191C4FDDC300135575 /* AppDelegate.m in Sources */,
+				490D0A001C5BBCA700D4BDC4 /* MOVVideo.m in Sources */,
 				A0EC8A9E1C54F18300EA77F4 /* MOVTVShow.m in Sources */,
 				A0EAA8671C58E40200FE2A10 /* MOVActorImage.m in Sources */,
 				A002BCE91C597D8E002ADD3F /* MOVActorMovie.m in Sources */,
@@ -342,6 +359,7 @@
 				A05935331C4FE22300135575 /* MOVCollectionViewCell.m in Sources */,
 				A0EAA86A1C59232D00FE2A10 /* MOVActorMovieCollectionViewCell.m in Sources */,
 				A0E4EC2B1C57A7F60034C151 /* MOVTVShowCast.m in Sources */,
+				490D09FD1C5BB29C00D4BDC4 /* MOVVideoViewController.m in Sources */,
 				A05935361C4FE47E00135575 /* MOVHomeTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

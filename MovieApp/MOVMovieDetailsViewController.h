@@ -37,4 +37,6 @@
 @property (nonatomic, strong) NSArray *actorArray;
 @property (nonatomic, strong) MOVActor *actor;
 
+//-(IBAction)openMovieVideo;
+
 @end

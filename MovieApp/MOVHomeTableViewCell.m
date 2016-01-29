@@ -15,7 +15,9 @@
 #import "MOVMovieDetailsViewController.h"
 #import "MOVMovie.h"
 #import "MOVGenre.h"
+#import "MOVDuration.h"
 #import <RestKit/RestKit.h>
+#import "MOVVideo.h"
 
 
 @implementation MOVHomeTableViewCell
@@ -60,6 +62,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         cell.movieTitleCell.text = movie.title;
         
         [self addMovieDurationAndGenres:movie];
+        [self addMovieVideo:movie];
         
         // Movie poster
         NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, movie.poster_path]];
@@ -74,6 +77,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         cell.movieTitleCell.text = serie.name;
         
         [self addTvShowDurationAndGenres:serie];
+        [self addTVShowVideo:serie];
         
         // Movie poster
         NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, serie.poster_path]];
@@ -168,6 +172,42 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
 }
 
 /*
+ * Updates the inputed movie information. It sets the movie videos.
+ *
+ *
+ */
+-(void)addMovieVideo:(MOVMovie *)movie {
+    
+    // Setup object mappings for videos
+    RKObjectMapping *videoMapping = [RKObjectMapping mappingForClass:[MOVVideo class]];
+    [videoMapping addAttributeMappingsFromDictionary:@{
+                                                      @"id": @"id",
+                                                      @"key": @"key",
+                                                      @"name": @"name",
+                                                      @"site" : @"site",
+                                                      @"size" : @"size",
+                                                      @"type" : @"type"
+                                                      }];
+    
+    // Register mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:videoMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"results" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%d/videos?api_key=eeeda4aeb01446fa9cabef99fab242af", [movie.id intValue]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        movie.videos = mappingResult.array;
+        NSLog(@"MOVIE VIDEO NUMBER: %lu", [movie.videos count]);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Could not load movie cast from API!': %@", error);
+    }];
+    
+    [objectRequestOperation start];
+
+    
+}
+
+/*
  * Updates the inputed movie information. It sets the movie runtime and movie genres.
  *
  *
@@ -179,11 +219,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     
     [genreMapping addAttributeMappingsFromArray:@[ @"id", @"name" ]];
     
-    RKObjectMapping *durationMapping = [RKObjectMapping mappingForClass:[MOVTVShow class]];
-    [durationMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"episode_run_time"]];
-    
-    RKResponseDescriptor *durationResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:durationMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"episode_run_time" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    [[RKObjectManager sharedManager] addResponseDescriptor:durationResponseDescriptor];
+    RKObjectMapping *durationMapping = [RKObjectMapping mappingForClass:[MOVDuration class]];
     
     // Configuring the Movie mapping
     RKObjectMapping *tvShowMapping = [RKObjectMapping mappingForClass:[MOVTVShow class]];
@@ -195,7 +231,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
                                                        @"first_air_date" : @"first_air_date",
                                                        @"backdrop_path" : @"backdrop_path",
                                                        @"vote_average" : @"vote_average",
-                                                       @"vote_count" : @"vote_count",
+                                                       @"vote_count" : @"vote_count"
                                                        }];
     
     // Define the relationship mapping
@@ -203,6 +239,12 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
                                                                                  toKeyPath:@"genres"
                                                                                withMapping:genreMapping]];
     
+    [durationMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"duration"]];
+
+    [tvShowMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"episode_run_time"
+                                                                                  toKeyPath:@"episode_run_time"
+                                                                                withMapping:durationMapping]];
+
     
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:tvShowMapping
                                                                                             method:RKRequestMethodAny
@@ -217,8 +259,8 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         self.selectedTvShows = mappingResult.array;
         //[self.movieCastCollectionView reloadData];
         MOVTVShow *clickedTvShow = [self.selectedTvShows objectAtIndex:0];
-        [tvShow setEpisode_run_time:clickedTvShow.episode_run_time];
         [tvShow setGenres:clickedTvShow.genres];
+        [tvShow setEpisode_run_time:clickedTvShow.episode_run_time];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         NSLog(@"Could not load movie cast from API!': %@", error);
     }];
@@ -226,6 +268,43 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     [objectRequestOperation start];
     
 }
+
+/*
+ * Updates the inputed tv show information. It sets the tv show videos.
+ *
+ *
+ */
+-(void)addTVShowVideo:(MOVTVShow *)tvShow {
+    
+    // Setup object mappings for videos
+    RKObjectMapping *videoMapping = [RKObjectMapping mappingForClass:[MOVVideo class]];
+    [videoMapping addAttributeMappingsFromDictionary:@{
+                                                       @"id": @"id",
+                                                       @"key": @"key",
+                                                       @"name": @"name",
+                                                       @"site" : @"site",
+                                                       @"size" : @"size",
+                                                       @"type" : @"type"
+                                                       }];
+    
+    // Register mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:videoMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"results" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/tv/%d/videos?api_key=eeeda4aeb01446fa9cabef99fab242af", [tvShow.id intValue]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        tvShow.videos = mappingResult.array;
+        NSLog(@"MOVIE VIDEO NUMBER: %lu", [tvShow.videos count]);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Could not load movie cast from API!': %@", error);
+    }];
+    
+    [objectRequestOperation start];
+    
+    
+}
+
 
 /*
  * Method that converts inputed month and day into string format.
