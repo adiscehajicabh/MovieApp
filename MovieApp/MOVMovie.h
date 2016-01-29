@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MOVGenre.h"
 
 @interface MOVMovie : NSObject
 
@@ -19,5 +20,7 @@
 @property (nonatomic, strong) NSString *backdrop_path;
 @property (nonatomic, strong) NSString *vote_average;
 @property (nonatomic, strong) NSString *vote_count;
+@property (nonatomic, strong) NSString *runtime;
+@property (nonatomic, strong) NSArray *genres;
 
 @end

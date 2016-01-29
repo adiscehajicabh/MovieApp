@@ -72,6 +72,17 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         // Setting the navbar title.
         self.title = self.movie.title;
         
+        // Setting the movie duration and movie genre.
+        MOVGenre *durationGenre = [self.movie.genres objectAtIndex:0];
+        self.movieDurationGenre.text = durationGenre.name;
+        
+        for (int i = 1; i < [self.movie.genres count]; i++) {
+            durationGenre = [self.movie.genres objectAtIndex:i];
+            self.movieDurationGenre.text = [self.movieDurationGenre.text stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
+        }
+        
+        self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [self convertMinutesIntoHours:self.movie.runtime], self.movieDurationGenre.text];
+        
         [self loadMovieCast:self.movie.id];
     } else {
         self.movieDescription.text = self.serie.overview;
@@ -109,6 +120,27 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         
         // Setting the navbar title.
         self.title = self.serie.name;
+        
+        // Setting the tv show duration and tv show genre.
+        MOVGenre *durationGenre = [self.serie.genres objectAtIndex:0];
+        self.movieDurationGenre.text = durationGenre.name;
+        
+        NSLog(@"=================TV SHOW DURATIONS: %@", self.serie.episode_run_time);
+        
+        for (int i = 1; i < [self.serie.genres count]; i++) {
+            durationGenre = [self.serie.genres objectAtIndex:i];
+            self.movieDurationGenre.text = [self.movieDurationGenre.text stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
+        }
+        
+        NSString *serieDuration = [self.serie.episode_run_time objectAtIndex:0];
+        
+        self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [self convertMinutesIntoHours:serieDuration], self.movieDurationGenre.text];
+        
+        
+        
+        
+        
+        
     
         [self loadTVShowCast:self.serie.id];
     }
@@ -246,6 +278,20 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         }
     }
 
+}
+
+-(NSString *)convertMinutesIntoHours:(NSString *)amount {
+    
+    int minutesAmount = [amount intValue];
+    
+    NSInteger hours = minutesAmount / 60;
+    NSInteger minutes = minutesAmount % 60;
+    
+    if (hours > 0) {
+        return [NSString stringWithFormat:@"%ldh %ldm", hours, minutes];
+    }
+    
+    return [NSString stringWithFormat:@"%ldm", minutes];
 }
 
 //- (void)loadView {

@@ -28,6 +28,10 @@
 @property (nonatomic, strong) NSArray *popularSeries;
 @property (nonatomic, strong) NSArray *movies;
 
+@property (nonatomic, strong) NSArray *selectedMovies;
+@property (nonatomic, strong) NSArray *selectedTvShows;
+
+
 @property (nonatomic, weak) id <MOVHomeTableViewCellDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UICollectionView *movieCollectionView;

@@ -31,7 +31,6 @@
 @property (nonatomic, strong) MOVMovie *selectedMovie;
 @property (nonatomic, strong) MOVTVShow *selectedSerie;
 
-
 @end
 
 @implementation MOVHomeTableViewController
@@ -199,8 +198,9 @@
 }
 
 -(void) addSegueMovie:(MOVMovie *)movie {
+//    [self loadSelectedMovie:movie];
     self.selectedMovie = movie;
-    
+    NSLog(@"======================ADD SEGUEEEEEEEE");
     [self performSegueWithIdentifier:@"movieDetailsSegue" sender:self];
     
 }
@@ -225,7 +225,6 @@
         }
     }
 }
-
 
 /*
  // Override to support conditional editing of the table view.

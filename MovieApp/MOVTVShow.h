@@ -18,5 +18,7 @@
 @property (nonatomic, strong) NSString *backdrop_path;
 @property (nonatomic, strong) NSString *vote_average;
 @property (nonatomic, strong) NSString *vote_count;
+@property (nonatomic, strong) NSArray *genres;
+@property (nonatomic, strong) NSArray *episode_run_time;
 
 @end

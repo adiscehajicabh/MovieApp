@@ -13,6 +13,10 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImageView+WebCache.h"
 #import "MOVMovieDetailsViewController.h"
+#import "MOVMovie.h"
+#import "MOVGenre.h"
+#import <RestKit/RestKit.h>
+
 
 @implementation MOVHomeTableViewCell
 
@@ -54,31 +58,22 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         // Title
         MOVMovie *movie = [movies objectAtIndex:indexPath.row];
         cell.movieTitleCell.text = movie.title;
-
+        
+        [self addMovieDurationAndGenres:movie];
+        
         // Movie poster
         NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, movie.poster_path]];
         [cell.movieImageCell sd_setImageWithURL:url];
         
         // Release date
-//        NSString *dateString = movie.release_date;
-//        NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
-//        [dateFormater setDateFormat:@"yyyy-MM-dd"];
-//        NSDate *dateMovie = [dateFormater dateFromString:dateString];
-//        NSDateComponents *movieDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth |   NSCalendarUnitYear fromDate:dateMovie];
-//        
-//        NSDateFormatter *currentDateFormater =[[NSDateFormatter alloc] init];
-//        [currentDateFormater setDateFormat:@"yyyy-MM-dd"];
-//        NSString *currentDate = [currentDateFormater stringFromDate:[NSDate date]];
-//        NSDateComponents *currentDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth |   NSCalendarUnitYear fromDate:currentDate];
-        
-        
-        
         cell.movieYearCell.text = [self insertMovieDate:movie];
     
     } else {
         // Title
         MOVTVShow *serie = [movies objectAtIndex:indexPath.row];
         cell.movieTitleCell.text = serie.name;
+        
+        [self addTvShowDurationAndGenres:serie];
         
         // Movie poster
         NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, serie.poster_path]];
@@ -106,7 +101,9 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     if ([[self.movies objectAtIndex:indexPath.row] isKindOfClass:[MOVMovie class]]) {
 
         MOVMovie *movie = [self.movies objectAtIndex:indexPath.row];
-    
+
+//        [self loadSelectedMovie:movie];
+
         [self.delegate addSegueMovie:movie];
     } else {
         
@@ -114,6 +111,120 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         
         [self.delegate addSegueSerie:serie];
     }
+}
+
+/*
+ * Updates the inputed movie information. It sets the movie runtime and movie genres.
+ *
+ *
+ */
+-(void)addMovieDurationAndGenres:(MOVMovie *)movie {
+    
+    // Create our new Genre mapping
+    RKObjectMapping *genreMapping = [RKObjectMapping mappingForClass:[MOVGenre class]];
+    
+    [genreMapping addAttributeMappingsFromArray:@[ @"id", @"name" ]];
+    
+    // Configuring the Movie mapping
+    RKObjectMapping *movieMapping = [RKObjectMapping mappingForClass:[MOVMovie class]];
+    [movieMapping addAttributeMappingsFromDictionary:@{
+                                                       @"id" : @"id",
+                                                       @"title" : @"title",
+                                                       @"overview" : @"overview",
+                                                       @"poster_path" : @"poster_path",
+                                                       @"release_date" : @"release_date",
+                                                       @"backdrop_path" : @"backdrop_path",
+                                                       @"vote_average" : @"vote_average",
+                                                       @"vote_count" : @"vote_count",
+                                                       @"runtime": @"runtime",
+                                                       }];
+    
+    // Define the relationship mapping
+    [movieMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"genres"
+                                                                                 toKeyPath:@"genres"
+                                                                               withMapping:genreMapping]];
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping
+                                                                                            method:RKRequestMethodAny
+                                                                                       pathPattern:nil
+                                                                                           keyPath:@""
+                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%d?api_key=34aa7e1baaee7e047801a1a8454587b8", [movie.id intValue]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        self.selectedMovies = mappingResult.array;
+        //[self.movieCastCollectionView reloadData];
+        MOVMovie *clickedMovie = [self.selectedMovies objectAtIndex:0];
+        [movie setRuntime:clickedMovie.runtime];
+        [movie setGenres:clickedMovie.genres];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Could not load movie cast from API!': %@", error);
+    }];
+    
+    [objectRequestOperation start];
+    
+}
+
+/*
+ * Updates the inputed movie information. It sets the movie runtime and movie genres.
+ *
+ *
+ */
+-(void)addTvShowDurationAndGenres:(MOVTVShow *)tvShow {
+    
+    // Create our new Genre mapping
+    RKObjectMapping *genreMapping = [RKObjectMapping mappingForClass:[MOVGenre class]];
+    
+    [genreMapping addAttributeMappingsFromArray:@[ @"id", @"name" ]];
+    
+    RKObjectMapping *durationMapping = [RKObjectMapping mappingForClass:[MOVTVShow class]];
+    [durationMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"episode_run_time"]];
+    
+    RKResponseDescriptor *durationResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:durationMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"episode_run_time" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    [[RKObjectManager sharedManager] addResponseDescriptor:durationResponseDescriptor];
+    
+    // Configuring the Movie mapping
+    RKObjectMapping *tvShowMapping = [RKObjectMapping mappingForClass:[MOVTVShow class]];
+    [tvShowMapping addAttributeMappingsFromDictionary:@{
+                                                       @"id" : @"id",
+                                                       @"name" : @"name",
+                                                       @"overview" : @"overview",
+                                                       @"poster_path" : @"poster_path",
+                                                       @"first_air_date" : @"first_air_date",
+                                                       @"backdrop_path" : @"backdrop_path",
+                                                       @"vote_average" : @"vote_average",
+                                                       @"vote_count" : @"vote_count",
+                                                       }];
+    
+    // Define the relationship mapping
+    [tvShowMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"genres"
+                                                                                 toKeyPath:@"genres"
+                                                                               withMapping:genreMapping]];
+    
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:tvShowMapping
+                                                                                            method:RKRequestMethodAny
+                                                                                       pathPattern:nil
+                                                                                           keyPath:@""
+                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/tv/%d?api_key=34aa7e1baaee7e047801a1a8454587b8", [tvShow.id intValue]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        self.selectedTvShows = mappingResult.array;
+        //[self.movieCastCollectionView reloadData];
+        MOVTVShow *clickedTvShow = [self.selectedTvShows objectAtIndex:0];
+        [tvShow setEpisode_run_time:clickedTvShow.episode_run_time];
+        [tvShow setGenres:clickedTvShow.genres];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Could not load movie cast from API!': %@", error);
+    }];
+    
+    [objectRequestOperation start];
+    
 }
 
 /*
@@ -152,6 +263,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     return dateString;
 }
 
+
 -(NSString *)insertMovieDate:(MOVMovie *)movie {
     
     // Release date
@@ -172,6 +284,10 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         return [NSString stringWithFormat:@"%lu", [movieDateComponents year]];
     } else if (([movieDateComponents year] == [currentDateComponents year]) && ([movieDateComponents month] < [currentDateComponents month])){
         return [NSString stringWithFormat:@"%lu", [movieDateComponents year]];
+    } else if (([movieDateComponents year] == [currentDateComponents year]) && ([movieDateComponents month] == [currentDateComponents month]) && ([movieDateComponents day] < [currentDateComponents day])) {
+        return [NSString stringWithFormat:@"%lu", [movieDateComponents year]];
+    } else if (([movieDateComponents year] == [currentDateComponents year]) && ([movieDateComponents month] == [currentDateComponents month]) && ([movieDateComponents day] == [currentDateComponents day])) {
+        return @"Today";
     } else if (([movieDateComponents year] == [currentDateComponents year]) && ([movieDateComponents month] == [currentDateComponents month])) {
         return [self dateStringFormat:[NSString stringWithFormat:@"%lu", [movieDateComponents day]] month:[NSString stringWithFormat:@"%lu", [movieDateComponents month]]];
     } else if (([movieDateComponents year] >= [currentDateComponents year]) && (([movieDateComponents month] - [currentDateComponents month]) == 1)) {

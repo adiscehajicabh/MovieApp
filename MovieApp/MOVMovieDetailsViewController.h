@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *movieDescription;
 @property (weak, nonatomic) IBOutlet UILabel *movieVoteAverage;
 @property (weak, nonatomic) IBOutlet UILabel *movieVoteCount;
+@property (weak, nonatomic) IBOutlet UILabel *movieDurationGenre;
 
 
 @property (nonatomic, strong) NSArray *movieCast;
