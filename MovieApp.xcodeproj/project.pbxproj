@@ -10,6 +10,13 @@
 		490D09FA1C5B952500D4BDC4 /* MOVDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 490D09F91C5B952500D4BDC4 /* MOVDuration.m */; };
 		490D09FD1C5BB29C00D4BDC4 /* MOVVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490D09FC1C5BB29C00D4BDC4 /* MOVVideoViewController.m */; };
 		490D0A001C5BBCA700D4BDC4 /* MOVVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 490D09FF1C5BBCA700D4BDC4 /* MOVVideo.m */; };
+		49AEBCE51C5F71A100EAC1EB /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AEBCE41C5F71A100EAC1EB /* libc++.1.tbd */; };
+		49AEBCE81C5F74ED00EAC1EB /* MOVMovieRLM.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCE71C5F74ED00EAC1EB /* MOVMovieRLM.m */; };
+		49AEBCEA1C5F95A300EAC1EB /* notliked.png in Resources */ = {isa = PBXBuildFile; fileRef = 49AEBCE91C5F95A300EAC1EB /* notliked.png */; };
+		49AEBCEC1C5F976800EAC1EB /* liked.png in Resources */ = {isa = PBXBuildFile; fileRef = 49AEBCEB1C5F976800EAC1EB /* liked.png */; };
+		49AEBCEF1C5F99AC00EAC1EB /* MOVTVShowRLM.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCEE1C5F99AC00EAC1EB /* MOVTVShowRLM.m */; };
+		49AEBCF21C5FA46300EAC1EB /* MOVFavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCF11C5FA46300EAC1EB /* MOVFavoritesViewController.m */; };
+		49AEBCF51C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCF41C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m */; };
 		6DF117E25A969EE174ACDECB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC6AEB02314E8D590719986 /* libPods.a */; };
 		A002BCE91C597D8E002ADD3F /* MOVActorMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = A002BCE81C597D8E002ADD3F /* MOVActorMovie.m */; };
 		A002BCEC1C5982BD002ADD3F /* MOVActorTVShow.m in Sources */ = {isa = PBXBuildFile; fileRef = A002BCEB1C5982BD002ADD3F /* MOVActorTVShow.m */; };
@@ -47,6 +54,18 @@
 		490D09FC1C5BB29C00D4BDC4 /* MOVVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVVideoViewController.m; sourceTree = "<group>"; };
 		490D09FE1C5BBCA700D4BDC4 /* MOVVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVVideo.h; sourceTree = "<group>"; };
 		490D09FF1C5BBCA700D4BDC4 /* MOVVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVVideo.m; sourceTree = "<group>"; };
+		49AEBCE01C5F5CF800EAC1EB /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		49AEBCE41C5F71A100EAC1EB /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
+		49AEBCE61C5F74ED00EAC1EB /* MOVMovieRLM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVMovieRLM.h; sourceTree = "<group>"; };
+		49AEBCE71C5F74ED00EAC1EB /* MOVMovieRLM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVMovieRLM.m; sourceTree = "<group>"; };
+		49AEBCE91C5F95A300EAC1EB /* notliked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notliked.png; sourceTree = "<group>"; };
+		49AEBCEB1C5F976800EAC1EB /* liked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liked.png; sourceTree = "<group>"; };
+		49AEBCED1C5F99AC00EAC1EB /* MOVTVShowRLM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVTVShowRLM.h; sourceTree = "<group>"; };
+		49AEBCEE1C5F99AC00EAC1EB /* MOVTVShowRLM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVTVShowRLM.m; sourceTree = "<group>"; };
+		49AEBCF01C5FA46300EAC1EB /* MOVFavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVFavoritesViewController.h; sourceTree = "<group>"; };
+		49AEBCF11C5FA46300EAC1EB /* MOVFavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVFavoritesViewController.m; sourceTree = "<group>"; };
+		49AEBCF31C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVFavoritesTableViewCell.h; sourceTree = "<group>"; };
+		49AEBCF41C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVFavoritesTableViewCell.m; sourceTree = "<group>"; };
 		6B7B168CBB829FCCDBBCF53F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6CC6AEB02314E8D590719986 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A002BCE71C597D8E002ADD3F /* MOVActorMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVActorMovie.h; sourceTree = "<group>"; };
@@ -104,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AEBCE51C5F71A100EAC1EB /* libc++.1.tbd in Frameworks */,
 				6DF117E25A969EE174ACDECB /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,6 +143,7 @@
 		9618AFB03547B6E04019F57C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				49AEBCE41C5F71A100EAC1EB /* libc++.1.tbd */,
 				6CC6AEB02314E8D590719986 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -131,6 +152,7 @@
 		A05935081C4FDDC300135575 = {
 			isa = PBXGroup;
 			children = (
+				49AEBCE01C5F5CF800EAC1EB /* Realm.framework */,
 				A05935131C4FDDC300135575 /* MovieApp */,
 				A05935121C4FDDC300135575 /* Products */,
 				8EA4697D3453783306463552 /* Pods */,
@@ -171,6 +193,12 @@
 				A0EAA8691C59232D00FE2A10 /* MOVActorMovieCollectionViewCell.m */,
 				A002BCED1C598592002ADD3F /* MOVActorTVShowCollectionViewCell.h */,
 				A002BCEE1C598592002ADD3F /* MOVActorTVShowCollectionViewCell.m */,
+				490D09FB1C5BB29C00D4BDC4 /* MOVVideoViewController.h */,
+				490D09FC1C5BB29C00D4BDC4 /* MOVVideoViewController.m */,
+				49AEBCF01C5FA46300EAC1EB /* MOVFavoritesViewController.h */,
+				49AEBCF11C5FA46300EAC1EB /* MOVFavoritesViewController.m */,
+				49AEBCF31C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.h */,
+				49AEBCF41C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m */,
 				A05935141C4FDDC300135575 /* Supporting Files */,
 				A059353D1C5116CF00135575 /* MOVMovie.h */,
 				A059353E1C5116CF00135575 /* MOVMovie.m */,
@@ -192,10 +220,12 @@
 				A0EAED1B1C5AE0E500BAA8C8 /* MOVGenre.m */,
 				490D09F81C5B952500D4BDC4 /* MOVDuration.h */,
 				490D09F91C5B952500D4BDC4 /* MOVDuration.m */,
-				490D09FB1C5BB29C00D4BDC4 /* MOVVideoViewController.h */,
-				490D09FC1C5BB29C00D4BDC4 /* MOVVideoViewController.m */,
 				490D09FE1C5BBCA700D4BDC4 /* MOVVideo.h */,
 				490D09FF1C5BBCA700D4BDC4 /* MOVVideo.m */,
+				49AEBCE61C5F74ED00EAC1EB /* MOVMovieRLM.h */,
+				49AEBCE71C5F74ED00EAC1EB /* MOVMovieRLM.m */,
+				49AEBCED1C5F99AC00EAC1EB /* MOVTVShowRLM.h */,
+				49AEBCEE1C5F99AC00EAC1EB /* MOVTVShowRLM.m */,
 			);
 			path = MovieApp;
 			sourceTree = "<group>";
@@ -203,6 +233,8 @@
 		A05935141C4FDDC300135575 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				49AEBCEB1C5F976800EAC1EB /* liked.png */,
+				49AEBCE91C5F95A300EAC1EB /* notliked.png */,
 				A0E7BFDB1C5A3FFC00EA94CC /* forward.png */,
 				A0E7BFD91C5A354800EA94CC /* movie_transparent.png */,
 				A0EC8AA71C5551D000EA77F4 /* movies.png */,
@@ -275,10 +307,12 @@
 			files = (
 				A0EC8AAA1C5551D000EA77F4 /* movies.png in Resources */,
 				A0E7BFDA1C5A354800EA94CC /* movie_transparent.png in Resources */,
+				49AEBCEA1C5F95A300EAC1EB /* notliked.png in Resources */,
 				A0EC8AAC1C5551D000EA77F4 /* favorites.png in Resources */,
 				A0E7BFDC1C5A3FFC00EA94CC /* forward.png in Resources */,
 				A0EC8AAB1C5551D000EA77F4 /* account.png in Resources */,
 				A05935241C4FDDC300135575 /* LaunchScreen.storyboard in Resources */,
+				49AEBCEC1C5F976800EAC1EB /* liked.png in Resources */,
 				A05935211C4FDDC300135575 /* Assets.xcassets in Resources */,
 				A059351F1C4FDDC300135575 /* Main.storyboard in Resources */,
 			);
@@ -340,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A002BCEC1C5982BD002ADD3F /* MOVActorTVShow.m in Sources */,
+				49AEBCF21C5FA46300EAC1EB /* MOVFavoritesViewController.m in Sources */,
 				A0E80A0B1C56DDD800FA8E8D /* MOVActor.m in Sources */,
 				A002BCEF1C598592002ADD3F /* MOVActorTVShowCollectionViewCell.m in Sources */,
 				A059353F1C5116CF00135575 /* MOVMovie.m in Sources */,
@@ -347,9 +382,12 @@
 				A05935191C4FDDC300135575 /* AppDelegate.m in Sources */,
 				490D0A001C5BBCA700D4BDC4 /* MOVVideo.m in Sources */,
 				A0EC8A9E1C54F18300EA77F4 /* MOVTVShow.m in Sources */,
+				49AEBCE81C5F74ED00EAC1EB /* MOVMovieRLM.m in Sources */,
+				49AEBCEF1C5F99AC00EAC1EB /* MOVTVShowRLM.m in Sources */,
 				A0EAA8671C58E40200FE2A10 /* MOVActorImage.m in Sources */,
 				A002BCE91C597D8E002ADD3F /* MOVActorMovie.m in Sources */,
 				A0EC8AAF1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m in Sources */,
+				49AEBCF51C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m in Sources */,
 				A059352D1C4FDE7100135575 /* MOVHomeTableViewController.m in Sources */,
 				A0EAED1C1C5AE0E500BAA8C8 /* MOVGenre.m in Sources */,
 				A0E4EC311C57B6360034C151 /* MOVActorDetailsViewController.m in Sources */,
@@ -471,6 +509,10 @@
 			baseConfigurationReference = BB6730FFB68930CD780B1AD8 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
 					"\"${PODS_ROOT}/Headers/Public\"/**",
@@ -517,6 +559,10 @@
 			baseConfigurationReference = 6B7B168CBB829FCCDBBCF53F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
 					"\"${PODS_ROOT}/Headers/Public\"/**",

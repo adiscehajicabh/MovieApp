@@ -36,7 +36,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="8Jb-ls-5hr" kind="relationship" relationship="viewControllers" id="egw-Kd-KLe"/>
-                        <segue destination="hvW-zp-Pgm" kind="relationship" relationship="viewControllers" id="orC-V1-rTU"/>
+                        <segue destination="nhw-XC-8wZ" kind="relationship" relationship="viewControllers" id="orC-V1-rTU"/>
                         <segue destination="HWH-B8-tVV" kind="relationship" relationship="viewControllers" id="nb8-Fd-lsP"/>
                     </connections>
                 </tabBarController>
@@ -44,10 +44,10 @@
             </objects>
             <point key="canvasLocation" x="978" y="-856"/>
         </scene>
-        <!--Favorites-->
+        <!--Favorites View Controller-->
         <scene sceneID="vdU-eu-tH9">
             <objects>
-                <viewController id="hvW-zp-Pgm" sceneMemberID="viewController">
+                <viewController id="hvW-zp-Pgm" customClass="MOVFavoritesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Lq5-NJ-2M2"/>
                         <viewControllerLayoutGuide type="bottom" id="KpW-hd-Iqi"/>
@@ -55,13 +55,71 @@
                     <view key="view" contentMode="scaleToFill" id="vqc-tc-tcI">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="114" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2CB-bg-Psk">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoritesTableCell" rowHeight="114" id="kLC-K6-oqK" customClass="MOVFavoritesTableViewCell">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="114"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kLC-K6-oqK" id="Hdz-IO-6OZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="113.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uLs-Gc-b85">
+                                                    <rect key="frame" x="8" y="7" width="67" height="100"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RU3-Cf-ELG">
+                                                    <rect key="frame" x="83" y="11" width="509" height="30"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYf-si-N4c">
+                                                    <rect key="frame" x="83" y="43" width="155" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0y-Tc-EbV">
+                                                    <rect key="frame" x="83" y="72" width="96" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="favoritesDuration" destination="LYf-si-N4c" id="ivV-nh-vuH"/>
+                                            <outlet property="favoritesImage" destination="uLs-Gc-b85" id="Shq-cn-N48"/>
+                                            <outlet property="favoritesRaiting" destination="Q0y-Tc-EbV" id="bge-eO-MWJ"/>
+                                            <outlet property="favoritesTitle" destination="RU3-Cf-ELG" id="YrB-YW-zGs"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="hvW-zp-Pgm" id="uoS-jG-f41"/>
+                                    <outlet property="delegate" destination="hvW-zp-Pgm" id="R1B-wY-XQk"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2CB-bg-Psk" firstAttribute="leading" secondItem="vqc-tc-tcI" secondAttribute="leadingMargin" constant="-20" id="6Tx-ft-vLd"/>
+                            <constraint firstItem="2CB-bg-Psk" firstAttribute="top" secondItem="vqc-tc-tcI" secondAttribute="topMargin" id="la5-4t-cyi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2CB-bg-Psk" secondAttribute="trailing" constant="-20" id="uaE-h7-ggd"/>
+                            <constraint firstItem="KpW-hd-Iqi" firstAttribute="top" secondItem="2CB-bg-Psk" secondAttribute="bottom" id="vhR-tb-63N"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Favorites" image="favorites.png" selectedImage="favorites.png" id="eK3-ck-XEJ"/>
+                    <navigationItem key="navigationItem" id="3Uf-Qe-h1N"/>
+                    <connections>
+                        <outlet property="favoritesTable" destination="2CB-bg-Psk" id="5LD-Qb-UQd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSA-fF-1l0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1712" y="-828.99999999999989"/>
+            <point key="canvasLocation" x="2524" y="-829"/>
         </scene>
         <!--Feed-->
         <scene sceneID="g1l-y7-9BQ">
@@ -195,17 +253,25 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="PlO-Ea-ndg">
-                                                            <rect key="frame" x="8" y="4" width="359" height="28"/>
+                                                            <rect key="frame" x="47" y="4" width="320" height="28"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKH-4a-oxC">
-                                                            <rect key="frame" x="8" y="26" width="359" height="21"/>
+                                                            <rect key="frame" x="47" y="26" width="320" height="21"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tA2-up-Hxp">
+                                                            <rect key="frame" x="0.0" y="-1.5" width="50" height="50"/>
+                                                            <inset key="imageEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
+                                                            <state key="normal" image="notliked.png"/>
+                                                            <connections>
+                                                                <action selector="addToFavorites" destination="0OT-8p-yVo" eventType="touchUpInside" id="63c-Dn-2UM"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                 </view>
                                                 <blurEffect style="light"/>
@@ -335,16 +401,6 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcN-2G-c5Q">
-                                                <rect key="frame" x="332" y="349" width="35" height="30"/>
-                                                <state key="normal" image="forward.png">
-                                                    <color key="titleColor" red="0.87960160340000004" green="0.87960160340000004" blue="0.87960160340000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="gsZ-17-Ika" kind="show" identifier="movieVideoSegue" id="DjY-tw-efu"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPG-tj-I5P">
                                                 <rect key="frame" x="8" y="469" width="109" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -357,6 +413,18 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcN-2G-c5Q">
+                                                <rect key="frame" x="335" y="344" width="40" height="40"/>
+                                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                                <state key="normal" image="forward.png">
+                                                    <color key="titleColor" red="0.87960160340000004" green="0.87960160340000004" blue="0.87960160340000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="gsZ-17-Ika" kind="show" identifier="movieVideoSegue" id="DjY-tw-efu"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
@@ -382,6 +450,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="1100"/>
                     <connections>
+                        <outlet property="favoritesButton" destination="tA2-up-Hxp" id="Qkx-Pt-YAY"/>
                         <outlet property="movieCastCollectionView" destination="Hkk-fi-us0" id="T3H-f5-lCL"/>
                         <outlet property="movieDescription" destination="RI3-xW-Lpt" id="CTv-3O-82Z"/>
                         <outlet property="movieDurationGenre" destination="bKH-4a-oxC" id="YF7-K1-k23"/>
@@ -428,7 +497,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2JU-fl-vJh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2997" y="-640"/>
+            <point key="canvasLocation" x="3809" y="-640"/>
         </scene>
         <!--Actor Details View Controller-->
         <scene sceneID="foz-MG-QWV">
@@ -653,6 +722,25 @@
             </objects>
             <point key="canvasLocation" x="334" y="354"/>
         </scene>
+        <!--Favorites-->
+        <scene sceneID="ykn-In-fc5">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nhw-XC-8wZ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Favorites" image="favorites.png" selectedImage="favorites.png" id="eK3-ck-XEJ"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tlK-xx-eAa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hvW-zp-Pgm" kind="relationship" relationship="rootViewController" id="h6s-rc-cs4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Abo-Zt-hNM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1712" y="-829"/>
+        </scene>
     </scenes>
     <resources>
         <image name="account.png" width="30" height="30"/>
@@ -660,5 +748,6 @@
         <image name="forward.png" width="50" height="50"/>
         <image name="movie_transparent.png" width="50" height="50"/>
         <image name="movies.png" width="30" height="30"/>
+        <image name="notliked.png" width="50" height="50"/>
     </resources>
 </document>

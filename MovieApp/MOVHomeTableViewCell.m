@@ -367,7 +367,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         return [NSString stringWithFormat:@"%lu", [movieDateComponents year]];
     } else if (([movieDateComponents year] == [currentDateComponents year]) && ([movieDateComponents month] == [currentDateComponents month]) && ([movieDateComponents day] == [currentDateComponents day])) {
         return @"Today";
-    } else if (([movieDateComponents year] == [currentDateComponents year]) && ([movieDateComponents month] == [currentDateComponents month])) {
+    } else if (([movieDateComponents year] == [currentDateComponents year]) && ([movieDateComponents month] == [currentDateComponents month]) && ([movieDateComponents day] > [currentDateComponents day])) {
         return [self dateStringFormat:[NSString stringWithFormat:@"%lu", [movieDateComponents day]] month:[NSString stringWithFormat:@"%lu", [movieDateComponents month]]];
     } else if (([movieDateComponents year] >= [currentDateComponents year]) && (([movieDateComponents month] - [currentDateComponents month]) == 1)) {
         return @"Next month";

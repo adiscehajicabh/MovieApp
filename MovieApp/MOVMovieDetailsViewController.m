@@ -19,9 +19,20 @@
 #import "MOVActorDetailsViewController.h"
 #import "MOVVideoViewController.h"
 #import "MOVVideo.h"
+#import "MOVMovieRLM.h"
+#import "MOVTVShowRLM.h"
+#import <Realm/Realm.h>
+
 
 
 @interface MOVMovieDetailsViewController ()
+
+{
+    RLMResults *savedMovies;
+    RLMResults *realmMovie;
+    RLMResults *realmTvShow;
+
+}
 
 @end
 
@@ -35,7 +46,9 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-       
+    
+    [self checkIfTheMovieIsFavorite];
+    
     // Checking if the selected object from categories is movie or tv show.
     if ([self.movie isKindOfClass:[MOVMovie class]]) {
         
@@ -276,7 +289,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             actorController.moviePoster = self.serie.backdrop_path;
         }
     }
-    
+    // Finds the trailer video from the seleted movie or tv show and opens it into the new view controller.
     if ([segue.identifier isEqualToString:@"movieVideoSegue"]) {
         
         
@@ -311,6 +324,113 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
     }
     
     return [NSString stringWithFormat:@"%ldm", minutes];
+}
+
+/*
+ * Saves the information about opened movie or tv show into database and changes the image of the clicked favorite button.
+ * If the movie or tv show is already favorite movie or tv show, it changes the favorite button image to transparent image, 
+ * and if the movie or tv show is not in favorites it changes the favorite button image to red image.
+ */
+-(void)addToFavorites {
+    
+    if ([self.movie isKindOfClass:[MOVMovie class]]) {
+
+        realmMovie = [MOVMovieRLM objectsWhere:@"id = %@", self.movie.id];
+
+        if ([realmMovie count] == 0) {
+        
+            // Saving the movie into database.
+            RLMRealm *realm = [RLMRealm defaultRealm];
+            [realm beginWriteTransaction];
+            MOVMovieRLM *movieRLM = [[MOVMovieRLM alloc] init];
+            movieRLM.id = self.movie.id;
+            movieRLM.title = self.movie.title;
+            movieRLM.overview = self.movie.overview;
+            movieRLM.poster_path = self.movie.poster_path;
+            movieRLM.release_date = self.movie.release_date;
+            movieRLM.backdrop_path = self.movie.backdrop_path;
+            movieRLM.vote_average = self.movie.vote_average;
+            movieRLM.vote_count = self.movie.vote_count;
+            [realm addObject:movieRLM];
+            [realm commitWriteTransaction];
+        
+            [self changeFavoriteButtonState:@"liked.png"];
+            
+        } else {
+            // Delete the movie information from database.
+            [[RLMRealm defaultRealm] beginWriteTransaction];
+            [[RLMRealm defaultRealm]deleteObject:[realmMovie firstObject]];
+            [[RLMRealm defaultRealm] commitWriteTransaction];
+
+            [self changeFavoriteButtonState:@"notliked.png"];
+
+        }
+    } else {
+        
+        realmTvShow = [MOVTVShowRLM objectsWhere:@"id = %@", self.serie.id];
+
+        if ([realmTvShow count] == 0) {
+            
+            // Saving the tv show into database.
+            RLMRealm *realm = [RLMRealm defaultRealm];
+            [realm beginWriteTransaction];
+            MOVTVShowRLM *tvShowRLM = [[MOVTVShowRLM alloc] init];
+            tvShowRLM.id = self.serie.id;
+            tvShowRLM.name = self.serie.name;
+            tvShowRLM.overview = self.serie.overview;
+            tvShowRLM.poster_path = self.serie.poster_path;
+            tvShowRLM.first_air_date = self.serie.first_air_date;
+            tvShowRLM.backdrop_path = self.serie.backdrop_path;
+            tvShowRLM.vote_average = self.serie.vote_average;
+            tvShowRLM.vote_count = self.serie.vote_count;
+            [realm addObject:tvShowRLM];
+            [realm commitWriteTransaction];
+            
+            [self changeFavoriteButtonState:@"liked.png"];
+            
+        } else {
+            // Deleting the tv show from database.
+            [[RLMRealm defaultRealm] beginWriteTransaction];
+            [[RLMRealm defaultRealm]deleteObject:[realmTvShow firstObject]];
+            [[RLMRealm defaultRealm] commitWriteTransaction];
+            
+            [self changeFavoriteButtonState:@"notliked.png"];
+            
+        }
+    }
+
+    
+}
+
+/*
+ * First checks if the selected object is movie or tv show and then checks if the database contains the object with selected id 
+ * and sets the favorite button image according with the database state.
+ */
+-(void)checkIfTheMovieIsFavorite {
+    
+    if ([self.movie isKindOfClass:[MOVMovie class]]) {
+        
+        realmMovie = [MOVMovieRLM objectsWhere:@"id = %@", self.movie.id];
+        
+        if ([realmMovie count] > 0) {
+            [self changeFavoriteButtonState:@"liked.png"];
+        }
+    } else {
+        
+        realmTvShow = [MOVTVShowRLM objectsWhere:@"id = %@", self.serie.id];
+        
+        if ([realmTvShow count] > 0) {
+            [self changeFavoriteButtonState:@"liked.png"];
+        }
+    }
+}
+
+/*
+ * Sets the image of the favorite button to the inputed image.
+ */
+-(void)changeFavoriteButtonState:(NSString *)imageName {
+    UIImage *btnImage = [UIImage imageNamed:imageName];
+    [self.favoritesButton setImage:btnImage forState:UIControlStateNormal];
 }
 
 //- (void)loadView {

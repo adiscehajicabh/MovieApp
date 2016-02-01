@@ -36,7 +36,8 @@
 
 @property (nonatomic, strong) NSArray *actorArray;
 @property (nonatomic, strong) MOVActor *actor;
+@property (weak, nonatomic) IBOutlet UIButton *favoritesButton;
 
-//-(IBAction)openMovieVideo;
+-(IBAction)addToFavorites;
 
 @end

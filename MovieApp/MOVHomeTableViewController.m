@@ -23,21 +23,13 @@
     NSMutableDictionary *movies;
 }
 
-@property (nonatomic, strong) NSArray *topRatedMovies;
-@property (nonatomic, strong) NSArray *popularMovies;
-@property (nonatomic, strong) NSArray *upcomingMovies;
-@property (nonatomic, strong) NSArray *topRatedSeries;
-@property (nonatomic, strong) NSArray *popularSeries;
-@property (nonatomic, strong) MOVMovie *selectedMovie;
-@property (nonatomic, strong) MOVTVShow *selectedSerie;
-
 @end
 
 @implementation MOVHomeTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -51,12 +43,15 @@
     // Setting the color of the status bar to the white.
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 
-    //Add lines for RestKit
+    // Calling methods for mapping.
     [self configureRestKit];
     [self loadMoviesAndSeries];
 
 }
 
+/*
+ * Maps the movie and tv show object and connects them to the url path of the API.
+ */
 - (void)configureRestKit{
     
     // Initialize AFNetworking HTTPClient
@@ -66,7 +61,8 @@
     // Initialize RestKit
     RKObjectManager *objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
     
-    // Setup object mappings for movies
+    
+    // Setup object mappings for movies.
     RKObjectMapping *movieMapping = [RKObjectMapping mappingForClass:[MOVMovie class]];
     [movieMapping addAttributeMappingsFromArray:@[@"id", @"title", @"overview", @"poster_path", @"release_date", @"backdrop_path", @"vote_average", @"vote_count"]];
     
@@ -80,7 +76,8 @@
     RKResponseDescriptor *responseDescriptorUpcomingMovies = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:@"/3/movie/upcoming" keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     [objectManager addResponseDescriptor:responseDescriptorUpcomingMovies];
 
-    // Setup object mappings for series
+    
+    // Setup object mappings for tv shows.
     RKObjectMapping *seriesMapping = [RKObjectMapping mappingForClass:[MOVTVShow class]];
     [seriesMapping addAttributeMappingsFromArray:@[@"id", @"name", @"overview", @"poster_path", @"first_air_date", @"release_date", @"backdrop_path", @"vote_average", @"vote_count"]];
     
@@ -92,6 +89,9 @@
     
 }
 
+/*
+ * Connects the movie and tv show models with API and stores the results into array.
+ */
 - (void) loadMoviesAndSeries {
     
     
@@ -100,6 +100,7 @@
     NSDictionary *queryParams = @{@"api_key" : API_KEY};
     
 //    [self mapMoviesFromAPI:@"/3/movie/top_rated" parameters:queryParams moviesArray:&(self.topRatedMovies) moviesKey:[categories objectAtIndex:0]];
+    
     
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/3/movie/top_rated" parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -153,7 +154,7 @@
 }
 
 
-//-(void)mapMoviesFromAPI:(NSString *)urlPath parameters:(NSDictionary *)queryParams moviesArray:(NSArray *__autoreleasing*)moviesCategory moviesKey:(NSString *)moviesKey {
+//-(void)mapMoviesFromAPI:(NSString *)urlPath parameters:(NSDictionary *)queryParams moviesArray:(NSArray **)moviesCategory moviesKey:(NSString *)moviesKey {
 //    [[RKObjectManager sharedManager] getObjectsAtPath:urlPath parameters:queryParams
 //                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
 //                                                  *moviesCategory = mappingResult.array;
@@ -197,14 +198,18 @@
     return cell;
 }
 
+/*
+ * Adds the segue for selected collection cell that contains movie.
+ */
 -(void) addSegueMovie:(MOVMovie *)movie {
-//    [self loadSelectedMovie:movie];
     self.selectedMovie = movie;
-    NSLog(@"======================ADD SEGUEEEEEEEE");
     [self performSegueWithIdentifier:@"movieDetailsSegue" sender:self];
     
 }
 
+/*
+ * Adds the segue for selected collection cell that contains tv show.
+ */
 -(void) addSegueSerie:(MOVTVShow *)serie {
     self.selectedSerie = serie;
     
