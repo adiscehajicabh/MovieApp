@@ -20,7 +20,6 @@
     // Override point for customization after application launch.
     
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
-//    [[UINavigationBar appearance] setTitleTextAttributes::[UIColor whiteColor]];
 
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowColor = [UIColor blackColor];

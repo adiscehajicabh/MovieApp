@@ -18,10 +18,10 @@
 @property NSString *backdrop_path;
 @property NSString *vote_average;
 @property NSString *vote_count;
+@property NSString *genres;
+@property NSString *episode_run_time;
 
-//@property NSArray *genres;
-//@property NSArray *episode_run_time;
-//@property NSArray *videos;
+-(NSAttributedString *)setTVShowTitleAndYear:(MOVTVShowRLM *)tvShow;
 
 @end
 

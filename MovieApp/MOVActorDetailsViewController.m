@@ -17,6 +17,7 @@
 #import "MOVActorTVShow.h"
 #import "MOVActorMovieCollectionViewCell.h"
 #import "MOVActorTVShowCollectionViewCell.h"
+#import "MOVConstants.h"
 
 @interface MOVActorDetailsViewController ()
 
@@ -24,9 +25,6 @@
 
 @implementation MOVActorDetailsViewController
 
-static NSString * const URL_BASE_IMG = @"http://image.tmdb.org/t/p/";
-static NSString * const POSTER_SIZE_W1280 = @"w1280";
-static NSString * const IMAGE_SIZE_W92 = @"w92";
 static NSString * const movieIdentifier = @"ActorMovieCollectionCell";
 static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
 

@@ -22,8 +22,7 @@
 #import "MOVMovieRLM.h"
 #import "MOVTVShowRLM.h"
 #import <Realm/Realm.h>
-
-
+#import "MOVConstants.h"
 
 @interface MOVMovieDetailsViewController ()
 
@@ -31,21 +30,20 @@
     RLMResults *savedMovies;
     RLMResults *realmMovie;
     RLMResults *realmTvShow;
-
 }
 
 @end
 
 @implementation MOVMovieDetailsViewController
 
-static NSString * const URL_BASE_IMG = @"http://image.tmdb.org/t/p/";
-static NSString * const POSTER_SIZE_W720 = @"w1280";
-static NSString * const IMAGE_SIZE_W92 = @"w92";
 static NSString * const reuseIdentifier = @"MovieActorCell";
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Clears all from Realm DB.
+//    [[NSFileManager defaultManager] removeItemAtPath:[[RLMRealmConfiguration defaultConfiguration] path] error:nil];
     
     [self checkIfTheMovieIsFavorite];
     
@@ -56,102 +54,121 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
         self.movieDescription.text = self.movie.overview;
     
-        // Movie image
-        NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.movie.poster_path]];
-        [self.movieImage sd_setImageWithURL:urlImage];
-        // Movie poster
-        NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W720, self.movie.backdrop_path]];
-        [self.moviePoster sd_setImageWithURL:urlPoster];
+        // Checking does the movie has the image.
+        if (self.movie.poster_path != nil) {
+            
+            // Movie image
+            NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.movie.poster_path]];
+            [self.movieImage sd_setImageWithURL:urlImage];
         
-        // Release date
-        NSString *dateString = self.movie.release_date;
-        NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
-        [dateFormater setDateFormat:@"yyyy-MM-dd"];
-        NSDate *date = [dateFormater dateFromString:dateString];
-        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
-    
-        // Setting the name of the movie and the year of the movie with different fonts.
-        UIFont *helveticaFontTitle = [UIFont fontWithName:@"helvetica neue" size:17.0];
-        UIFont *helveticaFontYear = [UIFont fontWithName:@"helvetica neue" size:13.0];
+        } else {
+            
+            UIImage *movImage = [UIImage imageNamed:@"movie_placeholder.png"];
+            self.movieImage.image = movImage;
 
-        NSDictionary *helveticaDictTitle = [NSDictionary dictionaryWithObject: helveticaFontTitle forKey:NSFontAttributeName];
-        NSMutableAttributedString *movieTitleString = [[NSMutableAttributedString alloc] initWithString:self.movie.title attributes: helveticaDictTitle];
+        }
         
-        NSDictionary *helveticaDictYear = [NSDictionary dictionaryWithObject:helveticaFontYear forKey:NSFontAttributeName];
-        NSMutableAttributedString *movieYearString = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@" (%lu)", [components year]] attributes:helveticaDictYear];
+        // Checking does the movie has the poster.
+        if (self.movie.backdrop_path != nil) {
+            
+            // Movie poster
+            NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, self.movie.backdrop_path]];
+            [self.moviePoster sd_setImageWithURL:urlPoster];
         
-        [movieTitleString appendAttributedString:movieYearString];
+        } else {
+            
+            UIImage *movPoster = [UIImage imageNamed:@"movieposter_placeholder1.png"];
+            self.moviePoster.image = movPoster;
+            
+        }
         
-        self.movieTitle.attributedText = movieTitleString;
+        // Setting the name of the movie and the year of the movie with different fonts.
+        self.movieTitle.attributedText = (NSAttributedString *)[self.movie setMovieTitleAndYear:self.movie];
         
+        // Setting the average movie rating and number of votes.
         self.movieVoteAverage.text = [NSString stringWithFormat:@"%.1f", [self.movie.vote_average floatValue]];
         self.movieVoteCount.text = self.movie.vote_count;
         
         // Setting the navbar title.
         self.title = self.movie.title;
         
-        // Setting the movie duration and movie genre.
-        MOVGenre *durationGenre = [self.movie.genres objectAtIndex:0];
-        self.movieDurationGenre.text = durationGenre.name;
-        
-        for (int i = 1; i < [self.movie.genres count]; i++) {
-            durationGenre = [self.movie.genres objectAtIndex:i];
-            self.movieDurationGenre.text = [self.movieDurationGenre.text stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
+        // Checking does the movie has genres.
+        if ([self.movie.genres count] > 0) {
+            
+            // Setting the genres of the movie
+            MOVGenre *durationGenre = [self.movie.genres objectAtIndex:0];
+            self.movieDurationGenre.text = durationGenre.name;
+            
+            for (int i = 1; i < [self.movie.genres count]; i++) {
+                durationGenre = [self.movie.genres objectAtIndex:i];
+                self.movieDurationGenre.text = [self.movieDurationGenre.text stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
+            }
         }
         
+        // Setting the duration of the movie.
         self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [self convertMinutesIntoHours:self.movie.runtime], self.movieDurationGenre.text];
         
         [self loadMovieCast:self.movie.id];
     } else {
         
-        NSLog(@"==================SERIE ID: %@", self.serie.id);
-        
         self.movieDescription.text = self.serie.overview;
         
-        // Movie image
-        NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.serie.poster_path]];
-        [self.movieImage sd_setImageWithURL:urlImage];
-        // Movie poster
-        NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W720, self.serie.backdrop_path]];
-        [self.moviePoster sd_setImageWithURL:urlPoster];
-                
-        // Release date
-        NSString *dateString = self.serie.first_air_date;
-        NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
-        [dateFormater setDateFormat:@"yyyy-MM-dd"];
-        NSDate *date = [dateFormater dateFromString:dateString];
-        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
+        // Checking does the tv show has image.
+        if (self.serie.poster_path != nil) {
+            
+            // Tv show image
+            NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.serie.poster_path]];
+            [self.movieImage sd_setImageWithURL:urlImage];
+        
+        } else {
+            
+            UIImage *tvImage = [UIImage imageNamed:@"movie_placeholder.png"];
+            self.movieImage.image = tvImage;
+            
+        }
+        
+        // Checking does the tv show has poster.
+        if (self.serie.backdrop_path != nil) {
+            
+            // Tv show poster
+            NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, self.serie.backdrop_path]];
+            [self.moviePoster sd_setImageWithURL:urlPoster];
+        
+        } else {
+            
+            UIImage *tvPoster = [UIImage imageNamed:@"movieposter_placeholder1.png"];
+            self.moviePoster.image = tvPoster;
+            
+        }
 
+        
         // Setting the name of the tv show and the year of the tv show with different fonts.
-        UIFont *helveticaFontTitle = [UIFont fontWithName:@"helvetica neue" size:17.0];
-        UIFont *helveticaFontYear = [UIFont fontWithName:@"helvetica neue" size:13.0];
+        self.movieTitle.attributedText = [self.serie setTVShowTitleAndYear:self.serie];
         
-        NSDictionary *helveticaDictTitle = [NSDictionary dictionaryWithObject: helveticaFontTitle forKey:NSFontAttributeName];
-        NSMutableAttributedString *movieTitleString = [[NSMutableAttributedString alloc] initWithString:self.serie.name attributes: helveticaDictTitle];
-        
-        NSDictionary *helveticaDictYear = [NSDictionary dictionaryWithObject:helveticaFontYear forKey:NSFontAttributeName];
-        NSMutableAttributedString *movieYearString = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@" (%lu)", [components year]] attributes:helveticaDictYear];
-        
-        [movieTitleString appendAttributedString:movieYearString];
-        
-        self.movieTitle.attributedText = movieTitleString;
-        
+        // Setting the average tv show rating and number of votes.
         self.movieVoteAverage.text = [NSString stringWithFormat:@"%.1f", [self.serie.vote_average floatValue]];
         self.movieVoteCount.text = self.serie.vote_count;
         
         // Setting the navbar title.
         self.title = self.serie.name;
         
-        // Setting the tv show duration and tv show genre.
-        MOVGenre *durationGenre = [self.serie.genres objectAtIndex:0];
-        MOVDuration *serieDuration = [self.serie.episode_run_time objectAtIndex:0];
-        self.movieDurationGenre.text = durationGenre.name;
-        
-        for (int i = 1; i < [self.serie.genres count]; i++) {
-            durationGenre = [self.serie.genres objectAtIndex:i];
-            self.movieDurationGenre.text = [self.movieDurationGenre.text stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
+        // Checking does the tv show has genres.
+        if ([self.serie.genres count] > 0) {
+            
+            // Setting the tv show duration and tv show genre.
+            MOVGenre *durationGenre = [self.serie.genres objectAtIndex:0];
+            self.movieDurationGenre.text = durationGenre.name;
+            
+            // Setting the genres of the tv show.
+            for (int i = 1; i < [self.serie.genres count]; i++) {
+                durationGenre = [self.serie.genres objectAtIndex:i];
+                self.movieDurationGenre.text = [self.movieDurationGenre.text stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
+            }
         }
         
+        MOVDuration *serieDuration = [self.serie.episode_run_time objectAtIndex:0];
+
+        // Setting the duration of the tv show.
         self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [self convertMinutesIntoHours:serieDuration.duration], self.movieDurationGenre.text];
     
         [self loadTVShowCast:self.serie.id];
@@ -242,8 +259,13 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         MOVMovieCast *movieActor = [self.movieCast objectAtIndex:indexPath.row];
         cell.movieActorName.text = movieActor.name;
     
-        NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, movieActor.profile_path]];
-        [cell.movieActorImage sd_setImageWithURL:urlImage];
+        if (movieActor.profile_path != nil) {
+            NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, movieActor.profile_path]];
+            [cell.movieActorImage sd_setImageWithURL:urlImage];
+        } else {
+            UIImage *actorImage = [UIImage imageNamed:@"movieperson_placeholder.png"];
+            cell.movieActorImage.image = actorImage;
+        }
         
     } else {
         
@@ -251,10 +273,15 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
         cell.movieActorName.text = tvShowActor.name;
         
-        NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, tvShowActor.profile_path]];
-        [cell.movieActorImage sd_setImageWithURL:urlImage];
+        if (tvShowActor.profile_path != nil) {
+            NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, tvShowActor.profile_path]];
+            [cell.movieActorImage sd_setImageWithURL:urlImage];
+        } else {
+            UIImage *actorImage = [UIImage imageNamed:@"movieperson_placeholder.png"];
+            cell.movieActorImage.image = actorImage;
+        }
     }
-    
+
     cell.movieActorImage.layer.cornerRadius = 5;
     cell.movieActorImage.layer.masksToBounds = YES;
     
@@ -337,6 +364,9 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
         realmMovie = [MOVMovieRLM objectsWhere:@"id = %@", self.movie.id];
 
+        MOVGenre *durationGenre = [self.movie.genres objectAtIndex:0];
+
+        
         if ([realmMovie count] == 0) {
         
             // Saving the movie into database.
@@ -351,6 +381,8 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             movieRLM.backdrop_path = self.movie.backdrop_path;
             movieRLM.vote_average = self.movie.vote_average;
             movieRLM.vote_count = self.movie.vote_count;
+            movieRLM.runtime = [self convertMinutesIntoHours:self.movie.runtime];
+            movieRLM.genres = [movieRLM.genres stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
             [realm addObject:movieRLM];
             [realm commitWriteTransaction];
         
@@ -369,6 +401,9 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         
         realmTvShow = [MOVTVShowRLM objectsWhere:@"id = %@", self.serie.id];
 
+        MOVGenre *durationGenre = [self.serie.genres objectAtIndex:0];
+        MOVDuration *serieDuration = [self.serie.episode_run_time objectAtIndex:0];
+        
         if ([realmTvShow count] == 0) {
             
             // Saving the tv show into database.
@@ -383,6 +418,8 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             tvShowRLM.backdrop_path = self.serie.backdrop_path;
             tvShowRLM.vote_average = self.serie.vote_average;
             tvShowRLM.vote_count = self.serie.vote_count;
+            tvShowRLM.episode_run_time = [self convertMinutesIntoHours:serieDuration.duration];
+            tvShowRLM.genres = [tvShowRLM.genres stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
             [realm addObject:tvShowRLM];
             [realm commitWriteTransaction];
             

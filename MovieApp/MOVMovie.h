@@ -24,4 +24,7 @@
 @property (nonatomic, strong) NSArray *genres;
 @property (nonatomic, strong) NSArray *videos;
 
+-(NSAttributedString *)setMovieTitleAndYear:(MOVMovie *)movie;
+//-(NSURL *)posterUrl;
+
 @end

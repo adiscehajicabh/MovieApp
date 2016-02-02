@@ -64,9 +64,16 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         [self addMovieDurationAndGenres:movie];
         [self addMovieVideo:movie];
         
-        // Movie poster
-        NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, movie.poster_path]];
-        [cell.movieImageCell sd_setImageWithURL:url];
+        if (movie.poster_path != nil) {
+            
+            // Movie poster
+            NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, movie.poster_path]];
+            [cell.movieImageCell sd_setImageWithURL:url];
+        
+        } else {
+            UIImage *movImage = [UIImage imageNamed:@"movie_placeholder.png"];
+            cell.movieImageCell.image = movImage;
+        }
         
         // Release date
         cell.movieYearCell.text = [self insertMovieDate:movie];
@@ -105,8 +112,6 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     if ([[self.movies objectAtIndex:indexPath.row] isKindOfClass:[MOVMovie class]]) {
 
         MOVMovie *movie = [self.movies objectAtIndex:indexPath.row];
-
-//        [self loadSelectedMovie:movie];
 
         [self.delegate addSegueMovie:movie];
     } else {

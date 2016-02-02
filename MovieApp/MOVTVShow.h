@@ -22,4 +22,6 @@
 @property (nonatomic, strong) NSArray *episode_run_time;
 @property (nonatomic, strong) NSArray *videos;
 
+-(NSAttributedString *)setTVShowTitleAndYear:(MOVTVShow *)tvShow;
+
 @end

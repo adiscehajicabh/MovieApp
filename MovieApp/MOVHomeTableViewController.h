@@ -13,11 +13,11 @@
 @interface MOVHomeTableViewController : UITableViewController <MOVHomeTableViewCellDelegate>
 
 // Declaring variables for each category.
-@property (nonatomic, strong) NSArray *topRatedMovies;
-@property (nonatomic, strong) NSArray *popularMovies;
-@property (nonatomic, strong) NSArray *upcomingMovies;
-@property (nonatomic, strong) NSArray *topRatedSeries;
-@property (nonatomic, strong) NSArray *popularSeries;
+@property (nonatomic, strong) NSMutableArray *topRatedMovies;
+@property (nonatomic, strong) NSMutableArray *popularMovies;
+@property (nonatomic, strong) NSMutableArray *upcomingMovies;
+@property (nonatomic, strong) NSMutableArray *topRatedSeries;
+@property (nonatomic, strong) NSMutableArray *popularSeries;
 
 // Declaring variables that represent selected movie.
 @property (nonatomic, strong) MOVMovie *selectedMovie;

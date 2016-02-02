@@ -7,6 +7,8 @@
 //
 
 #import <Realm/Realm.h>
+#import "MOVGenreRLM.h"
+#import "MOVVideoRLM.h"
 
 @interface MOVMovieRLM : RLMObject
 
@@ -19,9 +21,10 @@
 @property NSString *backdrop_path;
 @property NSString *vote_average;
 @property NSString *vote_count;
+@property NSString *runtime;
+@property NSString *genres;
 
-//@property NSString *runtime;
-//@property NSArray *genres;
-//@property NSArray *videos;
+-(NSAttributedString *)setMovieTitleAndYear:(MOVMovieRLM *)movie;
 
 @end
+
