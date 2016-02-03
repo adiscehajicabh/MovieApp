@@ -10,4 +10,6 @@
 
 @interface MOVHelperMethods : NSObject
 
++(NSString *)convertMinutesIntoHours:(NSString *)amount;
+
 @end

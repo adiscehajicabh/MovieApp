@@ -7,10 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MOVGenreRLM.h"
+
+@class MOVGenreRLM;
 
 @interface MOVGenre : NSObject
 
 @property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *name;
+
+-(void)convertMOVGenreRLMToMOVGenre:(MOVGenreRLM *)movieGenreRLM;
 
 @end

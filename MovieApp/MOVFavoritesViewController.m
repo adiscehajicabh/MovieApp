@@ -14,6 +14,10 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImageView+WebCache.h"
 #import "MOVConstants.h"
+#import "MOVMovieDetailsViewController.h"
+#import "MOVHomeTableViewCell.h"
+#import "MOVObjectMapping.h"
+#import "MOVHelperMethods.h"
 
 @interface MOVFavoritesViewController ()
 
@@ -26,6 +30,8 @@
 @end
 
 @implementation MOVFavoritesViewController
+
+static NSString *movieSegue = @"movieDetailsSegue";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,7 +64,7 @@
         [cell.favoritesImage sd_setImageWithURL:urlImage];
         
         cell.favoritesTitle.attributedText = [favMovie setMovieTitleAndYear:favMovie];
-        cell.favoritesDuration.text = favMovie.runtime;
+        cell.favoritesDuration.text = [MOVHelperMethods convertMinutesIntoHours:favMovie.runtime];
         cell.favoritesRaiting.text = [NSString stringWithFormat:@"%.1f", [favMovie.vote_average floatValue]];
     
     } else {
@@ -70,7 +76,7 @@
         [cell.favoritesImage sd_setImageWithURL:urlImage];
         
         cell.favoritesTitle.attributedText = [favTVShow setTVShowTitleAndYear:favTVShow];
-        cell.favoritesDuration.text = favTVShow.episode_run_time;
+        cell.favoritesDuration.text = [MOVHelperMethods convertMinutesIntoHours:favTVShow.duration];
         cell.favoritesRaiting.text = [NSString stringWithFormat:@"%.1f", [favTVShow.vote_average floatValue]];
     }
     
@@ -99,14 +105,70 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+    NSIndexPath *indexPath = nil;
+    
+    if ([segue.identifier isEqualToString:movieSegue]) {
+        MOVMovieDetailsViewController *movieDetail = [segue destinationViewController];
+        
+        indexPath = [self.favoritesTable indexPathForSelectedRow];
+        
+        if ([[favorites objectAtIndex:indexPath.row] isKindOfClass:[MOVMovieRLM class]]) {
+            MOVMovieRLM *movieRLM = [favorites objectAtIndex:indexPath.row];
+
+            MOVMovie *favoriteMovie = [self getMovieFromRealm:movieRLM];
+            
+            [MOVObjectMapping addMovieDurationAndGenres:favoriteMovie];
+            
+            movieDetail.movie = favoriteMovie;
+            movieRLM = nil;
+        } else {
+            MOVTVShowRLM *tvShowRLM = [favorites objectAtIndex:indexPath.row];
+
+            movieDetail.serie = [self getTVShowFromRealm:tvShowRLM];
+        }
+    }
 }
-*/
+
+-(MOVMovie *)getMovieFromRealm:(MOVMovieRLM *)movieRLM {
+    
+    MOVMovie *movie = [[MOVMovie alloc] init];
+    movie.id = movieRLM.id;
+    movie.title = movieRLM.title;
+    movie.overview = movieRLM.overview;
+    movie.posterPath = movieRLM.poster_path;
+    movie.releaseDate = movieRLM.release_date;
+    movie.backdropPath = movieRLM.backdrop_path;
+    movie.voteAverage = movieRLM.vote_average;
+    movie.voteCount = movieRLM.vote_count;
+    movie.runtime = movieRLM.runtime;
+    [movie convertMovieGenres:movieRLM.genres];
+    
+    return movie;
+}
+
+-(MOVTVShow *)getTVShowFromRealm:(MOVTVShowRLM *)tvShowRLM {
+    
+    MOVTVShow *tvShow = [[MOVTVShow alloc] init];
+    
+    tvShow.id = tvShowRLM.id;
+    tvShow.name = tvShowRLM.name;
+    tvShow.overview = tvShowRLM.overview;
+    tvShow.posterPath = tvShowRLM.poster_path;
+    tvShow.firstAirDate = tvShowRLM.first_air_date;
+    tvShow.backdropPath = tvShowRLM.backdrop_path;
+    tvShow.voteAverage = tvShowRLM.vote_average;
+    tvShow.voteCount = tvShowRLM.vote_count;
+    [tvShow convertTVShowGenres:tvShowRLM.genres];
+    tvShow.duration = tvShowRLM.duration;
+    
+    return tvShow;
+    
+}
+
 
 @end

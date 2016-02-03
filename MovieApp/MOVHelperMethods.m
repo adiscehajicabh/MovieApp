@@ -10,4 +10,18 @@
 
 @implementation MOVHelperMethods
 
++(NSString *)convertMinutesIntoHours:(NSString *)amount {
+    
+    int minutesAmount = [amount intValue];
+    
+    NSInteger hours = minutesAmount / 60;
+    NSInteger minutes = minutesAmount % 60;
+    
+    if (hours > 0) {
+        return [NSString stringWithFormat:@"%ldh %ldm", hours, minutes];
+    }
+    
+    return [NSString stringWithFormat:@"%ldm", minutes];
+}
+
 @end

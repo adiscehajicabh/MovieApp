@@ -7,6 +7,7 @@
 //
 
 #import "MOVTVShowRLM.h"
+#import "MOVGenre.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation MOVTVShowRLM
@@ -33,6 +34,21 @@
     [tvShowTitleString appendAttributedString:tvShowYearString];
     
     return tvShowTitleString;
+    
+}
+
+-(void)convertTVShowGenres:(NSMutableArray *)tvShowGenres {
+    
+    MOVGenre *genre = [[MOVGenre alloc] init];
+    MOVGenreRLM *genreRLM = [[MOVGenreRLM alloc] init];
+    
+    for (int i = 0; i < [tvShowGenres count]; i++) {
+        genre = [tvShowGenres objectAtIndex:i];
+        
+        [genreRLM convertMOVGenreToMOVGenreRLM:genre];
+        
+        [self.genres addObject:genreRLM];
+    }
     
 }
 

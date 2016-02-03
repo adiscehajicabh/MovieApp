@@ -13,8 +13,8 @@
 @property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *birthday;
-@property (nonatomic, strong) NSString *place_of_birth;
-@property (nonatomic, strong) NSString *profile_path;
+@property (nonatomic, strong) NSString *placeOfBirth;
+@property (nonatomic, strong) NSString *profilePath;
 @property (nonatomic, strong) NSString *biography;
 
 @end

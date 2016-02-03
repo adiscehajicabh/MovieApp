@@ -11,11 +11,11 @@
 @interface MOVActorMovie : NSObject
 
 @property (nonatomic, strong) NSString *character;
-@property (nonatomic, strong) NSString *credit_id;
+@property (nonatomic, strong) NSString *creditId;
 @property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *original_title;
-@property (nonatomic, strong) NSString *poster_path;
-@property (nonatomic, strong) NSString *release_date;
+@property (nonatomic, strong) NSString *originalTitle;
+@property (nonatomic, strong) NSString *posterPath;
+@property (nonatomic, strong) NSString *releaseDate;
 
 @end

@@ -7,6 +7,9 @@
 //
 
 #import "MOVTVShow.h"
+#import "MOVGenre.h"    
+#import "MOVGenreRLM.h"
+#import "MOVDuration.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 
@@ -15,7 +18,7 @@
 -(NSAttributedString *)setTVShowTitleAndYear:(MOVTVShow *)tvShow {
     
     // Release date
-    NSString *dateString = tvShow.first_air_date;
+    NSString *dateString = tvShow.firstAirDate;
     NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
     [dateFormater setDateFormat:@"yyyy-MM-dd"];
     NSDate *date = [dateFormater dateFromString:dateString];
@@ -35,6 +38,22 @@
     
     return tvShowTitleString;
 
+}
+
+-(void)convertTVShowGenres:(RLMArray *)tvShowGenresRLM {
+    
+    self.genres = [[NSMutableArray alloc] initWithCapacity:[tvShowGenresRLM count]];
+    MOVGenre *genre = [[MOVGenre alloc] init];
+    MOVGenreRLM *genreRLM = [[MOVGenreRLM alloc] init];
+    
+    for (int i = 0; i < [tvShowGenresRLM count]; i++) {
+        genreRLM = [tvShowGenresRLM objectAtIndex:i];
+        
+        [genre convertMOVGenreRLMToMOVGenre:genreRLM];
+        
+        [self.genres addObject:genre];
+    }
+    
 }
 
 @end

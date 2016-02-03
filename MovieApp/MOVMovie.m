@@ -14,7 +14,7 @@
 -(NSMutableAttributedString *)setMovieTitleAndYear:(MOVMovie *)movie {
     
     // Release date
-    NSString *dateString = movie.release_date;
+    NSString *dateString = movie.releaseDate;
     NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
     [dateFormater setDateFormat:@"yyyy-MM-dd"];
     NSDate *date = [dateFormater dateFromString:dateString];
@@ -39,4 +39,21 @@
 //{
 ////    return [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, self.poster_path]];
 //}
+
+-(void)convertMovieGenres:(RLMArray *)movieGenresRLM {
+    
+    self.genres = [[NSMutableArray alloc] initWithCapacity:[movieGenresRLM count]];
+    MOVGenre *genre = [[MOVGenre alloc] init];
+    MOVGenreRLM *genreRLM = [[MOVGenreRLM alloc] init];
+    
+    for (int i = 0; i < [movieGenresRLM count]; i++) {
+        genreRLM = [movieGenresRLM objectAtIndex:i];
+        
+        [genre convertMOVGenreRLMToMOVGenre:genreRLM];
+        
+        [self.genres addObject:genre];
+    }
+    
+}
+
 @end

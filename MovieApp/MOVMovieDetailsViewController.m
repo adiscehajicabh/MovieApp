@@ -23,6 +23,7 @@
 #import "MOVTVShowRLM.h"
 #import <Realm/Realm.h>
 #import "MOVConstants.h"
+#import "MOVHelperMethods.h"
 
 @interface MOVMovieDetailsViewController ()
 
@@ -43,7 +44,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
     [super viewDidLoad];
     
     // Clears all from Realm DB.
-//    [[NSFileManager defaultManager] removeItemAtPath:[[RLMRealmConfiguration defaultConfiguration] path] error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:[[RLMRealmConfiguration defaultConfiguration] path] error:nil];
     
     [self checkIfTheMovieIsFavorite];
     
@@ -55,10 +56,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         self.movieDescription.text = self.movie.overview;
     
         // Checking does the movie has the image.
-        if (self.movie.poster_path != nil) {
+        if (self.movie.posterPath != nil) {
             
             // Movie image
-            NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.movie.poster_path]];
+            NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.movie.posterPath]];
             [self.movieImage sd_setImageWithURL:urlImage];
         
         } else {
@@ -69,10 +70,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         }
         
         // Checking does the movie has the poster.
-        if (self.movie.backdrop_path != nil) {
+        if (self.movie.backdropPath != nil) {
             
             // Movie poster
-            NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, self.movie.backdrop_path]];
+            NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, self.movie.backdropPath]];
             [self.moviePoster sd_setImageWithURL:urlPoster];
         
         } else {
@@ -86,8 +87,8 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         self.movieTitle.attributedText = (NSAttributedString *)[self.movie setMovieTitleAndYear:self.movie];
         
         // Setting the average movie rating and number of votes.
-        self.movieVoteAverage.text = [NSString stringWithFormat:@"%.1f", [self.movie.vote_average floatValue]];
-        self.movieVoteCount.text = self.movie.vote_count;
+        self.movieVoteAverage.text = [NSString stringWithFormat:@"%.1f", [self.movie.voteAverage floatValue]];
+        self.movieVoteCount.text = self.movie.voteCount;
         
         // Setting the navbar title.
         self.title = self.movie.title;
@@ -106,7 +107,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         }
         
         // Setting the duration of the movie.
-        self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [self convertMinutesIntoHours:self.movie.runtime], self.movieDurationGenre.text];
+        self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [MOVHelperMethods convertMinutesIntoHours:self.movie.runtime], self.movieDurationGenre.text];
         
         [self loadMovieCast:self.movie.id];
     } else {
@@ -114,10 +115,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         self.movieDescription.text = self.serie.overview;
         
         // Checking does the tv show has image.
-        if (self.serie.poster_path != nil) {
+        if (self.serie.posterPath != nil) {
             
             // Tv show image
-            NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.serie.poster_path]];
+            NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.serie.posterPath]];
             [self.movieImage sd_setImageWithURL:urlImage];
         
         } else {
@@ -128,10 +129,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         }
         
         // Checking does the tv show has poster.
-        if (self.serie.backdrop_path != nil) {
+        if (self.serie.backdropPath != nil) {
             
             // Tv show poster
-            NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, self.serie.backdrop_path]];
+            NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, self.serie.backdropPath]];
             [self.moviePoster sd_setImageWithURL:urlPoster];
         
         } else {
@@ -146,8 +147,8 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         self.movieTitle.attributedText = [self.serie setTVShowTitleAndYear:self.serie];
         
         // Setting the average tv show rating and number of votes.
-        self.movieVoteAverage.text = [NSString stringWithFormat:@"%.1f", [self.serie.vote_average floatValue]];
-        self.movieVoteCount.text = self.serie.vote_count;
+        self.movieVoteAverage.text = [NSString stringWithFormat:@"%.1f", [self.serie.voteAverage floatValue]];
+        self.movieVoteCount.text = self.serie.voteCount;
         
         // Setting the navbar title.
         self.title = self.serie.name;
@@ -166,10 +167,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             }
         }
         
-        MOVDuration *serieDuration = [self.serie.episode_run_time objectAtIndex:0];
+//        MOVDuration *serieDuration = [self.serie.episodeRunTime objectAtIndex:0];
 
         // Setting the duration of the tv show.
-        self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [self convertMinutesIntoHours:serieDuration.duration], self.movieDurationGenre.text];
+        self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [MOVHelperMethods convertMinutesIntoHours:self.serie.duration], self.movieDurationGenre.text];
     
         [self loadTVShowCast:self.serie.id];
     }
@@ -183,13 +184,13 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
     // Setup object mappings for movies
     RKObjectMapping *castMapping = [RKObjectMapping mappingForClass:[MOVMovieCast class]];
     [castMapping addAttributeMappingsFromDictionary:@{
-                                                      @"cast_id": @"cast_id",
+                                                      @"cast_id": @"castId",
                                                       @"character": @"character",
-                                                      @"credit_id": @"credit_id",
+                                                      @"credit_id": @"creditId",
                                                       @"id": @"id",
                                                       @"name" : @"name",
                                                       @"order" : @"order",
-                                                      @"profile_path" : @"profile_path"
+                                                      @"profile_path" : @"profilePath"
                                                       }];
     
     // Register mappings with the provider using a response descriptor
@@ -217,11 +218,11 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
     RKObjectMapping *castMapping = [RKObjectMapping mappingForClass:[MOVTVShowCast class]];
     [castMapping addAttributeMappingsFromDictionary:@{
                                                       @"character": @"character",
-                                                      @"credit_id": @"credit_id",
+                                                      @"credit_id": @"creditId",
                                                       @"id": @"id",
                                                       @"name" : @"name",
                                                       @"order" : @"order",
-                                                      @"profile_path" : @"profile_path"
+                                                      @"profile_path" : @"profilePath"
                                                       }];
     
     // Register mappings with the provider using a response descriptor
@@ -259,8 +260,8 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         MOVMovieCast *movieActor = [self.movieCast objectAtIndex:indexPath.row];
         cell.movieActorName.text = movieActor.name;
     
-        if (movieActor.profile_path != nil) {
-            NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, movieActor.profile_path]];
+        if (movieActor.profilePath != nil) {
+            NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, movieActor.profilePath]];
             [cell.movieActorImage sd_setImageWithURL:urlImage];
         } else {
             UIImage *actorImage = [UIImage imageNamed:@"movieperson_placeholder.png"];
@@ -273,8 +274,8 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
         cell.movieActorName.text = tvShowActor.name;
         
-        if (tvShowActor.profile_path != nil) {
-            NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, tvShowActor.profile_path]];
+        if (tvShowActor.profilePath != nil) {
+            NSURL *urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, tvShowActor.profilePath]];
             [cell.movieActorImage sd_setImageWithURL:urlImage];
         } else {
             UIImage *actorImage = [UIImage imageNamed:@"movieperson_placeholder.png"];
@@ -311,9 +312,9 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         
         // Checking if the selected object is movie or tv show and setting the variable that contains the poster image url.
         if (self.movie != nil) {
-            actorController.moviePoster = self.movie.backdrop_path;
+            actorController.moviePoster = self.movie.backdropPath;
         } else {
-            actorController.moviePoster = self.serie.backdrop_path;
+            actorController.moviePoster = self.serie.backdropPath;
         }
     }
     // Finds the trailer video from the seleted movie or tv show and opens it into the new view controller.
@@ -339,20 +340,6 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
 }
 
--(NSString *)convertMinutesIntoHours:(NSString *)amount {
-    
-    int minutesAmount = [amount intValue];
-    
-    NSInteger hours = minutesAmount / 60;
-    NSInteger minutes = minutesAmount % 60;
-    
-    if (hours > 0) {
-        return [NSString stringWithFormat:@"%ldh %ldm", hours, minutes];
-    }
-    
-    return [NSString stringWithFormat:@"%ldm", minutes];
-}
-
 /*
  * Saves the information about opened movie or tv show into database and changes the image of the clicked favorite button.
  * If the movie or tv show is already favorite movie or tv show, it changes the favorite button image to transparent image, 
@@ -364,7 +351,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
         realmMovie = [MOVMovieRLM objectsWhere:@"id = %@", self.movie.id];
 
-        MOVGenre *durationGenre = [self.movie.genres objectAtIndex:0];
+//        MOVGenre *durationGenre = [self.movie.genres objectAtIndex:0];
 
         
         if ([realmMovie count] == 0) {
@@ -376,13 +363,15 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             movieRLM.id = self.movie.id;
             movieRLM.title = self.movie.title;
             movieRLM.overview = self.movie.overview;
-            movieRLM.poster_path = self.movie.poster_path;
-            movieRLM.release_date = self.movie.release_date;
-            movieRLM.backdrop_path = self.movie.backdrop_path;
-            movieRLM.vote_average = self.movie.vote_average;
-            movieRLM.vote_count = self.movie.vote_count;
-            movieRLM.runtime = [self convertMinutesIntoHours:self.movie.runtime];
-            movieRLM.genres = [movieRLM.genres stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
+            movieRLM.poster_path = self.movie.posterPath;
+            movieRLM.release_date = self.movie.releaseDate;
+            movieRLM.backdrop_path = self.movie.backdropPath;
+            movieRLM.vote_average = self.movie.voteAverage;
+            movieRLM.vote_count = self.movie.voteCount;
+            movieRLM.runtime = self.movie.runtime;
+            [movieRLM convertMovieGenres:self.movie.genres];
+            
+//            movieRLM.genres = [movieRLM.genres stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
             [realm addObject:movieRLM];
             [realm commitWriteTransaction];
         
@@ -401,8 +390,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         
         realmTvShow = [MOVTVShowRLM objectsWhere:@"id = %@", self.serie.id];
 
-        MOVGenre *durationGenre = [self.serie.genres objectAtIndex:0];
-        MOVDuration *serieDuration = [self.serie.episode_run_time objectAtIndex:0];
+        MOVDuration *serieDuration = [self.serie.episodeRunTime objectAtIndex:0];
         
         if ([realmTvShow count] == 0) {
             
@@ -413,13 +401,13 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             tvShowRLM.id = self.serie.id;
             tvShowRLM.name = self.serie.name;
             tvShowRLM.overview = self.serie.overview;
-            tvShowRLM.poster_path = self.serie.poster_path;
-            tvShowRLM.first_air_date = self.serie.first_air_date;
-            tvShowRLM.backdrop_path = self.serie.backdrop_path;
-            tvShowRLM.vote_average = self.serie.vote_average;
-            tvShowRLM.vote_count = self.serie.vote_count;
-            tvShowRLM.episode_run_time = [self convertMinutesIntoHours:serieDuration.duration];
-            tvShowRLM.genres = [tvShowRLM.genres stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
+            tvShowRLM.poster_path = self.serie.posterPath;
+            tvShowRLM.first_air_date = self.serie.firstAirDate;
+            tvShowRLM.backdrop_path = self.serie.backdropPath;
+            tvShowRLM.vote_average = self.serie.voteAverage;
+            tvShowRLM.vote_count = self.serie.voteCount;
+            tvShowRLM.duration = self.serie.duration;
+            [tvShowRLM convertTVShowGenres:self.serie.genres];
             [realm addObject:tvShowRLM];
             [realm commitWriteTransaction];
             

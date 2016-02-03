@@ -11,12 +11,12 @@
 @interface MOVActorTVShow : NSObject
 
 @property (nonatomic, strong) NSString *character;
-@property (nonatomic, strong) NSString *credit_id;
-@property (nonatomic, strong) NSString *episode_count;
-@property (nonatomic, strong) NSString *first_air_date;
+@property (nonatomic, strong) NSString *creditId;
+@property (nonatomic, strong) NSString *episodeCount;
+@property (nonatomic, strong) NSString *firstAirDate;
 @property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *original_name;
-@property (nonatomic, strong) NSString *poster_path;
+@property (nonatomic, strong) NSString *originalName;
+@property (nonatomic, strong) NSString *posterPath;
 
 @end

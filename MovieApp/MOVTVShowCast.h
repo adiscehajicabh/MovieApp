@@ -11,10 +11,10 @@
 @interface MOVTVShowCast : NSObject
 
 @property (nonatomic, strong) NSString *character;
-@property (nonatomic, strong) NSString *credit_id;
+@property (nonatomic, strong) NSString *creditId;
 @property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *order;
-@property (nonatomic, strong) NSString *profile_path;
+@property (nonatomic, strong) NSString *profilePath;
 
 @end

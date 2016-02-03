@@ -18,6 +18,7 @@
 #import "MOVDuration.h"
 #import <RestKit/RestKit.h>
 #import "MOVVideo.h"
+#import "MOVObjectMapping.h"
 
 
 @implementation MOVHomeTableViewCell
@@ -61,13 +62,13 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         MOVMovie *movie = [movies objectAtIndex:indexPath.row];
         cell.movieTitleCell.text = movie.title;
         
-        [self addMovieDurationAndGenres:movie];
+        [MOVObjectMapping addMovieDurationAndGenres:movie];
         [self addMovieVideo:movie];
         
-        if (movie.poster_path != nil) {
+        if (movie.posterPath != nil) {
             
             // Movie poster
-            NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, movie.poster_path]];
+            NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, movie.posterPath]];
             [cell.movieImageCell sd_setImageWithURL:url];
         
         } else {
@@ -87,11 +88,11 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         [self addTVShowVideo:serie];
         
         // Movie poster
-        NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, serie.poster_path]];
+        NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, serie.posterPath]];
         [cell.movieImageCell sd_setImageWithURL:url];
         
         // Release date
-        NSString *dateString = serie.first_air_date;
+        NSString *dateString = serie.firstAirDate;
         NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
         [dateFormater setDateFormat:@"yyyy-MM-dd"];
         NSDate *date = [dateFormater dateFromString:dateString];
@@ -122,59 +123,59 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     }
 }
 
-/*
- * Updates the inputed movie information. It sets the movie runtime and movie genres.
- *
- *
- */
--(void)addMovieDurationAndGenres:(MOVMovie *)movie {
-    
-    // Create our new Genre mapping
-    RKObjectMapping *genreMapping = [RKObjectMapping mappingForClass:[MOVGenre class]];
-    
-    [genreMapping addAttributeMappingsFromArray:@[ @"id", @"name" ]];
-    
-    // Configuring the Movie mapping
-    RKObjectMapping *movieMapping = [RKObjectMapping mappingForClass:[MOVMovie class]];
-    [movieMapping addAttributeMappingsFromDictionary:@{
-                                                       @"id" : @"id",
-                                                       @"title" : @"title",
-                                                       @"overview" : @"overview",
-                                                       @"poster_path" : @"poster_path",
-                                                       @"release_date" : @"release_date",
-                                                       @"backdrop_path" : @"backdrop_path",
-                                                       @"vote_average" : @"vote_average",
-                                                       @"vote_count" : @"vote_count",
-                                                       @"runtime": @"runtime",
-                                                       }];
-    
-    // Define the relationship mapping
-    [movieMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"genres"
-                                                                                 toKeyPath:@"genres"
-                                                                               withMapping:genreMapping]];
-    
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping
-                                                                                            method:RKRequestMethodAny
-                                                                                       pathPattern:nil
-                                                                                           keyPath:@""
-                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%d?api_key=34aa7e1baaee7e047801a1a8454587b8", [movie.id intValue]]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
-    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        self.selectedMovies = mappingResult.array;
-        //[self.movieCastCollectionView reloadData];
-        MOVMovie *clickedMovie = [self.selectedMovies objectAtIndex:0];
-        [movie setRuntime:clickedMovie.runtime];
-        [movie setGenres:clickedMovie.genres];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        NSLog(@"Could not load movie cast from API!': %@", error);
-    }];
-    
-    [objectRequestOperation start];
-    
-}
+///*
+// * Updates the inputed movie information. It sets the movie runtime and movie genres.
+// *
+// *
+// */
+//-(void)addMovieDurationAndGenres:(MOVMovie *)movie {
+//    
+//    // Create our new Genre mapping
+//    RKObjectMapping *genreMapping = [RKObjectMapping mappingForClass:[MOVGenre class]];
+//    
+//    [genreMapping addAttributeMappingsFromArray:@[ @"id", @"name" ]];
+//    
+//    // Configuring the Movie mapping
+//    RKObjectMapping *movieMapping = [RKObjectMapping mappingForClass:[MOVMovie class]];
+//    [movieMapping addAttributeMappingsFromDictionary:@{
+//                                                       @"id" : @"id",
+//                                                       @"title" : @"title",
+//                                                       @"overview" : @"overview",
+//                                                       @"poster_path" : @"posterPath",
+//                                                       @"release_date" : @"releaseDate",
+//                                                       @"backdrop_path" : @"backdropPath",
+//                                                       @"vote_average" : @"voteAverage",
+//                                                       @"vote_count" : @"voteCount",
+//                                                       @"runtime": @"runtime",
+//                                                       }];
+//    
+//    // Define the relationship mapping
+//    [movieMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"genres"
+//                                                                                 toKeyPath:@"genres"
+//                                                                               withMapping:genreMapping]];
+//    
+//    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping
+//                                                                                            method:RKRequestMethodAny
+//                                                                                       pathPattern:nil
+//                                                                                           keyPath:@""
+//                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+//    
+//    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%d?api_key=34aa7e1baaee7e047801a1a8454587b8", [movie.id intValue]]];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+//    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+//    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+//        self.selectedMovies = mappingResult.array;
+//        //[self.movieCastCollectionView reloadData];
+//        MOVMovie *clickedMovie = [self.selectedMovies objectAtIndex:0];
+//        [movie setRuntime:clickedMovie.runtime];
+//        [movie setGenres:clickedMovie.genres];
+//    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+//        NSLog(@"Could not load movie cast from API!': %@", error);
+//    }];
+//    
+//    [objectRequestOperation start];
+//    
+//}
 
 /*
  * Updates the inputed movie information. It sets the movie videos.
@@ -232,11 +233,11 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
                                                        @"id" : @"id",
                                                        @"name" : @"name",
                                                        @"overview" : @"overview",
-                                                       @"poster_path" : @"poster_path",
-                                                       @"first_air_date" : @"first_air_date",
-                                                       @"backdrop_path" : @"backdrop_path",
-                                                       @"vote_average" : @"vote_average",
-                                                       @"vote_count" : @"vote_count"
+                                                       @"poster_path" : @"posterPath",
+                                                       @"first_air_date" : @"firstAirDate",
+                                                       @"backdrop_path" : @"backdropPath",
+                                                       @"vote_average" : @"voteAverage",
+                                                       @"vote_count" : @"voteCount"
                                                        }];
     
     // Define the relationship mapping
@@ -247,7 +248,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     [durationMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"duration"]];
 
     [tvShowMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"episode_run_time"
-                                                                                  toKeyPath:@"episode_run_time"
+                                                                                  toKeyPath:@"episodeRunTime"
                                                                                 withMapping:durationMapping]];
 
     
@@ -261,11 +262,15 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
     [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        self.selectedTvShows = mappingResult.array;
+        //self.selectedTvShows = mappingResult.array;
         //[self.movieCastCollectionView reloadData];
-        MOVTVShow *clickedTvShow = [self.selectedTvShows objectAtIndex:0];
+        MOVTVShow *clickedTvShow = mappingResult.firstObject;
         [tvShow setGenres:clickedTvShow.genres];
-        [tvShow setEpisode_run_time:clickedTvShow.episode_run_time];
+        [tvShow setEpisodeRunTime:clickedTvShow.episodeRunTime];
+        
+        MOVDuration *tvShowDuration = [clickedTvShow.episodeRunTime objectAtIndex:0];
+        [tvShow setDuration:tvShowDuration.duration];
+        
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         NSLog(@"Could not load movie cast from API!': %@", error);
     }];
@@ -351,7 +356,7 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
 -(NSString *)insertMovieDate:(MOVMovie *)movie {
     
     // Release date
-    NSString *dateString = movie.release_date;
+    NSString *dateString = movie.releaseDate;
     NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
     [dateFormater setDateFormat:@"yyyy-MM-dd"];
     NSDate *dateMovie = [dateFormater dateFromString:dateString];

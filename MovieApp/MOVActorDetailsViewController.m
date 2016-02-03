@@ -66,7 +66,7 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
         cellMovie.actorMovieName.text = actorMovie.title;
     
         // Actor movie image
-        NSURL * urlImageMovie = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorMovie.poster_path]];
+        NSURL * urlImageMovie = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorMovie.posterPath]];
         [cellMovie.actorMovieImage sd_setImageWithURL:urlImageMovie];
     
         cellMovie.actorMovieImage.layer.cornerRadius = 5;
@@ -82,7 +82,7 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
         cellTvShows.actorTvShowName.text = actorTvShow.name;
     
         // Actor movie image
-        NSURL * urlImageTvShow = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorTvShow.poster_path]];
+        NSURL * urlImageTvShow = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorTvShow.posterPath]];
         [cellTvShows.actorTvShowImage sd_setImageWithURL:urlImageTvShow];
     
         cellTvShows.actorTvShowImage.layer.cornerRadius = 5;
@@ -100,8 +100,8 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
                                                       @"id": @"id",
                                                       @"name": @"name",
                                                       @"birthday": @"birthday",
-                                                      @"place_of_birth" : @"place_of_birth",
-                                                      @"profile_path" : @"profile_path",
+                                                      @"place_of_birth" : @"placeOfBirth",
+                                                      @"profile_path" : @"profilePath",
                                                       @"biography" : @"biography"
                                                       }];
     
@@ -128,7 +128,7 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
     // Setup object mappings for movies
     RKObjectMapping *actorMapping = [RKObjectMapping mappingForClass:[MOVActorImage class]];
     [actorMapping addAttributeMappingsFromDictionary:@{
-                                                       @"backdrop_path": @"backdrop_path",
+                                                       @"backdrop_path": @"backdropPath",
                                                        }];
     
     // Register mappings with the provider using a response descriptor
@@ -153,13 +153,13 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
     self.actorName.text = self.actor.name;
     
     // Actor image
-    NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.actor.profile_path]];
+    NSURL * urlImage = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, self.actor.profilePath]];
     [self.actorImage sd_setImageWithURL:urlImage];
     
     self.actorBiography.text = self.actor.biography;
     
-    if (self.actor.place_of_birth != nil && self.actor.birthday != nil) {
-        NSString *birthPlace = self.actor.place_of_birth;
+    if (self.actor.placeOfBirth != nil && self.actor.birthday != nil) {
+        NSString *birthPlace = self.actor.placeOfBirth;
         birthPlace = [birthPlace  stringByReplacingOccurrencesOfString:@", " withString:@" - "];
     
         self.actorBirthPlace.text = [NSString stringWithFormat:@"Born %@ in %@", self.actor.birthday, birthPlace];
@@ -176,7 +176,7 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
         uint32_t rand = arc4random_uniform((uint32_t)[self.actorPosterImages count]);
         MOVActorImage *actorPosterImage = [self.actorPosterImages objectAtIndex:rand];
     
-        NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, actorPosterImage.backdrop_path]];
+        NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, actorPosterImage.backdropPath]];
         [self.actorPoster sd_setImageWithURL:urlPoster];
     } else {
         NSURL * urlPoster = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W1280, self.moviePoster]];
@@ -191,12 +191,12 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
     RKObjectMapping *castMapping = [RKObjectMapping mappingForClass:[MOVActorMovie class]];
     [castMapping addAttributeMappingsFromDictionary:@{
                                                       @"character": @"character",
-                                                      @"credit_id": @"credit_id",
+                                                      @"credit_id": @"creditId",
                                                       @"id": @"id",
-                                                      @"release_date" : @"release_date",
+                                                      @"release_date" : @"releaseDate",
                                                       @"title" : @"title",
-                                                      @"poster_path" : @"poster_path",
-                                                      @"original_title" : @"original_title"
+                                                      @"poster_path" : @"posterPath",
+                                                      @"original_title" : @"originalTitle"
                                                        }];
     
     // Register mappings with the provider using a response descriptor
@@ -222,13 +222,13 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
     RKObjectMapping *castMapping = [RKObjectMapping mappingForClass:[MOVActorTVShow class]];
     [castMapping addAttributeMappingsFromDictionary:@{
                                                       @"character": @"character",
-                                                      @"credit_id": @"credit_id",
-                                                      @"episode_count" : @"episode_count",
-                                                      @"first_air_date" : @"first_air_date",
+                                                      @"credit_id": @"creditId",
+                                                      @"episode_count" : @"episodeCount",
+                                                      @"first_air_date" : @"firstAirDate",
                                                       @"id": @"id",
                                                       @"name" : @"name",
-                                                      @"original_name" : @"original_name",
-                                                      @"poster_path" : @"poster_path"
+                                                      @"original_name" : @"originalName",
+                                                      @"poster_path" : @"posterPath"
                                                       }];
     
     // Register mappings with the provider using a response descriptor

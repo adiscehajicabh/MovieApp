@@ -7,10 +7,17 @@
 //
 
 #import <Realm/Realm.h>
+#import "MOVGenre.h"
+
+@class MOVGenre;
 
 @interface MOVGenreRLM : RLMObject
 
 @property NSString *id;
 @property NSString *name;
 
+-(void)convertMOVGenreToMOVGenreRLM:(MOVGenre *)movieGenre;
+
 @end
+
+RLM_ARRAY_TYPE(MOVGenreRLM)

@@ -10,7 +10,7 @@
 
 @interface MOVActorImage : NSObject
 
-@property (nonatomic, strong) NSString *backdrop_path;
+@property (nonatomic, strong) NSString *backdropPath;
 
 
 @end

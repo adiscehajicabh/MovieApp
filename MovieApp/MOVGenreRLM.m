@@ -7,7 +7,13 @@
 //
 
 #import "MOVGenreRLM.h"
+#import "MOVGenre.h"
 
 @implementation MOVGenreRLM
+
+-(void)convertMOVGenreToMOVGenreRLM:(MOVGenre *)movieGenre {
+        self.id = movieGenre.id;
+        self.name = movieGenre.name;
+}
 
 @end

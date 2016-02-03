@@ -7,6 +7,7 @@
 //
 
 #import "MOVMovieRLM.h"
+#import "MOVMovie.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 
@@ -40,5 +41,19 @@
     return movieTitleString;
 }
 
+-(void)convertMovieGenres:(NSMutableArray *)movieGenres {
+    
+    MOVGenre *genre = [[MOVGenre alloc] init];
+    MOVGenreRLM *genreRLM = [[MOVGenreRLM alloc] init];
+    
+    for (int i = 0; i < [movieGenres count]; i++) {
+        genre = [movieGenres objectAtIndex:i];
+        
+        [genreRLM convertMOVGenreToMOVGenreRLM:genre];
+        
+        [self.genres addObject:genreRLM];
+    }
+    
+}
 
 @end

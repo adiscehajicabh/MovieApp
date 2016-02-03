@@ -75,7 +75,17 @@ static NSString *movieSegue = @"movieDetailsSegue";
     
     // Setup object mappings for movies.
     RKObjectMapping *movieMapping = [RKObjectMapping mappingForClass:[MOVMovie class]];
-    [movieMapping addAttributeMappingsFromArray:@[@"id", @"title", @"overview", @"poster_path", @"release_date", @"backdrop_path", @"vote_average", @"vote_count"]];
+    [movieMapping addAttributeMappingsFromDictionary:@{
+                                                      @"id" : @"id",
+                                                      @"title" : @"title",
+                                                      @"overview" : @"overview",
+                                                      @"release_date" : @"releaseDate",
+                                                      @"poster_path" : @"posterPath",
+                                                      @"original_title" : @"originalTitle",
+                                                      @"backdrop_path" : @"backdropPath",
+                                                      @"vote_average" : @"voteAverage",
+                                                      @"vote_count" : @"voteCount"
+                                                      }];
     
     // Register mappings with the provider using a response descriptor
     RKResponseDescriptor *responseDescriptorTopRatedMovies = [RKResponseDescriptor responseDescriptorWithMapping:movieMapping method:RKRequestMethodGET pathPattern:nil keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
@@ -90,7 +100,17 @@ static NSString *movieSegue = @"movieDetailsSegue";
     
     // Setup object mappings for tv shows.
     RKObjectMapping *seriesMapping = [RKObjectMapping mappingForClass:[MOVTVShow class]];
-    [seriesMapping addAttributeMappingsFromArray:@[@"id", @"name", @"overview", @"poster_path", @"first_air_date", @"backdrop_path", @"vote_average", @"vote_count"]];
+    [seriesMapping addAttributeMappingsFromDictionary:@{
+                                                        @"id" : @"id",
+                                                        @"name" : @"name",
+                                                        @"overview" : @"overview",
+                                                        @"first_air_date" : @"firstAirDate",
+                                                        @"poster_path" : @"posterPath",
+                                                        @"backdrop_path" : @"backdropPath",
+                                                        @"vote_average" : @"voteAverage",
+                                                        @"vote_count" : @"voteCount"
+                                                        }];
+     
     
     RKResponseDescriptor *responseDescriptorTopRatedSeries = [RKResponseDescriptor responseDescriptorWithMapping:seriesMapping method:RKRequestMethodGET pathPattern:TOP_RATED_TV_SHOWS_URL keyPath:@"results" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     [objectManager addResponseDescriptor:responseDescriptorTopRatedSeries];
@@ -113,55 +133,6 @@ static NSString *movieSegue = @"movieDetailsSegue";
     [self mapMoviesFromAPI:TOP_RATED_TV_SHOWS_URL parameters:queryParams moviesArray:self.topRatedSeries moviesKey:[categories objectAtIndex:3]];
     [self mapMoviesFromAPI:POPULAR_TV_SHOWS_URL parameters:queryParams moviesArray:self.popularSeries moviesKey:[categories objectAtIndex:4]];
     
-//    [[RKObjectManager sharedManager] getObjectsAtPath:TOP_RATED_MOVIES_URL parameters:queryParams
-//                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-//                                                  self.topRatedMovies = mappingResult.array;
-//                                                  NSLog(@"TOP RATED MOVIES: %lu", [self.topRatedMovies count]);
-//                                                  [movies setObject:self.topRatedMovies forKey:@"Top rated movies"];
-//                                                  [self.tableView reloadData];
-//                                              }
-//                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-//                                                  NSLog(@"Could not load movies from API!': %@", error);
-//                                              }];
-//    [[RKObjectManager sharedManager] getObjectsAtPath:POPULAR_MOVIES_URL parameters:queryParams
-//                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-//                                                  self.popularMovies = mappingResult.array;
-//                                                  NSLog(@"TOP RATED MOVIES: %lu", [self.popularMovies count]);
-//                                                  [movies setObject:self.popularMovies forKey:@"Most popular movies"];
-//                                                  [self.tableView reloadData];
-//                                              }
-//                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-//                                                  NSLog(@"Could not load movies from API!': %@", error);
-//                                              }];
-//    [[RKObjectManager sharedManager] getObjectsAtPath:UPCOMING_MOVIES_URL parameters:queryParams
-//                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-//                                                  self.upcomingMovies = mappingResult.array;
-//                                                  NSLog(@"TOP RATED MOVIES: %lu", [self.upcomingMovies count]);
-//                                                  [movies setObject:self.upcomingMovies forKey:@"Upcoming movies"];
-//                                                  [self.tableView reloadData];
-//                                              }
-//                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-//                                                  NSLog(@"Could not load movies from API!': %@", error);
-//                                              }];
-//
-//    [[RKObjectManager sharedManager] getObjectsAtPath:TOP_RATED_TV_SHOWS_URL parameters:queryParams
-//                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-//                                                  self.topRatedSeries = mappingResult.array;
-//                                                  [movies setObject:self.topRatedSeries forKey:@"Top rated TV shows"];
-//                                                  [self.tableView reloadData];
-//                                              }
-//                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-//                                                  NSLog(@"Could not load movies from API!': %@", error);
-//                                              }];
-//    [[RKObjectManager sharedManager] getObjectsAtPath:POPULAR_TV_SHOWS_URL parameters:queryParams
-//                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-//                                                  self.popularSeries = mappingResult.array;
-//                                                  [movies setObject:self.popularSeries forKey:@"Most popular TV shows"];
-//                                                  [self.tableView reloadData];
-//                                              }
-//                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-//                                                  NSLog(@"Could not load movies from API!': %@", error);
-//                                              }];
 }
 
 

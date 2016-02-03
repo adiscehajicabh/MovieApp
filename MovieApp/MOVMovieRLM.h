@@ -22,9 +22,10 @@
 @property NSString *vote_average;
 @property NSString *vote_count;
 @property NSString *runtime;
-@property NSString *genres;
+@property RLMArray <MOVGenreRLM *><MOVGenreRLM> *genres;
 
 -(NSAttributedString *)setMovieTitleAndYear:(MOVMovieRLM *)movie;
+-(void)convertMovieGenres:(NSMutableArray *)movieGenres;
 
 @end
 

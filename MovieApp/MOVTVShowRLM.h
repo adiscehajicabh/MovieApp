@@ -7,6 +7,7 @@
 //
 
 #import <Realm/Realm.h>
+#import "MOVGenreRLM.h"
 
 @interface MOVTVShowRLM : RLMObject
 
@@ -18,10 +19,12 @@
 @property NSString *backdrop_path;
 @property NSString *vote_average;
 @property NSString *vote_count;
-@property NSString *genres;
-@property NSString *episode_run_time;
+@property RLMArray <MOVGenreRLM *><MOVGenreRLM> *genres;
+@property NSString *duration;
+
 
 -(NSAttributedString *)setTVShowTitleAndYear:(MOVTVShowRLM *)tvShow;
+-(void)convertTVShowGenres:(NSMutableArray *)tvShowGenres;
 
 @end
 

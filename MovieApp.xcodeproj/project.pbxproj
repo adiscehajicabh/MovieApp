@@ -17,6 +17,7 @@
 		49AEBCEF1C5F99AC00EAC1EB /* MOVTVShowRLM.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCEE1C5F99AC00EAC1EB /* MOVTVShowRLM.m */; };
 		49AEBCF21C5FA46300EAC1EB /* MOVFavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCF11C5FA46300EAC1EB /* MOVFavoritesViewController.m */; };
 		49AEBCF51C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCF41C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m */; };
+		49E002831C61FC8600C4F262 /* MOVObjectMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E002821C61FC8600C4F262 /* MOVObjectMapping.m */; };
 		49E1C4D31C60B136002C311C /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 49E1C4D21C60B136002C311C /* star.png */; };
 		49E1C4D51C60B343002C311C /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 49E1C4D41C60B343002C311C /* time.png */; };
 		49E1C4DA1C60C989002C311C /* movie_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 49E1C4D71C60C989002C311C /* movie_placeholder.png */; };
@@ -75,6 +76,8 @@
 		49AEBCF11C5FA46300EAC1EB /* MOVFavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVFavoritesViewController.m; sourceTree = "<group>"; };
 		49AEBCF31C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVFavoritesTableViewCell.h; sourceTree = "<group>"; };
 		49AEBCF41C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVFavoritesTableViewCell.m; sourceTree = "<group>"; };
+		49E002811C61FC8600C4F262 /* MOVObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVObjectMapping.h; sourceTree = "<group>"; };
+		49E002821C61FC8600C4F262 /* MOVObjectMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVObjectMapping.m; sourceTree = "<group>"; };
 		49E1C4D21C60B136002C311C /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		49E1C4D41C60B343002C311C /* time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time.png; sourceTree = "<group>"; };
 		49E1C4D71C60C989002C311C /* movie_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movie_placeholder.png; sourceTree = "<group>"; };
@@ -225,6 +228,8 @@
 				49E1C4E71C60D94A002C311C /* MOVConstants.m */,
 				49E1C4EA1C60EC2F002C311C /* MOVHelperMethods.h */,
 				49E1C4EB1C60EC2F002C311C /* MOVHelperMethods.m */,
+				49E002811C61FC8600C4F262 /* MOVObjectMapping.h */,
+				49E002821C61FC8600C4F262 /* MOVObjectMapping.m */,
 			);
 			name = MOVUtilities;
 			sourceTree = "<group>";
@@ -465,6 +470,7 @@
 				49AEBCE81C5F74ED00EAC1EB /* MOVMovieRLM.m in Sources */,
 				49E1C4E81C60D94A002C311C /* MOVConstants.m in Sources */,
 				49AEBCEF1C5F99AC00EAC1EB /* MOVTVShowRLM.m in Sources */,
+				A0EAED1C1C5AE0E500BAA8C8 /* MOVGenre.m in Sources */,
 				49E4FB441C602478005FB3DC /* MOVGenreRLM.m in Sources */,
 				49E4FB471C6024D9005FB3DC /* MOVVideoRLM.m in Sources */,
 				A0EAA8671C58E40200FE2A10 /* MOVActorImage.m in Sources */,
@@ -472,7 +478,6 @@
 				A0EC8AAF1C556FBC00EA77F4 /* MOVMovieDetailsViewController.m in Sources */,
 				49AEBCF51C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m in Sources */,
 				A059352D1C4FDE7100135575 /* MOVHomeTableViewController.m in Sources */,
-				A0EAED1C1C5AE0E500BAA8C8 /* MOVGenre.m in Sources */,
 				A0E4EC311C57B6360034C151 /* MOVActorDetailsViewController.m in Sources */,
 				A0E80A0E1C56E1D700FA8E8D /* MOVMovieCast.m in Sources */,
 				A0E80A081C56C50F00FA8E8D /* MOVMovieActorCollectionViewCell.m in Sources */,
@@ -482,6 +487,7 @@
 				A0E4EC2B1C57A7F60034C151 /* MOVTVShowCast.m in Sources */,
 				49E1C4EC1C60EC2F002C311C /* MOVHelperMethods.m in Sources */,
 				490D09FD1C5BB29C00D4BDC4 /* MOVVideoViewController.m in Sources */,
+				49E002831C61FC8600C4F262 /* MOVObjectMapping.m in Sources */,
 				A05935361C4FE47E00135575 /* MOVHomeTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
