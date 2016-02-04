@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MOVMovie.h"
+
 
 @interface MOVActorMovieCollectionViewCell : UICollectionViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *actorMovieImage;
 @property (weak, nonatomic) IBOutlet UILabel *actorMovieName;
 

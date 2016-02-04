@@ -515,7 +515,7 @@
                         <viewControllerLayoutGuide type="bottom" id="CYN-Vh-4C5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="B17-8c-BRr">
-                        <rect key="frame" x="0.0" y="64" width="600" height="1036"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="1100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mz3-L2-TkA">
@@ -604,7 +604,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="84" height="126"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpG-7U-1pI">
-                                                                    <rect key="frame" x="0.0" y="128" width="85" height="38"/>
+                                                                    <rect key="frame" x="0.0" y="128" width="84" height="37"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -615,6 +615,7 @@
                                                         <connections>
                                                             <outlet property="actorMovieImage" destination="1Yg-bu-I9j" id="e9u-KY-hjX"/>
                                                             <outlet property="actorMovieName" destination="lpG-7U-1pI" id="4Ac-EX-i2O"/>
+                                                            <segue destination="0OT-8p-yVo" kind="show" identifier="actorMovieDetailSegue" id="2Ri-CE-vpn"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
@@ -667,6 +668,7 @@
                                                         <connections>
                                                             <outlet property="actorTvShowImage" destination="KG1-5d-yz6" id="dXk-qo-y7C"/>
                                                             <outlet property="actorTvShowName" destination="MiX-Yf-TTz" id="Ipg-F2-5ka"/>
+                                                            <segue destination="0OT-8p-yVo" kind="show" identifier="actorTVShowDetailSegue" id="Cll-Dj-U3p"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
@@ -708,7 +710,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kpC-9I-HC9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3077" y="653"/>
+            <point key="canvasLocation" x="3413" y="353"/>
         </scene>
         <!--Feed-->
         <scene sceneID="lfc-LH-azz">
@@ -760,6 +762,6 @@
         <image name="time.png" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="juQ-dK-hQk"/>
+        <segue reference="Cll-Dj-U3p"/>
     </inferredMetricsTieBreakers>
 </document>

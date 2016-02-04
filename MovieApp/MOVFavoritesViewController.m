@@ -121,9 +121,7 @@ static NSString *movieSegue = @"movieDetailsSegue";
             MOVMovieRLM *movieRLM = [favorites objectAtIndex:indexPath.row];
 
             MOVMovie *favoriteMovie = [self getMovieFromRealm:movieRLM];
-            
-            [MOVObjectMapping addMovieDurationAndGenres:favoriteMovie];
-            
+                        
             movieDetail.movie = favoriteMovie;
             movieRLM = nil;
         } else {

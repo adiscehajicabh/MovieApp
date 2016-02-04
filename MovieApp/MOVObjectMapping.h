@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "MOVMovie.h"
+#import "MOVTVShow.h"
 
 @interface MOVObjectMapping : NSObject
 
 +(void)addMovieDurationAndGenres:(MOVMovie *)movie;
++(void)addTvShowDurationAndGenres:(MOVTVShow *)tvShow;
+
++(void)loadMovie:(NSString *)id loadedMovie:(MOVMovie *)movie;
++(void)loadTVShow:(NSString *)id loadedTVShow:(MOVTVShow *)tvShow;
 
 @end

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MOVActor.h"
+#import "MOVMovie.h"
+#import "MOVActorMovieCollectionViewCell.h"
 
 @interface MOVActorDetailsViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -28,5 +30,8 @@
 
 @property (nonatomic, strong) NSArray *actorMovies;
 @property (nonatomic, strong) NSArray *actorTvShows;
+
+@property (nonatomic, strong) NSMutableArray *movies;
+@property (nonatomic, strong) NSMutableArray *tvShows;
 
 @end

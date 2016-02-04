@@ -18,6 +18,8 @@
 #import "MOVActorMovieCollectionViewCell.h"
 #import "MOVActorTVShowCollectionViewCell.h"
 #import "MOVConstants.h"
+#import "MOVMovieDetailsViewController.h"
+#import "MOVObjectMapping.h"
 
 @interface MOVActorDetailsViewController ()
 
@@ -27,10 +29,15 @@
 
 static NSString * const movieIdentifier = @"ActorMovieCollectionCell";
 static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
+static NSString * const actorMovieSegue = @"actorMovieDetailSegue";
+static NSString * const actorTVShowSegue = @"actorTVShowDetailSegue";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.movies = [[NSMutableArray alloc] init];
+    self.tvShows = [[NSMutableArray alloc] init];
     
     [self loadActorDetails:self.actorId];
     [self loadActorImage:self.actorId];
@@ -61,10 +68,16 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
         
         MOVActorMovieCollectionViewCell *cellMovie = [collectionView dequeueReusableCellWithReuseIdentifier:movieIdentifier forIndexPath:indexPath];
     
+//        cellMovie.delegate = self;
+        
         MOVActorMovie *actorMovie = [self.actorMovies objectAtIndex:indexPath.row];
     
+        MOVMovie *loadedMovie = [[MOVMovie alloc] init];
+        [MOVObjectMapping loadMovie:actorMovie.id loadedMovie:loadedMovie];
+        [self.movies addObject:loadedMovie];
+        
         cellMovie.actorMovieName.text = actorMovie.title;
-    
+        
         // Actor movie image
         NSURL * urlImageMovie = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, IMAGE_SIZE_W92, actorMovie.posterPath]];
         [cellMovie.actorMovieImage sd_setImageWithURL:urlImageMovie];
@@ -79,6 +92,10 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
     
         MOVActorTVShow *actorTvShow = [self.actorTvShows objectAtIndex:indexPath.row];
     
+        MOVTVShow *loadedTVShow = [[MOVTVShow alloc] init];
+        [MOVObjectMapping loadTVShow:actorTvShow.id loadedTVShow:loadedTVShow];
+        [self.tvShows addObject:loadedTVShow];
+        
         cellTvShows.actorTvShowName.text = actorTvShow.name;
     
         // Actor movie image
@@ -252,14 +269,32 @@ static NSString * const tvShowIdentifier = @"ActorTVShowCollectionCell";
 
 
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+    MOVMovieDetailsViewController *movieDetail = [segue destinationViewController];
+    
+    if ([segue.identifier isEqualToString:actorMovieSegue]) {
+        
+        NSIndexPath *indexPath = [self.actorMovieCollection indexPathForCell:sender];
+        
+        MOVMovie *actorMovie = [self.movies objectAtIndex:indexPath.row];
+        
+        movieDetail.movie = actorMovie;
+        
+    } else if ([segue.identifier isEqualToString:actorTVShowSegue]) {
+        
+        NSIndexPath *indexPath = [self.actorTVShowCollection indexPathForCell:sender];
+        
+        MOVTVShow *actorTVShow = [self.tvShows objectAtIndex:indexPath.row];
+            
+        movieDetail.serie = actorTVShow;
+        
+    }
 }
-*/
+
 
 @end

@@ -24,6 +24,8 @@
 #import <Realm/Realm.h>
 #import "MOVConstants.h"
 #import "MOVHelperMethods.h"
+#import "MOVActorMovie.h"
+#import "MOVObjectMapping.h"
 
 @interface MOVMovieDetailsViewController ()
 
@@ -42,6 +44,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    if (self.actorMovie != nil) {
+//        [MOVObjectMapping loadMovie:self.actorMovie.id loadedMovie:self.movie];
+//    }
     
     // Clears all from Realm DB.
     [[NSFileManager defaultManager] removeItemAtPath:[[RLMRealmConfiguration defaultConfiguration] path] error:nil];

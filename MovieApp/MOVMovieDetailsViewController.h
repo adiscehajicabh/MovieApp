@@ -11,6 +11,7 @@
 #import "MOVTVShow.h"
 #import "MOVMovieDetailsViewController.h"
 #import "MOVActor.h"
+#import "MOVActorMovie.h"
 
 
 
@@ -18,6 +19,7 @@
 
 @property (nonatomic, strong) MOVMovie *movie;
 @property (nonatomic, strong) MOVTVShow *serie;
+@property (nonatomic, strong) MOVActorMovie *actorMovie;
 
 @property (weak, nonatomic) IBOutlet UIView *navbarTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *moviePoster;
