@@ -53,7 +53,7 @@ static NSString *movieSegue = @"movieDetailsSegue";
     
     // Setting the color of the status bar to the white.
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-
+    
     // Calling methods for mapping.
     [self configureRestKit];
     [self loadMoviesAndSeries];

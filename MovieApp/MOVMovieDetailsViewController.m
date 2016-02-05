@@ -45,6 +45,11 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStyleDone target:self action:@selector(homeScreen:)];
+//    
+//    self.navigationItem.rightBarButtonItem = homeButton;
+    
+    
 //    if (self.actorMovie != nil) {
 //        [MOVObjectMapping loadMovie:self.actorMovie.id loadedMovie:self.movie];
 //    }

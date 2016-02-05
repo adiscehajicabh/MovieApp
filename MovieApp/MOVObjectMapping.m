@@ -213,14 +213,8 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
     [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        //self.selectedTvShows = mappingResult.array;
-        //[self.movieCastCollectionView reloadData];
         MOVTVShow *clickedTvShow = mappingResult.firstObject;
-        [tvShow setGenres:clickedTvShow.genres];
-        [tvShow setEpisodeRunTime:clickedTvShow.episodeRunTime];
         
-        MOVDuration *tvShowDuration = [clickedTvShow.episodeRunTime objectAtIndex:0];
-        [tvShow setDuration:tvShowDuration.duration];
         [tvShow setId:clickedTvShow.id];
         [tvShow setName:clickedTvShow.name];
         [tvShow setOverview:clickedTvShow.overview];
@@ -229,7 +223,13 @@
         [tvShow setBackdropPath:clickedTvShow.backdropPath];
         [tvShow setVoteAverage:clickedTvShow.voteAverage];
         [tvShow setVoteCount:clickedTvShow.voteCount];
+        [tvShow setGenres:clickedTvShow.genres];
+        [tvShow setEpisodeRunTime:clickedTvShow.episodeRunTime];
         
+        if([clickedTvShow.episodeRunTime count] > 0) {
+            MOVDuration *tvShowDuration = [clickedTvShow.episodeRunTime objectAtIndex:0];
+            [tvShow setDuration:tvShowDuration.duration];
+        }
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         NSLog(@"Could not load movie cast from API!': %@", error);
