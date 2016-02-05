@@ -389,7 +389,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             [[RLMRealm defaultRealm]deleteObject:[realmMovie firstObject]];
             [[RLMRealm defaultRealm] commitWriteTransaction];
 
-            [self changeFavoriteButtonState:@"notliked.png"];
+            [self changeFavoriteButtonState:@"like_white.png"];
 
         }
     } else {
@@ -425,7 +425,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             [[RLMRealm defaultRealm]deleteObject:[realmTvShow firstObject]];
             [[RLMRealm defaultRealm] commitWriteTransaction];
             
-            [self changeFavoriteButtonState:@"notliked.png"];
+            [self changeFavoriteButtonState:@"like_white.png"];
             
         }
     }

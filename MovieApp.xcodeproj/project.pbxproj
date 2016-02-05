@@ -12,11 +12,11 @@
 		490D0A001C5BBCA700D4BDC4 /* MOVVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 490D09FF1C5BBCA700D4BDC4 /* MOVVideo.m */; };
 		49AEBCE51C5F71A100EAC1EB /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AEBCE41C5F71A100EAC1EB /* libc++.1.tbd */; };
 		49AEBCE81C5F74ED00EAC1EB /* MOVMovieRLM.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCE71C5F74ED00EAC1EB /* MOVMovieRLM.m */; };
-		49AEBCEA1C5F95A300EAC1EB /* notliked.png in Resources */ = {isa = PBXBuildFile; fileRef = 49AEBCE91C5F95A300EAC1EB /* notliked.png */; };
-		49AEBCEC1C5F976800EAC1EB /* liked.png in Resources */ = {isa = PBXBuildFile; fileRef = 49AEBCEB1C5F976800EAC1EB /* liked.png */; };
 		49AEBCEF1C5F99AC00EAC1EB /* MOVTVShowRLM.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCEE1C5F99AC00EAC1EB /* MOVTVShowRLM.m */; };
 		49AEBCF21C5FA46300EAC1EB /* MOVFavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCF11C5FA46300EAC1EB /* MOVFavoritesViewController.m */; };
 		49AEBCF51C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEBCF41C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m */; };
+		49DECBE31C63CF7A00266651 /* like_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 49DECBE21C63CF7A00266651 /* like_white.png */; };
+		49DECBE51C63D0CA00266651 /* liked.png in Resources */ = {isa = PBXBuildFile; fileRef = 49DECBE41C63D0CA00266651 /* liked.png */; };
 		49E002831C61FC8600C4F262 /* MOVObjectMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E002821C61FC8600C4F262 /* MOVObjectMapping.m */; };
 		49E1C4D31C60B136002C311C /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 49E1C4D21C60B136002C311C /* star.png */; };
 		49E1C4D51C60B343002C311C /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 49E1C4D41C60B343002C311C /* time.png */; };
@@ -68,14 +68,14 @@
 		49AEBCE41C5F71A100EAC1EB /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		49AEBCE61C5F74ED00EAC1EB /* MOVMovieRLM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVMovieRLM.h; sourceTree = "<group>"; };
 		49AEBCE71C5F74ED00EAC1EB /* MOVMovieRLM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVMovieRLM.m; sourceTree = "<group>"; };
-		49AEBCE91C5F95A300EAC1EB /* notliked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notliked.png; sourceTree = "<group>"; };
-		49AEBCEB1C5F976800EAC1EB /* liked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liked.png; sourceTree = "<group>"; };
 		49AEBCED1C5F99AC00EAC1EB /* MOVTVShowRLM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVTVShowRLM.h; sourceTree = "<group>"; };
 		49AEBCEE1C5F99AC00EAC1EB /* MOVTVShowRLM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVTVShowRLM.m; sourceTree = "<group>"; };
 		49AEBCF01C5FA46300EAC1EB /* MOVFavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVFavoritesViewController.h; sourceTree = "<group>"; };
 		49AEBCF11C5FA46300EAC1EB /* MOVFavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVFavoritesViewController.m; sourceTree = "<group>"; };
 		49AEBCF31C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVFavoritesTableViewCell.h; sourceTree = "<group>"; };
 		49AEBCF41C5FAAF300EAC1EB /* MOVFavoritesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVFavoritesTableViewCell.m; sourceTree = "<group>"; };
+		49DECBE21C63CF7A00266651 /* like_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_white.png; sourceTree = "<group>"; };
+		49DECBE41C63D0CA00266651 /* liked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liked.png; sourceTree = "<group>"; };
 		49E002811C61FC8600C4F262 /* MOVObjectMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOVObjectMapping.h; sourceTree = "<group>"; };
 		49E002821C61FC8600C4F262 /* MOVObjectMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOVObjectMapping.m; sourceTree = "<group>"; };
 		49E1C4D21C60B136002C311C /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
@@ -308,13 +308,13 @@
 		A05935141C4FDDC300135575 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				49DECBE41C63D0CA00266651 /* liked.png */,
+				49DECBE21C63CF7A00266651 /* like_white.png */,
 				49E1C4E01C60D1FD002C311C /* movieposter_placeholder1.png */,
 				49E1C4D71C60C989002C311C /* movie_placeholder.png */,
 				49E1C4D81C60C989002C311C /* movieperson_placeholder.png */,
 				49E1C4D41C60B343002C311C /* time.png */,
-				49AEBCEB1C5F976800EAC1EB /* liked.png */,
 				49E1C4D21C60B136002C311C /* star.png */,
-				49AEBCE91C5F95A300EAC1EB /* notliked.png */,
 				A0E7BFDB1C5A3FFC00EA94CC /* forward.png */,
 				A0E7BFD91C5A354800EA94CC /* movie_transparent.png */,
 				A0EC8AA71C5551D000EA77F4 /* movies.png */,
@@ -387,16 +387,16 @@
 			files = (
 				A0EC8AAA1C5551D000EA77F4 /* movies.png in Resources */,
 				A0E7BFDA1C5A354800EA94CC /* movie_transparent.png in Resources */,
+				49DECBE51C63D0CA00266651 /* liked.png in Resources */,
 				49E1C4DB1C60C989002C311C /* movieperson_placeholder.png in Resources */,
 				49E1C4DA1C60C989002C311C /* movie_placeholder.png in Resources */,
 				49E1C4E11C60D1FD002C311C /* movieposter_placeholder1.png in Resources */,
 				49E1C4D51C60B343002C311C /* time.png in Resources */,
-				49AEBCEA1C5F95A300EAC1EB /* notliked.png in Resources */,
+				49DECBE31C63CF7A00266651 /* like_white.png in Resources */,
 				A0EC8AAC1C5551D000EA77F4 /* favorites.png in Resources */,
 				A0E7BFDC1C5A3FFC00EA94CC /* forward.png in Resources */,
 				A0EC8AAB1C5551D000EA77F4 /* account.png in Resources */,
 				A05935241C4FDDC300135575 /* LaunchScreen.storyboard in Resources */,
-				49AEBCEC1C5F976800EAC1EB /* liked.png in Resources */,
 				A05935211C4FDDC300135575 /* Assets.xcassets in Resources */,
 				49E1C4D31C60B136002C311C /* star.png in Resources */,
 				A059351F1C4FDDC300135575 /* Main.storyboard in Resources */,
