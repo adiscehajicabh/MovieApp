@@ -8,10 +8,13 @@
 
 #import "MOVObjectMapping.h"
 #import "MOVDuration.h"
+#import "MOVVideo.h"
 #import <RestKit/RestKit.h>
 
 
 @implementation MOVObjectMapping
+
+
 
 
 /*
@@ -250,5 +253,78 @@
     return genreMapping;
 }
 
+/*
+ * Updates the inputed movie information. It sets the movie videos.
+ *
+ *
+ */
++(void)addMovieVideo:(MOVMovie *)movie {
+    
+//    // Setup object mappings for videos
+//    RKObjectMapping *videoMapping = [RKObjectMapping mappingForClass:[MOVVideo class]];
+//    [videoMapping addAttributeMappingsFromDictionary:@{
+//                                                       @"id": @"id",
+//                                                       @"key": @"key",
+//                                                       @"name": @"name",
+//                                                       @"site" : @"site",
+//                                                       @"size" : @"size",
+//                                                       @"type" : @"type"
+//                                                       }];
+    
+    // Register mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[self createVideoMapping] method:RKRequestMethodAny pathPattern:nil keyPath:@"results" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%d/videos?api_key=eeeda4aeb01446fa9cabef99fab242af", [movie.id intValue]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        movie.videos = mappingResult.array;
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Could not load movie cast from API!': %@", error);
+    }];
+    
+    [objectRequestOperation start];
+
+}
+
+/*
+ * Updates the inputed tv show information. It sets the tv show videos.
+ *
+ *
+ */
++(void)addTVShowVideo:(MOVTVShow *)tvShow {
+    
+    // Register mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[self createVideoMapping] method:RKRequestMethodAny pathPattern:nil keyPath:@"results" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/tv/%d/videos?api_key=eeeda4aeb01446fa9cabef99fab242af", [tvShow.id intValue]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        tvShow.videos = mappingResult.array;
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Could not load movie cast from API!': %@", error);
+    }];
+    
+    [objectRequestOperation start];
+    
+    
+}
+
+
++(RKObjectMapping *)createVideoMapping {
+    
+    // Setup object mappings for videos
+    RKObjectMapping *videoMapping = [RKObjectMapping mappingForClass:[MOVVideo class]];
+    [videoMapping addAttributeMappingsFromDictionary:@{
+                                                       @"id": @"id",
+                                                       @"key": @"key",
+                                                       @"name": @"name",
+                                                       @"site" : @"site",
+                                                       @"size" : @"size",
+                                                       @"type" : @"type"
+                                                       }];
+    return videoMapping;
+}
 
 @end

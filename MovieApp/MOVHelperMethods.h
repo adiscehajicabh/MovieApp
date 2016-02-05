@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 @interface MOVHelperMethods : NSObject
 
 +(NSString *)convertMinutesIntoHours:(NSString *)amount;
++(void)changeFavoriteButtonState:(NSString *)imageName favoriteButton:(UIButton *)button;
 
 @end

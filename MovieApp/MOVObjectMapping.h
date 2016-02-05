@@ -18,4 +18,7 @@
 +(void)loadMovie:(NSString *)id loadedMovie:(MOVMovie *)movie;
 +(void)loadTVShow:(NSString *)id loadedTVShow:(MOVTVShow *)tvShow;
 
++(void)addMovieVideo:(MOVMovie *)movie;
++(void)addTVShowVideo:(MOVTVShow *)tvShow;
+
 @end

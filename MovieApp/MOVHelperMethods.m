@@ -7,6 +7,8 @@
 //
 
 #import "MOVHelperMethods.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 @implementation MOVHelperMethods
 
@@ -23,5 +25,14 @@
     
     return [NSString stringWithFormat:@"%ldm", minutes];
 }
+
+/*
+ * Sets the image of the favorite button to the inputed image.
+ */
++(void)changeFavoriteButtonState:(NSString *)imageName favoriteButton:(UIButton *)button {
+    UIImage *btnImage = [UIImage imageNamed:imageName];
+    [button setImage:btnImage forState:UIControlStateNormal];
+}
+
 
 @end

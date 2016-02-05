@@ -16,11 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
-    
-   
-//    [[self movieVideoPlayer] loadHTMLString:embededCode baseURL:nil];
-    
 
     NSURL *videoUrl = [NSURL URLWithString:self.videoUrl];
     NSURLRequest *videoRequest = [NSURLRequest requestWithURL:videoUrl];

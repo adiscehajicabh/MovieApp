@@ -615,6 +615,7 @@
                         <outlet property="movieVoteAverage" destination="9Wk-rK-6Ov" id="n2g-c8-iLS"/>
                         <outlet property="movieVoteCount" destination="fLD-Rf-7dK" id="7b0-4n-jUz"/>
                         <outlet property="navbarTitle" destination="Azk-8X-XOj" id="7u3-AJ-e9I"/>
+                        <outlet property="videoButton" destination="xcN-2G-c5Q" id="2J3-QV-gZ8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VnN-yj-L00" userLabel="First Responder" sceneMemberID="firstResponder"/>

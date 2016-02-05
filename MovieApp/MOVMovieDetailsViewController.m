@@ -49,11 +49,6 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
 //    
 //    self.navigationItem.rightBarButtonItem = homeButton;
     
-    
-//    if (self.actorMovie != nil) {
-//        [MOVObjectMapping loadMovie:self.actorMovie.id loadedMovie:self.movie];
-//    }
-    
     // Clears all from Realm DB.
     [[NSFileManager defaultManager] removeItemAtPath:[[RLMRealmConfiguration defaultConfiguration] path] error:nil];
     
@@ -62,8 +57,6 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
     // Checking if the selected object from categories is movie or tv show.
     if ([self.movie isKindOfClass:[MOVMovie class]]) {
         
-        NSLog(@"==================MOVIE ID: %@", self.movie.id);
-
         self.movieDescription.text = self.movie.overview;
     
         // Checking does the movie has the image.
@@ -119,6 +112,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         
         // Setting the duration of the movie.
         self.movieDurationGenre.text = [NSString stringWithFormat:@"%@ - %@", [MOVHelperMethods convertMinutesIntoHours:self.movie.runtime], self.movieDurationGenre.text];
+        
+        if ([self.movie.videos count] > 0) {
+            [self.videoButton setEnabled:YES];
+        }
         
         [self loadMovieCast:self.movie.id];
     } else {
@@ -331,22 +328,29 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
     // Finds the trailer video from the seleted movie or tv show and opens it into the new view controller.
     if ([segue.identifier isEqualToString:@"movieVideoSegue"]) {
         
-        
         MOVVideo *firstMovieVideo = nil;
         NSString *videoKey = nil;
         
-        if (self.movie != nil) {
+        if ([self.movie.videos count] > 0) {
             firstMovieVideo = [self.movie.videos objectAtIndex:0];
             videoKey = firstMovieVideo.key;
-        } else {
+            
+            MOVVideoViewController *videoController = [segue destinationViewController];
+            
+            videoController.videoUrl = [NSString stringWithFormat:@"https://www.youtube.com/watch?v=%@", videoKey];
+        } else if([self.serie.videos count] > 0) {
             firstMovieVideo = [self.serie.videos objectAtIndex:0];
             videoKey = firstMovieVideo.key;
+        
+            MOVVideoViewController *videoController = [segue destinationViewController];
+            
+            videoController.videoUrl = [NSString stringWithFormat:@"https://www.youtube.com/watch?v=%@", videoKey];
+        } else {
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"No available videos" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alertView show];
         }
-        
-        MOVVideoViewController *videoController = [segue destinationViewController];
-        
-        videoController.videoUrl = [NSString stringWithFormat:@"https://www.youtube.com/watch?v=%@", videoKey];
-   
     }
 
 }
@@ -361,9 +365,6 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
     if ([self.movie isKindOfClass:[MOVMovie class]]) {
 
         realmMovie = [MOVMovieRLM objectsWhere:@"id = %@", self.movie.id];
-
-//        MOVGenre *durationGenre = [self.movie.genres objectAtIndex:0];
-
         
         if ([realmMovie count] == 0) {
         
@@ -381,12 +382,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             movieRLM.vote_count = self.movie.voteCount;
             movieRLM.runtime = self.movie.runtime;
             [movieRLM convertMovieGenres:self.movie.genres];
-            
-//            movieRLM.genres = [movieRLM.genres stringByAppendingString:[NSString stringWithFormat:@" | %@", durationGenre.name]];
             [realm addObject:movieRLM];
             [realm commitWriteTransaction];
         
-            [self changeFavoriteButtonState:@"liked.png"];
+            [MOVHelperMethods changeFavoriteButtonState:@"liked.png" favoriteButton:self.favoritesButton];
             
         } else {
             // Delete the movie information from database.
@@ -394,14 +393,12 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             [[RLMRealm defaultRealm]deleteObject:[realmMovie firstObject]];
             [[RLMRealm defaultRealm] commitWriteTransaction];
 
-            [self changeFavoriteButtonState:@"like_white.png"];
+            [MOVHelperMethods changeFavoriteButtonState:@"like_white.png" favoriteButton:self.favoritesButton];
 
         }
     } else {
         
         realmTvShow = [MOVTVShowRLM objectsWhere:@"id = %@", self.serie.id];
-
-        MOVDuration *serieDuration = [self.serie.episodeRunTime objectAtIndex:0];
         
         if ([realmTvShow count] == 0) {
             
@@ -422,7 +419,7 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             [realm addObject:tvShowRLM];
             [realm commitWriteTransaction];
             
-            [self changeFavoriteButtonState:@"liked.png"];
+            [MOVHelperMethods changeFavoriteButtonState:@"liked.png" favoriteButton:self.favoritesButton];
             
         } else {
             // Deleting the tv show from database.
@@ -430,12 +427,10 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
             [[RLMRealm defaultRealm]deleteObject:[realmTvShow firstObject]];
             [[RLMRealm defaultRealm] commitWriteTransaction];
             
-            [self changeFavoriteButtonState:@"like_white.png"];
+            [MOVHelperMethods changeFavoriteButtonState:@"like_white.png" favoriteButton:self.favoritesButton];
             
         }
     }
-
-    
 }
 
 /*
@@ -449,24 +444,16 @@ static NSString * const reuseIdentifier = @"MovieActorCell";
         realmMovie = [MOVMovieRLM objectsWhere:@"id = %@", self.movie.id];
         
         if ([realmMovie count] > 0) {
-            [self changeFavoriteButtonState:@"liked.png"];
+            [MOVHelperMethods changeFavoriteButtonState:@"liked.png" favoriteButton:self.favoritesButton];
         }
     } else {
         
         realmTvShow = [MOVTVShowRLM objectsWhere:@"id = %@", self.serie.id];
         
         if ([realmTvShow count] > 0) {
-            [self changeFavoriteButtonState:@"liked.png"];
+            [MOVHelperMethods changeFavoriteButtonState:@"liked.png" favoriteButton:self.favoritesButton];
         }
     }
-}
-
-/*
- * Sets the image of the favorite button to the inputed image.
- */
--(void)changeFavoriteButtonState:(NSString *)imageName {
-    UIImage *btnImage = [UIImage imageNamed:imageName];
-    [self.favoritesButton setImage:btnImage forState:UIControlStateNormal];
 }
 
 //- (void)loadView {

@@ -62,9 +62,6 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         MOVMovie *movie = [movies objectAtIndex:indexPath.row];
         cell.movieTitleCell.text = movie.title;
         
-        [MOVObjectMapping addMovieDurationAndGenres:movie];
-        [self addMovieVideo:movie];
-        
         if (movie.posterPath != nil) {
             
             // Movie poster
@@ -84,12 +81,14 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
         MOVTVShow *serie = [movies objectAtIndex:indexPath.row];
         cell.movieTitleCell.text = serie.name;
         
-        [MOVObjectMapping addTvShowDurationAndGenres:serie];
-        [self addTVShowVideo:serie];
-        
-        // Movie poster
-        NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, serie.posterPath]];
-        [cell.movieImageCell sd_setImageWithURL:url];
+        if (serie.posterPath != nil) {
+            // Movie poster
+            NSURL * url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", URL_BASE_IMG, POSTER_SIZE_W92, serie.posterPath]];
+            [cell.movieImageCell sd_setImageWithURL:url];
+        } else {
+            UIImage *movImage = [UIImage imageNamed:@"movie_placeholder.png"];
+            cell.movieImageCell.image = movImage;
+        }
         
         // Release date
         NSString *dateString = serie.firstAirDate;
@@ -177,41 +176,41 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
 //    
 //}
 
-/*
- * Updates the inputed movie information. It sets the movie videos.
- *
- *
- */
--(void)addMovieVideo:(MOVMovie *)movie {
-    
-    // Setup object mappings for videos
-    RKObjectMapping *videoMapping = [RKObjectMapping mappingForClass:[MOVVideo class]];
-    [videoMapping addAttributeMappingsFromDictionary:@{
-                                                      @"id": @"id",
-                                                      @"key": @"key",
-                                                      @"name": @"name",
-                                                      @"site" : @"site",
-                                                      @"size" : @"size",
-                                                      @"type" : @"type"
-                                                      }];
-    
-    // Register mappings with the provider using a response descriptor
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:videoMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"results" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%d/videos?api_key=eeeda4aeb01446fa9cabef99fab242af", [movie.id intValue]]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
-    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        movie.videos = mappingResult.array;
-        NSLog(@"MOVIE VIDEO NUMBER: %lu", [movie.videos count]);
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        NSLog(@"Could not load movie cast from API!': %@", error);
-    }];
-    
-    [objectRequestOperation start];
-
-    
-}
+///*
+// * Updates the inputed movie information. It sets the movie videos.
+// *
+// *
+// */
+//-(void)addMovieVideo:(MOVMovie *)movie {
+//    
+//    // Setup object mappings for videos
+//    RKObjectMapping *videoMapping = [RKObjectMapping mappingForClass:[MOVVideo class]];
+//    [videoMapping addAttributeMappingsFromDictionary:@{
+//                                                      @"id": @"id",
+//                                                      @"key": @"key",
+//                                                      @"name": @"name",
+//                                                      @"site" : @"site",
+//                                                      @"size" : @"size",
+//                                                      @"type" : @"type"
+//                                                      }];
+//    
+//    // Register mappings with the provider using a response descriptor
+//    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:videoMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"results" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+//    
+//    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%d/videos?api_key=eeeda4aeb01446fa9cabef99fab242af", [movie.id intValue]]];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+//    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+//    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+//        movie.videos = mappingResult.array;
+//        NSLog(@"MOVIE VIDEO NUMBER: %lu", [movie.videos count]);
+//    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+//        NSLog(@"Could not load movie cast from API!': %@", error);
+//    }];
+//    
+//    [objectRequestOperation start];
+//
+//    
+//}
 
 ///*
 // * Updates the inputed movie information. It sets the movie runtime and movie genres.
@@ -279,41 +278,41 @@ static NSString * const POSTER_SIZE_W92 = @"w92";
 //    
 //}
 
-/*
- * Updates the inputed tv show information. It sets the tv show videos.
- *
- *
- */
--(void)addTVShowVideo:(MOVTVShow *)tvShow {
-    
-    // Setup object mappings for videos
-    RKObjectMapping *videoMapping = [RKObjectMapping mappingForClass:[MOVVideo class]];
-    [videoMapping addAttributeMappingsFromDictionary:@{
-                                                       @"id": @"id",
-                                                       @"key": @"key",
-                                                       @"name": @"name",
-                                                       @"site" : @"site",
-                                                       @"size" : @"size",
-                                                       @"type" : @"type"
-                                                       }];
-    
-    // Register mappings with the provider using a response descriptor
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:videoMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"results" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/tv/%d/videos?api_key=eeeda4aeb01446fa9cabef99fab242af", [tvShow.id intValue]]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
-    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        tvShow.videos = mappingResult.array;
-        NSLog(@"MOVIE VIDEO NUMBER: %lu", [tvShow.videos count]);
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        NSLog(@"Could not load movie cast from API!': %@", error);
-    }];
-    
-    [objectRequestOperation start];
-    
-    
-}
+///*
+// * Updates the inputed tv show information. It sets the tv show videos.
+// *
+// *
+// */
+//-(void)addTVShowVideo:(MOVTVShow *)tvShow {
+//    
+//    // Setup object mappings for videos
+//    RKObjectMapping *videoMapping = [RKObjectMapping mappingForClass:[MOVVideo class]];
+//    [videoMapping addAttributeMappingsFromDictionary:@{
+//                                                       @"id": @"id",
+//                                                       @"key": @"key",
+//                                                       @"name": @"name",
+//                                                       @"site" : @"site",
+//                                                       @"size" : @"size",
+//                                                       @"type" : @"type"
+//                                                       }];
+//    
+//    // Register mappings with the provider using a response descriptor
+//    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:videoMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"results" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+//    
+//    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/tv/%d/videos?api_key=eeeda4aeb01446fa9cabef99fab242af", [tvShow.id intValue]]];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+//    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseDescriptor ]];
+//    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+//        tvShow.videos = mappingResult.array;
+//        NSLog(@"MOVIE VIDEO NUMBER: %lu", [tvShow.videos count]);
+//    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+//        NSLog(@"Could not load movie cast from API!': %@", error);
+//    }];
+//    
+//    [objectRequestOperation start];
+//    
+//    
+//}
 
 
 /*

@@ -16,6 +16,7 @@
 #import "MOVHomeTableViewCell.h"
 #import "MOVMovieCast.h"
 #import "MOVConstants.h"
+#import "MOVObjectMapping.h"
 
 @interface MOVHomeTableViewController ()
 
@@ -147,6 +148,17 @@ static NSString *movieSegue = @"movieDetailsSegue";
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   
                                                   movieBlock(moviesCategory, mappingResult.array);
+                                                  
+                                                  // Mapping the movie and tv show genres and duration with the movie.
+                                                  for (int i = 0; i < moviesCategory.count; i++) {
+                                                      if ([[moviesCategory objectAtIndex:i] isKindOfClass:[MOVMovie class]]) {
+                                                          [MOVObjectMapping addMovieDurationAndGenres:[moviesCategory objectAtIndex:i]];
+                                                          [MOVObjectMapping addMovieVideo:[moviesCategory objectAtIndex:i]];
+                                                      } else {
+                                                           [MOVObjectMapping addTvShowDurationAndGenres:[moviesCategory objectAtIndex:i]];
+                                                          [MOVObjectMapping addTVShowVideo:[moviesCategory objectAtIndex:i]];
+                                                      }
+                                                  }
                                                   
                                                   [movies setObject:moviesCategory forKey:moviesKey];
                                                   

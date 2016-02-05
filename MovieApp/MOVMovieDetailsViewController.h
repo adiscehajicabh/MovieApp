@@ -39,6 +39,10 @@
 @property (nonatomic, strong) NSArray *actorArray;
 @property (nonatomic, strong) MOVActor *actor;
 @property (weak, nonatomic) IBOutlet UIButton *favoritesButton;
+@property (weak, nonatomic) IBOutlet UIButton *videoButton;
+
+@property (nonatomic,retain) UIPopoverController *popoverController;
+
 
 -(IBAction)addToFavorites;
 
